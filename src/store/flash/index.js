@@ -15,10 +15,34 @@ export default{
     },
   },
   mutations: {
-    setLists (state, data) {
-      state.lists = data
+    setFlashLists (state, data) {
+      let val = []
+      for (var i = 0; i < data.length; i++) {
+        let arr = {
+          id:'',
+          day:'',
+          month:'',
+          year:'',
+          time:'',
+          content:'',
+          flag:false
+        }
+        arr.id = data[i].id
+        arr.day = data[i].id.substr(6,2)
+        arr.month = data[i].id.substr(4,2)
+        arr.year = data[i].id.substr(0,4)
+        arr.time = data[i].timeShow
+        arr.content = data[i].titleContent
+        if(i > 0){
+          if(data[i].id.substr(6,2) != data[i-1].id.substr(6,2)){
+              arr.flag = true
+          }
+        }
+        val.push(arr)
+      }
+      state.lists = val
     },
-    setDetail (state, data) {
+    setFlashDetail (state, data) {
       state.detail = data
     }
   },
@@ -27,7 +51,7 @@ export default{
     fetchFlashLists({ commit }, data){
       return http.postmain(api.getFutures,data.model).then((response) => {
         if(response.data.respbase.returncode == '10000'){
-          commit('setLists', response.data.respparam)
+          commit('setFlashLists', response.data.respparam)
         }else{
           console.log("出错")
         }
@@ -37,7 +61,7 @@ export default{
     fetchFlashDetail({ commit }, data){
       return http.postmain(api.futuresDetails,data.model).then((response) => {
         if(response.data.respbase.returncode == '10000'){
-          commit('setDetail', response.data.respparam)
+          commit('setFlashDetail', response.data.respparam)
         }else{
           console.log("出错")
         }

@@ -9,6 +9,9 @@ const filter = {
   timefilter:function(value){
     return moment(value).format('HH:mm')
   },
+  timefilter1:function(value){
+    return moment(value).format('hh:mm:ss')
+  },
   twodecimal:function(val){
     val = Number(val)
     return val.toFixed(2)

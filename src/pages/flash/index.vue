@@ -3,8 +3,17 @@
     <div class="flashlist">
       <div class="inner">
         <div class="item" v-for="(item,index) in flashlists" :key="index">
-          <span>{{item.timeShow | datefilter1}}</span>
-          <p>{{item.titleContent}}</p>
+          <!-- <div class="days" v-if="index==0">
+            <label class="monthday">04-02</label>
+            <label class="year">2019</label>
+          </div> -->
+          <div class="days" v-if="item.flag || index == 0">
+            <label class="monthday">{{item.month}}-{{item.day}}</label>
+            <label class="year">{{item.year}}</label>
+          </div>
+          <span class="time">{{item.time | timefilter1}}</span>
+          <p v-if="item.content.length>100">{{item.content.substr(0,100)+'...'}}<span>详见></span></p>
+          <p v-else>{{item.content}}</p>
         </div>
       </div>
     </div>
@@ -36,7 +45,7 @@ export default{
           clientauthflag: common.getClientauthflag(),
           reqorigin: "xuantie",
           token: "",
-          sourceip: "127.0.0.1"
+          sourceip: common.getIp()
         },
         reqpage:{
           total:0,
@@ -47,6 +56,15 @@ export default{
         reqparam:{}
       }
       this.$store.dispatch('fetchFlashLists', { model })
+    },
+    subdays(val){
+      return val.substr(6,2)
+    },
+    submonth(val){
+      return val.substr(4,2)
+    },
+    subyear(val){
+      return val.substr(0,4)
     }
   }
 }
@@ -57,23 +75,51 @@ export default{
   }
   .flashlist .inner{
     border-left:1px solid #2f3954;
-    padding-left:25px;
+    padding-left:28px;
   }
   .flashlist .item{
-    margin-bottom:10px;
+    margin-bottom:15px;
     position: relative;
   }
   .flashlist .item:before{
     content:'';
     position: absolute;
-    left:-30px;
+    left:-33px;
     top:6px;
     width:10px;
     height:10px;
     background:#2f3954;
     border-radius: 50%;
   }
-  .flashlist .item span{
+  .flashlist .item div.days{
+    position: absolute;
+    top:0;
+    left:-45px;
+    width:38px;
+    border-radius: 3px;
+    background:#ea7b33;
+    border:1px solid #ea7b33;
+    font-size:12px;
+    transform: scale(0.9);
+    transform-origin:0 0;
+    z-index:3;
+  }
+  .flashlist .item div.days label{
+    text-align:center;
+    display: block;
+  }
+  .flashlist .item div.days .monthday{
+    color:#fff;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  .flashlist .item div.days .year{
+    color:#333;
+    background:#fff;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+  .flashlist .item span.time{
     background:#24344e;
     color:#ffffff;
     font-size:12px;
@@ -82,7 +128,7 @@ export default{
     text-align:center;
     position: relative;
   }
-  .flashlist .item span:before{
+  .flashlist .item span.time:before{
     content:'';
     position: absolute;
     left:-25px;
@@ -96,5 +142,8 @@ export default{
     color:#bec8d4;
     text-align:justify;
     font-size:13px;
+  }
+  .flashlist .item p span{
+    color:#c00;
   }
 </style>
