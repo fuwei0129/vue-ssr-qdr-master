@@ -1,0 +1,141 @@
+.pdt40{
+  padding-top:40px;
+}
+/* begin推荐列表和新闻详情begin */
+.recommend-list{
+  padding:0 10px;
+}
+.recommend-list .item-main{
+  padding:10px 0;
+  border-bottom:1px solid #29303b;
+}
+.recommend-list .flexbox{
+  display: -webkit-flex;
+  display: flex;
+  width:100%;
+}
+.recommend-list .normalbox{
+  width:100%;
+  position: relative;
+}
+.recommend-list .item-left{
+  -webkit-flex: 1 1;
+  flex: 1 1;
+  height: 83px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+.recommend-list .item-title{
+  font-size: 13px;
+  line-height: 22px;
+  max-height: 44px;
+  color: #fff;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+.recommend-list .item-bottom{
+  font-size: 12px;
+  line-height: 18px;
+  color: #4f5c69;
+  max-height: 18px;
+}
+.recommend-list .item-bottom::after{
+  content:'';
+  clear:both;
+  display: block;
+}
+.recommend-list .item-author{
+  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  display:block;
+	float:left;
+}
+.recommend-list .item-created{
+	display:block;
+  float:left;
+  margin-left:10px;
+}
+.recommend-list .item-right{
+  -webkit-flex: 0 0 110px;
+  flex: 0 0 110px;
+  height: 83px;
+  display: block;
+  margin-left: 12px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 3px;
+}
+.recommend-list .item-photo{
+  height: 190px;
+  margin:7px 0 5px;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 3px;
+}
+.article-normal-box{
+  padding:20px 10px;
+}
+.article-normal-box .nodata{
+  background:url(/public/icon-loss.png) no-repeat center bottom;
+  background-size: 50%;
+  height:200px;
+  position: relative;
+}
+.article-normal-box .nodata:after{
+  content:'您所访问的页面不存在或已删除';
+  position: absolute;
+  width:100%;
+  bottom:-20px;
+  color: #5a6780;
+  text-align: center;
+  font-size: 15px;
+}
+.article-normal-box .title{
+  color:#dfe5f0;
+  text-align:justify;
+  font-size:16px;
+}
+.article-normal-box .second{
+  padding:10px 0;
+  color:#96a0ac;
+  font-size:12px;
+}
+.article-normal-box .second .sourceform{
+  margin-left:12px;
+}
+.article-normal-box .content{
+  margin-top:20px;
+  color:#b0b8be;
+  word-break: break-all;
+  text-align:justify;
+  margin-bottom:10px;
+  letter-spacing:1px;
+  line-height:20px;
+}
+.article-normal-box .content p{
+  text-align:justify;
+  margin-bottom:10px;
+  letter-spacing:1px;
+  line-height:20px;
+}
+/* end推荐列表和新闻详情end */
