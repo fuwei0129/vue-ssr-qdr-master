@@ -55,10 +55,10 @@ export default{
   // 计算属性
   computed: {
       newsbanners(){
-        return this.$store.getters.getBannerLists // 推荐列表(banner轮播)
+        return this.$store.getters.getBanners // 推荐列表(banner轮播)
       },
       newslists () {
-        return this.$store.getters.getRecLists // 推荐列表（新闻）
+        return this.$store.getters.getRecNews // 推荐列表（新闻）
       }
   },
 }

@@ -5,7 +5,7 @@
           v-infinite-scroll="loadMore"
           infinite-scroll-disabled="isMoreLoading"
           infinite-scroll-distance="0"
-          infinite-scroll-immediate-check="false">
+          infinite-scroll-immediate-check="true">
       <div class="inner">
         <div class="item" v-for="(item,index) in flashlists" :key="index">
           <div class="days" v-if="item.flag || index == 0">
