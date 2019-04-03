@@ -7,8 +7,8 @@
       <mt-tab-item id="4">专栏</mt-tab-item>
     </mt-navbar>
     <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1"><news :banners="newsbanners" :lists="newslists"></news></mt-tab-container-item>
-      <mt-tab-container-item id="2"><flash></flash></mt-tab-container-item>
+      <mt-tab-container-item id="1"><news :panel="selected" :banners="newsbanners" :lists="newslists"></news></mt-tab-container-item>
+      <mt-tab-container-item id="2"><flash :panel="selected"></flash></mt-tab-container-item>
       <mt-tab-container-item id="3">3</mt-tab-container-item>
       <mt-tab-container-item id="4">4</mt-tab-container-item>
     </mt-tab-container>
@@ -64,6 +64,9 @@ export default{
 }
 </script>
 <style>
+.mint-navbar.is-fixed{
+  z-index:4;
+}
 .mint-navbar{
   background:#131a25;
   height:50px;

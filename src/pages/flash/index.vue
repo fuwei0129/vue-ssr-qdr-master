@@ -1,12 +1,13 @@
 <template>
   <section>
-    <div class="flashlist">
+    <div class="flashlist"
+          v-if="panel==2"
+          v-infinite-scroll="loadMore"
+          infinite-scroll-disabled="isMoreLoading"
+          infinite-scroll-distance="0"
+          infinite-scroll-immediate-check="false">
       <div class="inner">
         <div class="item" v-for="(item,index) in flashlists" :key="index">
-          <!-- <div class="days" v-if="index==0">
-            <label class="monthday">04-02</label>
-            <label class="year">2019</label>
-          </div> -->
           <div class="days" v-if="item.flag || index == 0">
             <label class="monthday">{{item.month}}-{{item.day}}</label>
             <label class="year">{{item.year}}</label>
@@ -17,15 +18,29 @@
         </div>
       </div>
     </div>
+    <!--显示加载中-->
+    <div class="loading-box" v-if="isLoading">
+        <mt-spinner type="snake" class="loading-more"></mt-spinner>
+        <span class="loading-more-txt">加载中...</span>
+    </div>
+    <div class="no-more" v-if="noMore">没有更多了~</div>
   </section>
 </template>
 <script>
 import common from '../../utils/common'
+import http from '../../utils/http'
+import api from '../../utils/api'
 export default{
   name: "flashindex",
+  props:{
+    panel:''
+  },
   data(){
     return{
-
+      page:1,
+      isLoading:false, //是否显示加载中
+      isMoreLoading:false, //是否加载更多
+      noMore:false //是否还有更多
     }
   },
   // 计算属性
@@ -35,10 +50,13 @@ export default{
       }
   },
   mounted(){
+    if(this.$store.getters.getFlashLists.length > 0){
+      return
+    }
     this.fetchList()
   },
   methods:{
-    fetchList(){
+    fetchList(type){
       let model = {
         reqbase:{
           timestamp: common.getLastDate(),
@@ -49,29 +67,47 @@ export default{
         },
         reqpage:{
           total:0,
-          page: 1,
+          page: this.page,
           size: 10,
           count: true
         },
         reqparam:{}
       }
-      this.$store.dispatch('fetchFlashLists', { model })
+      let that = this
+      if(type == 'loadmore'){
+        http.postmain(api.getFutures,model).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam == null){
+                that.noMore = true
+                that.isLoading = false
+            }else{
+              that.isMoreLoading = false
+              that.isLoading = false
+              that.$store.commit('setFlashLists',response.data.respparam)
+            }
+          }else{
+            console.log("出错")
+          }
+        })
+      }else{
+        this.$store.dispatch('fetchFlashLists', { model })
+      }
     },
-    subdays(val){
-      return val.substr(6,2)
-    },
-    submonth(val){
-      return val.substr(4,2)
-    },
-    subyear(val){
-      return val.substr(0,4)
+    loadMore(){
+      this.isMoreLoading = true // 设置加载更多中
+      this.isLoading = true // 加载中转圈圈
+      this.page++
+      var that = this
+      setTimeout(() => {
+        this.fetchList('loadmore')
+      },1000)
     }
   }
 }
 </script>
 <style>
   .flashlist{
-    padding:10px 15px 10px 25px;
+    padding:10px 15px 0 25px;
   }
   .flashlist .inner{
     border-left:1px solid #2f3954;

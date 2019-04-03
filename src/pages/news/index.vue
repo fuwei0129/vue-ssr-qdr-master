@@ -3,7 +3,7 @@
     <mt-swipe :auto="4000" :defaultIndex="0" style="height:150px">
       <mt-swipe-item
           v-for="(item,index) in banners"
-          :class="index == 0 ? 'is-active' : ''"
+          :class="firstindex == 0 ? 'is-active' : ''"
           :key="index"
           :prevent="true"
           :stopPropagation="true"
@@ -64,6 +64,7 @@ export default{
   // },
   name: "newsindex",
   props:{
+    panel:'',
     banners:{
       type:Array,
       default:function(){
@@ -80,8 +81,8 @@ export default{
   // 数据
   data() {
     return {
-      index:0,
-      page: 0 // 页码
+      firstindex:0,
+      page: 1 // 页码
     }
   },
   mounted(){

@@ -139,3 +139,24 @@
   line-height:20px;
 }
 /* end推荐列表和新闻详情end */
+
+/* 加载中、没有更多了 */
+.loading-box{
+  text-align: center;
+}
+.loading-more{
+  display:inline-block;
+  vertical-align: middle;
+  transform: scale(0.5);
+}
+.loading-more-txt{
+  vertical-align: middle;
+  font-size:14px;
+  color:#fff;
+}
+.no-more{
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  padding-bottom:10px;
+}

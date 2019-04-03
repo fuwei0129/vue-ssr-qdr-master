@@ -40,7 +40,7 @@ export default{
         }
         val.push(arr)
       }
-      state.lists = val
+      state.lists = state.lists.concat(val)
     },
     setFlashDetail (state, data) {
       state.detail = data
