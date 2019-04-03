@@ -66,7 +66,7 @@ export default{
     },
     //获取快讯详情
     fetchFlashDetail({ commit }, data){
-      return http.postmain(api.futuresDetails,data.model).then((response) => {
+      return http.postmain(api.futuresDetail,data.model).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           commit('setFlashDetail', response.data.respparam)
         }else{

@@ -53,7 +53,7 @@ export default{
     },
     //获取推荐详情
     fetchRecommendDetail({ commit }, data){
-      return http.postmain(api.recommendDetails,data.model).then((response) => {
+      return http.postmain(api.recommendDetail,data.model).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           commit('setRecDetail', response.data.respparam)
         }else{

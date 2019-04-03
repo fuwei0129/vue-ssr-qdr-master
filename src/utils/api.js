@@ -16,7 +16,9 @@ export default {
   //期达人主要接口
   //****************************************
   getNewsRecommend:'/newsRecommend/getNewsRecommend', //推荐
-  recommendDetails:'/newsRecommend/recommendDetails', //推荐详情
+  recommendDetail:'/newsRecommend/recommendDetails', //推荐详情
   getFutures:'/futures/getFutures', //7*24
-  futuresDetails:'/futures/futuresDetails', //7*24详情
+  futuresDetail:'/futures/futuresDetails', //7*24详情
+  getColumns:'/zhuangLan/zhuangLanList', //专栏
+  columnDetail:'/zhuangLan/zhuangLanDetails', //专栏详情
 }

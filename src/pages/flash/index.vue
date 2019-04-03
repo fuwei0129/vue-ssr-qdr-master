@@ -7,7 +7,7 @@
           infinite-scroll-distance="0"
           infinite-scroll-immediate-check="true">
       <div class="inner">
-        <div class="item" v-for="(item,index) in flashlists" :key="index">
+        <div class="item" v-for="(item,index) in lists" :key="index">
           <div class="days" v-if="item.flag || index == 0">
             <label class="monthday">{{item.month}}-{{item.day}}</label>
             <label class="year">{{item.year}}</label>
@@ -44,7 +44,7 @@ export default{
   },
   // 计算属性
   computed: {
-      flashlists () {
+      lists () {
         return this.$store.getters.getFlashLists // 快讯列表
       }
   },

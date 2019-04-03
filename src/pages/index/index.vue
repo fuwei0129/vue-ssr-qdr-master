@@ -10,13 +10,14 @@
       <mt-tab-container-item id="1"><news :panel="selected" :banners="newsbanners" :lists="newslists"></news></mt-tab-container-item>
       <mt-tab-container-item id="2"><flash :panel="selected"></flash></mt-tab-container-item>
       <mt-tab-container-item id="3">3</mt-tab-container-item>
-      <mt-tab-container-item id="4">4</mt-tab-container-item>
+      <mt-tab-container-item id="4"><columns :panel="selected"></columns></mt-tab-container-item>
     </mt-tab-container>
   </section>
 </template>
 <script>
 import news from '../news/index.vue'
 import flash from '../flash/index.vue'
+import columns from '../column/index.vue'
 import common from '../../utils/common'
 export default{
   /**
@@ -50,7 +51,8 @@ export default{
   },
   components:{
     news,
-    flash
+    flash,
+    columns
   },
   // 计算属性
   computed: {
