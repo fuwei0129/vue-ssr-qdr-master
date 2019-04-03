@@ -95,7 +95,6 @@ export default{
   data() {
     return {
       firstindex:0,
-      page:1,
       isLoading:false, //是否显示加载中
       isMoreLoading:false, //是否加载更多
       noMore:false //是否还有更多
@@ -115,7 +114,7 @@ export default{
         },
         reqpage:{
           total:0,
-          page: this.page,
+          page: this.$store.getters.getRecPage,
           size: 10,
           count: true
         },
@@ -140,7 +139,7 @@ export default{
     loadMore(){
       this.isMoreLoading = true // 设置加载更多中
       this.isLoading = true // 加载中转圈圈
-      this.page++
+      this.$store.commit('addRecPage')
       var that = this
       setTimeout(() => {
         this.fetchList()

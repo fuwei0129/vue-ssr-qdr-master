@@ -3,10 +3,14 @@ import api from '../../utils/api'
 
 export default{
   state: {
+    page: 1,
     lists: [], // 快讯列表
     detail: {} // 快讯详情
   },
   getters: {
+    getFlashPage: state => { //页码
+      return state.page
+    },
     getFlashLists: state => { //快讯
       return state.lists
     },
@@ -15,6 +19,9 @@ export default{
     },
   },
   mutations: {
+    addFlashPage (state) {
+      state.page++
+    },
     setFlashLists (state, data) {
       let val = []
       for (var i = 0; i < data.length; i++) {

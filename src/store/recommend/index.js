@@ -3,14 +3,17 @@ import api from '../../utils/api'
 
 export default{
   state: {
-    lists: [], // 推荐列表
     banners:[], //banner轮播图
+    page: 1,
     news: [], //新闻列表
     detail: {} // 推荐详情
   },
   getters: {
     getBanners: state => { //轮播图
       return state.banners
+    },
+    getRecPage: state => { //页码
+      return state.page
     },
     getRecNews: state => { //新闻
       return state.news
@@ -22,6 +25,9 @@ export default{
   mutations: {
     setBanners (state, data) {
       state.banners = data
+    },
+    addRecPage (state) {
+      state.page++
     },
     setRecNews (state, data) {
       state.news = state.news.concat(data)
