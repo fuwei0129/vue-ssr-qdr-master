@@ -6,7 +6,7 @@
           infinite-scroll-disabled="isMoreLoading"
           infinite-scroll-distance="0"
           infinite-scroll-immediate-check="true">
-      <div class="item-main" v-for="(item,index) in lists" :key="index">
+      <div class="item-main" v-for="(item,index) in lists" :key="index" @click="todetail(item)">
         <div class="flexbox">
     			<div class="item-left">
     				<div class="item-title -webkit-box-orient">{{item.title}}</div>
@@ -102,6 +102,9 @@ export default{
       setTimeout(() => {
         this.fetchList('loadmore')
       },1000)
+    },
+    todetail(obj){
+      this.$router.push({name:'columndetail',params:{id:obj.id,type:obj.sourceTable}});
     }
   }
 }

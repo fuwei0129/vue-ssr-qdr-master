@@ -46,7 +46,7 @@ export default{
   },
   data(){
     return{
-      selected:"1"
+      selected:this.$store.getters.getCurrentTabIndex
     }
   },
   components:{
@@ -56,13 +56,18 @@ export default{
   },
   // 计算属性
   computed: {
-      newsbanners(){
-        return this.$store.getters.getBanners // 推荐列表(banner轮播)
-      },
-      newslists () {
-        return this.$store.getters.getRecNews // 推荐列表（新闻）
-      }
+    newsbanners(){
+      return this.$store.getters.getBanners // 推荐列表(banner轮播)
+    },
+    newslists () {
+      return this.$store.getters.getRecNews // 推荐列表（新闻）
+    }
   },
+  watch: {
+    selected: function (val, oldVal){
+      this.$store.commit('setCurrentTabIndex',val)
+    }
+  }
 }
 </script>
 <style>
