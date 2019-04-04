@@ -3,7 +3,7 @@
     <mt-swipe :auto="4000" :defaultIndex="0" style="height:150px">
       <mt-swipe-item
           v-for="(item,index) in banners"
-          :class="firstindex == 0 ? 'is-active' : ''"
+          :class="index == 0 ? 'is-active' : ''"
           :key="index"
           :prevent="true"
           :stopPropagation="true"
@@ -94,7 +94,6 @@ export default{
   // 数据
   data() {
     return {
-      firstindex:0,
       isLoading:false, //是否显示加载中
       isMoreLoading:false, //是否加载更多
       noMore:false //是否还有更多

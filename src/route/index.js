@@ -14,9 +14,35 @@ export function createRouter () {
     scrollBehavior: () => ({y: 0}),
     routes: [
       // 主页
-  		{ path: '/', component: index,meta:{ title:'期达人-推荐',content:'期达人-推荐'} },
-      { path: '/news/detail/:id/:type',name:'newsdetail',component: newsdetail,meta:{ title:'期达人-推荐详情',content:'期达人-推荐详情描述'} },
-      { path: '/column/detail/:id/:type',name:'columndetail',component: columndetail,meta:{ title:'期达人-专栏详情',content:'期达人-专栏详情描述'} },
+  		{
+        path: '/',
+        component: index,
+        meta:{
+          keepAlive: true,
+          title:'期达人-推荐',
+          content:'期达人-推荐'
+        }
+      },
+      {
+        path: '/news/detail/:id/:type',
+        name:'newsdetail',
+        component: newsdetail,
+        meta:{
+          keepAlive: false,
+          title:'期达人-推荐详情',
+          content:'期达人-推荐详情描述'
+        }
+      },
+      {
+        path: '/column/detail/:id/:type',
+        name:'columndetail',
+        component: columndetail,
+        meta:{
+          keepAlive: false,
+          title:'期达人-专栏详情',
+          content:'期达人-专栏详情描述'
+        }
+      },
     ]
   })
 }

@@ -8,7 +8,14 @@
         </div>
         <div v-else>
           <div class="title">{{article.param.title}}</div>
-          <div class="second"><span class="datetime">{{article.param.time | datefilter}}</span><span class="sourceform">来源：{{article.param.sourcefrom}}</span></div>
+
+          <div class="authorbox" v-if="sourceTable=='tpt_dkgd'">
+            <div class="author-avatar"><img :src="article.profilePhoto" /></div>
+            <div class="author-info"><span class="name">{{article.name}}</span><span class="time">{{article.param.time | datefilter}}</span></div>
+            <div class="auth-buttons"><span>关注</span></div>
+          </div>
+
+          <div class="second" v-else><span class="datetime">{{article.param.time | datefilter}}</span><span class="sourceform">来源：{{article.param.sourcefrom}}</span></div>
           <div class="content" v-html="article.param.content"></div>
         </div>
       </div>
@@ -47,7 +54,8 @@ export default{
   name: "columndetail",
   data(){
     return{
-      title:'专栏详情'
+      title:'专栏详情',
+      sourceTable:this.$route.params.type
     }
   },
   // 计算属性
@@ -66,5 +74,46 @@ export default{
   }
 }
 </script>
-<style>
+<style scoped>
+.authorbox{
+  margin-top:15px;
+  display: flex;
+  padding:0 5px;
+}
+.author-avatar{
+  flex:0 0 50px;
+  height:50px;
+  margin-right:10px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.author-info{
+  flex:1 1;
+}
+.author-info span{
+  display:block;
+  font-size:13px;
+}
+.name{
+  margin-top:5px;
+  color:#ef6838;
+}
+.time{
+  color:#a2a7ad;
+}
+.auth-buttons span{
+  display: inline-block;
+  width:60px;
+  height:25px;
+  line-height:25px;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid #ef6838;
+  color: #ef6838;
+  text-align: center;
+  position: relative;
+}
+.auth-buttons span:before{
+  content:'+ ';
+}
 </style>
