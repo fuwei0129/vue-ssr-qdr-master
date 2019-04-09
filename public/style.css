@@ -158,6 +158,9 @@
   letter-spacing:1px;
   line-height:20px;
 }
+.article-normal-box .content table{
+  width:100%;
+}
 .article-normal-box .content p{
   text-align:justify;
   margin-bottom:10px;

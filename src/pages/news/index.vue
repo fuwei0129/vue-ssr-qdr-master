@@ -5,8 +5,9 @@
           v-for="(item,index) in banners"
           :class="index == 0 ? 'is-active' : ''"
           :key="index"
-          :prevent="true"
-          :stopPropagation="true"
+          :prevent="false"
+          :stopPropagation="false"
+          @click.native="btodetail(item)"
           v-if="item.picUrl != null">
         <img :src="item.picUrl" />
       </mt-swipe-item>
@@ -23,7 +24,7 @@
           <div class="item-photo" v-if="item.pic==''" style="background-image:url(./public/default.png)"></div>
           <div class="item-photo" v-else v-bind:style="{backgroundImage: 'url('+item.pic+')'}"></div>
           <div class="item-bottom">
-            <span class="item-author">{{item.sourceFrom}}</span><span class="item-created">{{item.createTime | datefilter1}}</span>
+            <span class="item-author">{{item.sourceFrom}}</span><span class="item-created">{{item.createTime | timefilter}}</span>
           </div>
         </div>
         <div class="flexbox" v-else>
