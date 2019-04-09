@@ -80,7 +80,7 @@ export default{
   background:#131a25;
   height:50px;
 }
-.mint-tab-item{
+.mint-navbar .mint-tab-item{
   color:#7b92a5;
   position: relative;
 }
@@ -98,10 +98,11 @@ export default{
   height:4px;
   background:#dfa55b;
 }
-.mint-tab-item-label{
+.mint-navbar .mint-tab-item-label{
   font-size:14px;
 }
 .mint-tab-container{
   margin-top:50px;
+  margin-bottom:52px;
 }
 </style>
