@@ -1,11 +1,23 @@
+.pd15{
+  padding:15px;
+}
 .pdt40{
   padding-top:40px;
 }
-.pdb57{
-  padding-bottom:57px;
+.pdb52{
+  padding-bottom:52px;
 }
 .mt10{
   margin-top:10px;
+}
+.mt5{
+  margin-top:5px;
+}
+.mt8{
+  margin-top:8px;
+}
+.flex{
+  display: flex;
 }
 /* begin推荐列表和新闻详情begin */
 .recommend-list{
@@ -36,7 +48,7 @@
   justify-content: space-between;
 }
 .recommend-list .item-title{
-  font-size: 13px;
+  font-size: 14px;
   line-height: 22px;
   max-height: 44px;
   color: #fff;

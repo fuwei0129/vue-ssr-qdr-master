@@ -42,7 +42,39 @@ export default{
       selected:'1'
     }
   },
+  mounted(){
+    this.route()
+  },
+  methods: {
+  	route () {
+  		if(this.$route.path == "/"){
+        this.selected = "1"
+      }else if(this.$route.path == "2"){
+        this.selected = "2"
+      }else if(this.$route.path == "/futures/index"){
+        this.selected = "3"
+      }else if(this.$route.path == "4"){
+        this.selected = "4"
+      }else if(this.$route.path == "5"){
+        this.selected = "5"
+      }
+  	}
+  },
+  watch: {
+      selected: function (val, oldVal) {
+          if(val == "1"){
+            this.$router.push({name:'index'})
+          }else if(val == "2"){
 
+          }else if(val == "3"){
+            this.$router.push({name:'futuresindex'})
+          }else if(val == "4"){
+
+          }else if(val == "5"){
+
+          }
+      }
+  }
 }
 </script>
 <style>
@@ -51,6 +83,7 @@ export default{
 }
 .mint-tabbar{
   background-color:#08111c;
+  background-image:none;
 }
 .mint-tabbar > .mint-tab-item.is-selected{
   background-color:#08111c;

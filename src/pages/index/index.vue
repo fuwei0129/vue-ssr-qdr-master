@@ -99,7 +99,7 @@ export default{
   background:#dfa55b;
 }
 .mint-navbar .mint-tab-item-label{
-  font-size:14px;
+  font-size:15px;
 }
 .mint-tab-container{
   margin-top:50px;

@@ -34,7 +34,7 @@ export default {
   methods: {
     routeChange () {
       let path = this.$route.path
-      if (path === '/' || path === '/index') {
+      if (path === '/' || path === '/index' || path === '/futures/index') {
         this.showNav = true
       } else {
         this.showNav = false
@@ -45,7 +45,7 @@ export default {
 </script>
 <style>
 body{
-  background:#19202b;
+  background:#09131b;
   width:100%;
   overflow-x: hidden;
 }
