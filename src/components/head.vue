@@ -23,7 +23,4 @@ export default{
 }
 </script>
 <style>
-.mint-header{
-  background-color: #131a25;
-}
 </style>

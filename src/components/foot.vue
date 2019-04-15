@@ -2,7 +2,7 @@
   <section>
     <mt-tabbar v-model="selected" v-show="showNav" fixed>
       <mt-tab-item id="1">
-        <img slot="icon" src="../../public/ico_01_on.png" v-if="selected == '1'">
+        <img slot="icon" src="../../public/ico_01_on.png" v-if="route === '/'">
         <img slot="icon" src="../../public/ico_01.png" v-else>
         资讯
       </mt-tab-item>
@@ -12,7 +12,7 @@
         行情
       </mt-tab-item>
       <mt-tab-item id="3">
-        <img slot="icon" src="../../public/ico_03_on.png" v-if="selected == '3'">
+        <img slot="icon" src="../../public/ico_03_on.png" v-if="route === '/futures/index'">
         <img slot="icon" src="../../public/ico_03.png" v-else>
         达人
       </mt-tab-item>
@@ -42,22 +42,14 @@ export default{
       selected:'1'
     }
   },
-  mounted(){
-    this.route()
-  },
-  methods: {
+  computed: {
   	route () {
-  		if(this.$route.path == "/"){
-        this.selected = "1"
-      }else if(this.$route.path == "2"){
-        this.selected = "2"
+      if(this.$route.path == "/"){
+        this.selected = '1'
       }else if(this.$route.path == "/futures/index"){
-        this.selected = "3"
-      }else if(this.$route.path == "4"){
-        this.selected = "4"
-      }else if(this.$route.path == "5"){
-        this.selected = "5"
+        this.selected = '3'
       }
+      return this.$route.path
   	}
   },
   watch: {

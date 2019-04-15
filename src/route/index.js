@@ -6,6 +6,8 @@ import index from '../pages/index/index.vue'
 import newsdetail from '../pages/news/detail.vue'
 import columndetail from '../pages/column/detail.vue'
 import futuresindex from '../pages/futures/index.vue'
+import futuresdetail from '../pages/futures/detail.vue'
+import futuresreply from '../pages/futures/reply.vue'
 
 Vue.use(Router)
 
@@ -53,6 +55,26 @@ export function createRouter () {
           keepAlive: true,
           title:'期达人-期问',
           content:'期达人-期问列表'
+        }
+      },
+      {
+        path: '/futures/detail/:id',
+        name:'futuresdetail',
+        component: futuresdetail,
+        meta:{
+          keepAlive: false,
+          title:'期达人-期问详情',
+          content:'期达人-期问详情描述'
+        }
+      },
+      {
+        path: '/futures/reply/:id',
+        name:'futuresreply',
+        component: futuresreply,
+        meta:{
+          keepAlive: false,
+          title:'期达人-期问回答详情',
+          content:'期达人-期问回答详情描述'
         }
       },
     ]
