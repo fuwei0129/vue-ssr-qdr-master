@@ -13,6 +13,11 @@ export default {
   view:'/accessNotes/view', //访问记录
   keep:'/accessNotes/keep', //保持在线
   //****************************************
+  //行情+快讯
+  //****************************************
+  getToken:'/token/access', //获取token
+  stkdata:'/stkdata', //获取大行情
+  //****************************************
   //期达人主要接口
   //****************************************
   getNewsRecommend:'/newsRecommend/getNewsRecommend', //推荐

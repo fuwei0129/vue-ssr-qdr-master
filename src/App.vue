@@ -34,7 +34,7 @@ export default {
   methods: {
     routeChange () {
       let path = this.$route.path
-      if (path === '/' || path === '/index' || path === '/futures/index') {
+      if (path === '/' || path === '/index' || path === '/market/index' || path === '/futures/index') {
         this.showNav = true
       } else {
         this.showNav = false

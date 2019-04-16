@@ -6,6 +6,9 @@ const filter = {
   datefilter1:function(value){
     return moment(value).format('YYYY-MM-DD')
   },
+  datefilter2:function(value){
+    return moment(value*1000).format('MM/DD-HH:mm')
+  },
   timefilter:function(value){
     return moment(value).format('HH:mm')
   },

@@ -4,7 +4,7 @@
       <router-link to="" slot="left">
         <mt-button icon="back" @click="$router.back(-1)"></mt-button>
       </router-link>
-      <span class="icon-add" slot="right">写回答</span>
+      <span class="icon-add" slot="right" @click="answer(1)">写回答</span>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <div class="futures-detail-box pdt40 mt5">
@@ -127,6 +127,9 @@ export default{
     }
   },
   methods:{
+    answer(id){
+      this.$router.push({name:'answer',params:{id:id}});
+    },
     todetail(id){
       this.$router.push({name:'futuresreply',params:{id:id}});
     }

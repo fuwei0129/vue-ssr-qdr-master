@@ -5,6 +5,7 @@ import recommend from './recommend/index'
 import flash from './flash/index'
 import live from './live/index'
 import column from './column/index'
+import market from './market/index'
 Vue.use(Vuex)
 
 export function createStore () {
@@ -13,7 +14,8 @@ export function createStore () {
       recommend,
       flash,
       live,
-      column
+      column,
+      market
     }
   })
 }

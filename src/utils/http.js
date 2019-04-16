@@ -37,6 +37,54 @@ function checkCode (res) {
 }
 
 export default {
+  get (url, params) {
+    var urlstr="";
+    for (var variable in params) {
+      urlstr+="&"+variable+"="+params[variable];
+    }
+    url=url+"?"+urlstr;
+    return axios({
+      method: 'get',
+      baseURL: 'http://gw.yundzh.com',
+      url,
+      timeout: 10000,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencode'
+      }
+    }).then(
+      (response) => {
+        return checkStatus(response)
+      }
+    ).then(
+      (res) => {
+        return checkCode(res)
+      }
+    )
+  },
+  postmarket (url,data) {
+    var urlstr="";
+    for (var variable in data) {
+      urlstr+="&"+variable+"="+data[variable];
+    }
+    url=url+"?"+urlstr;
+    return axios({
+      method: 'post',
+      baseURL: 'http://gw.yundzh.com',
+      url,
+      timeout: 10000,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencode'
+      }
+    }).then(
+      (response) => {
+        return checkStatus(response)
+      }
+    ).then(
+      (res) => {
+        return checkCode(res)
+      }
+    )
+  },
   postpassport (url,data) {
     return axios({
       method: 'post',
@@ -131,26 +179,6 @@ export default {
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
-      }
-    }).then(
-      (response) => {
-        return checkStatus(response)
-      }
-    ).then(
-      (res) => {
-        return checkCode(res)
-      }
-    )
-  },
-  get (url, params) {
-    return axios({
-      method: 'get',
-      baseURL: '/',
-      url,
-      params, // get 请求时带的参数
-      timeout: 10000,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest'
       }
     }).then(
       (response) => {

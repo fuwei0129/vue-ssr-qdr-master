@@ -5,9 +5,11 @@ import Router from 'vue-router'
 import index from '../pages/index/index.vue'
 import newsdetail from '../pages/news/detail.vue'
 import columndetail from '../pages/column/detail.vue'
+import marketindex from '../pages/market/index.vue'
 import futuresindex from '../pages/futures/index.vue'
 import futuresdetail from '../pages/futures/detail.vue'
 import futuresreply from '../pages/futures/reply.vue'
+import answer from '../pages/futures/answer.vue'
 
 Vue.use(Router)
 
@@ -48,6 +50,16 @@ export function createRouter () {
         }
       },
       {
+        path: '/market/index',
+        name:'marketindex',
+        component: marketindex,
+        meta:{
+          keepAlive: false,
+          title:'期达人-行情',
+          content:'期达人-行情列表'
+        }
+      },
+      {
         path: '/futures/index',
         name:'futuresindex',
         component: futuresindex,
@@ -65,6 +77,16 @@ export function createRouter () {
           keepAlive: false,
           title:'期达人-期问详情',
           content:'期达人-期问详情描述'
+        }
+      },
+      {
+        path: '/futures/answer/:id',
+        name:'answer',
+        component: answer,
+        meta:{
+          keepAlive: false,
+          title:'期达人-期问填写回答',
+          content:'期达人-期问填写回答'
         }
       },
       {

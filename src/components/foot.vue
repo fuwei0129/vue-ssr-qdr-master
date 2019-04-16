@@ -7,7 +7,7 @@
         资讯
       </mt-tab-item>
       <mt-tab-item id="2">
-        <img slot="icon" src="../../public/ico_02_on.png" v-if="selected == '2'">
+        <img slot="icon" src="../../public/ico_02_on.png" v-if="route === '/market/index'">
         <img slot="icon" src="../../public/ico_02.png" v-else>
         行情
       </mt-tab-item>
@@ -46,6 +46,8 @@ export default{
   	route () {
       if(this.$route.path == "/"){
         this.selected = '1'
+      }else if(this.$route.path == "/market/index"){
+        this.selected = '2'
       }else if(this.$route.path == "/futures/index"){
         this.selected = '3'
       }
@@ -57,7 +59,7 @@ export default{
           if(val == "1"){
             this.$router.push({name:'index'})
           }else if(val == "2"){
-
+            this.$router.push({name:'marketindex'})
           }else if(val == "3"){
             this.$router.push({name:'futuresindex'})
           }else if(val == "4"){

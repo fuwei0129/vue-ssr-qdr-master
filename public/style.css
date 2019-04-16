@@ -473,6 +473,25 @@
   margin-bottom: 5px;
   line-height: 25px;
 }
+/* 提问和回答style */
+.txt_question{
+  width:100%;
+  resize: none;
+  min-height:120px;
+  outline: none;
+  font-size:15px;
+  color:#fff;
+  background:transparent;
+}
+.uploads{
+  margin-top:15px;
+}
+.uploads .ico_add{
+  background:url(/public/ico_add_img.png) no-repeat center;
+  width:100px;
+  height:100px;
+  background-size:100px;
+}
 /* 头部 */
 .mint-header{
   background-color: #161f2e!important;
