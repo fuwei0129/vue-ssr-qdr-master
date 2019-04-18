@@ -5,11 +5,14 @@ import Router from 'vue-router'
 import index from '../pages/index/index.vue'
 import newsdetail from '../pages/news/detail.vue'
 import columndetail from '../pages/column/detail.vue'
+import livedetail from '../pages/live/detail.vue'
 import marketindex from '../pages/market/index.vue'
 import futuresindex from '../pages/futures/index.vue'
 import futuresdetail from '../pages/futures/detail.vue'
 import futuresreply from '../pages/futures/reply.vue'
 import answer from '../pages/futures/answer.vue'
+import mineindex from '../pages/mine/index.vue'
+import login from '../pages/mine/login.vue'
 
 Vue.use(Router)
 
@@ -99,6 +102,36 @@ export function createRouter () {
           content:'期达人-期问回答详情描述'
         }
       },
+      {
+        path: '/live/detail/:id',
+        name:'livedetail',
+        component: livedetail,
+        meta:{
+          keepAlive: false,
+          title:'期达人-直播详情',
+          content:'期达人-直播室详情'
+        }
+      },
+      {
+        path: '/mine/index',
+        name:'mineindex',
+        component: mineindex,
+        meta:{
+          keepAlive: false,
+          title:'我的',
+          content:'我的-个人中心'
+        }
+      },
+      {
+        path: '/mine/login',
+        name:'login',
+        component: login,
+        meta:{
+          keepAlive: false,
+          title:'登录/注册',
+          content:'登录/注册'
+        }
+      }
     ]
   })
 }

@@ -18,7 +18,7 @@
               <div class="val">{{item.ZuiXinJia}} <span v-if="item.ZhangDie > 0" class="arrow -market-color">▲</span><span v-else class="arrow -market-color">▼</span></div>
               <time>{{item.ShiJian | datefilter2}}</time>
             </div>
-            <div class="cell -market-color">
+            <div class="cell -market-color" style="flex:.8">
               <div class="ratio" v-if="item.ZhangDie > 0">+{{item.ZhangDie}}</div>
               <div class="ratio" v-else>{{item.ZhangDie}}</div>
               <div class="amount" v-if="item.ZhangDie > 0">+{{item.ZhangFu}}%</div>
@@ -198,7 +198,7 @@ export default{
     },
     nameformat(val){
       if(val.length>5){
-        val = val.substr(0,5)+'...'
+        val = val.substr(0,7)+'...'
       }
       return val
     }

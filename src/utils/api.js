@@ -28,4 +28,5 @@ export default {
   columnDetail:'/zhuangLan/zhuangLanDetails', //专栏详情
   lives:'/zhiBo/zhiBoList', //直播列表
   liveBanners:'/zhiBo/showPosition', //直播列表轮播图
+  getPushStreams:'/aliyun/getPushStreams',//获取视频流
 }

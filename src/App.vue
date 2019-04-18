@@ -34,7 +34,7 @@ export default {
   methods: {
     routeChange () {
       let path = this.$route.path
-      if (path === '/' || path === '/index' || path === '/market/index' || path === '/futures/index') {
+      if (path === '/' || path === '/index' || path === '/market/index' || path === '/futures/index' || path === '/mine/index') {
         this.showNav = true
       } else {
         this.showNav = false
@@ -48,5 +48,8 @@ body{
   background:#09131b;
   width:100%;
   overflow-x: hidden;
+}
+*{
+  box-sizing: border-box;
 }
 </style>

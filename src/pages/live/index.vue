@@ -12,7 +12,7 @@
       </mt-swipe-item>
     </mt-swipe>
     <div class="lives mt10">
-      <div class="item" v-for="(item,index) in lives" v-if="item.pic != null">
+      <div class="item" v-for="(item,index) in lives" v-if="item.pic != null" @click="tolivedetail(item)">
         <img :src="item.pic" style="width:100%;height:100%;" />
         <div class="info">
           <span class="fl">{{item.title}}</span>
@@ -89,6 +89,9 @@ export default{
         reqparam:{}
       }
       this.$store.dispatch('fetchLives', { model })
+    },
+    tolivedetail(obj){
+      this.$router.push({name:'livedetail',params:{id:obj.studioid}});
     }
   }
 }

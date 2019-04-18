@@ -21,7 +21,7 @@
       <div class="item-main" v-for="(item,index) in lists" :key="index" @click="ltodetail(item)">
         <div class="normalbox" v-if="(index+1)%4 == 0">
           <div class="item-title -webkit-box-orient">{{item.title}}</div>
-          <div class="item-photo" v-if="item.pic==''" style="background-image:url(./public/default.png)"></div>
+          <div class="item-photo" v-if="item.pic==''" style="background-image:url(/public/default.png)"></div>
           <div class="item-photo" v-else v-bind:style="{backgroundImage: 'url('+item.pic+')'}"></div>
           <div class="item-bottom">
             <span class="item-author">{{item.sourceFrom}}</span><span class="item-created">{{item.createTime | timefilter}}</span>
@@ -34,7 +34,7 @@
     					<span class="item-author">{{item.sourceFrom}}</span><span class="item-created">{{item.createTime | timefilter}}</span>
     				</div>
     			</div>
-    			<div class="item-right" v-if="item.pic==''" style="background-image:url(./public/default.png)"></div>
+    			<div class="item-right" v-if="item.pic==''" style="background-image:url(/public/default.png)"></div>
           <div class="item-right" v-else v-bind:style="{backgroundImage: 'url('+item.pic+')'}"></div>
         </div>
       </div>

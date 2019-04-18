@@ -201,7 +201,8 @@
   background:#141f30;
 }
 .author-row .avatar{
-  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: cover;
   margin-right:10px;
   border-radius: 50%;
   overflow: hidden;

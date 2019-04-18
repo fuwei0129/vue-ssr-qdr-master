@@ -22,7 +22,7 @@
         开户
       </mt-tab-item>
       <mt-tab-item id="5">
-        <img slot="icon" src="../../public/ico_05_on.png" v-if="selected == '5'">
+        <img slot="icon" src="../../public/ico_05_on.png" v-if="route === '/mine/index'">
         <img slot="icon" src="../../public/ico_05.png" v-else>
         我的
       </mt-tab-item>
@@ -50,6 +50,8 @@ export default{
         this.selected = '2'
       }else if(this.$route.path == "/futures/index"){
         this.selected = '3'
+      }else if(this.$route.path == "/mine/index"){
+        this.selected = '5'
       }
       return this.$route.path
   	}
@@ -65,7 +67,7 @@ export default{
           }else if(val == "4"){
 
           }else if(val == "5"){
-
+            this.$router.push({name:'mineindex'})
           }
       }
   }
