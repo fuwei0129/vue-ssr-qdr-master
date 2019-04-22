@@ -85,7 +85,7 @@ export function getOtherClientauthflag(){
 
 //获取token
 export function getToken(){
-  let token = getCookie('userToken') ? getCookie('userToken') : ''
+  let token = sessionStorage.token ? sessionStorage.token : ''
   return token
 }
 

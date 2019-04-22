@@ -3,7 +3,10 @@
     <div class="signtop">
       <div class="flex">
         <div class="user-photo" style="background-image:url(/public/default.png)"></div>
-        <div class="mid-right" @click="sign()">
+        <div class="mid-right" v-if="user">
+          <span>{{user.nickName}}</span><label>喜欢期货，所有我用期达人</label>
+        </div>
+        <div class="mid-right" @click="sign()" v-else>
           <span>登录/注册</span><label>喜欢期货，所有我用期达人</label>
         </div>
       </div>
@@ -19,10 +22,12 @@
       <mt-cell class="mt5" title="开户" to="" is-link></mt-cell>
       <mt-cell class="mt5" title="购买记录" to="" is-link></mt-cell>
       <mt-cell class="mt15" title="在线客服" is-link></mt-cell>
+      <mt-cell class="mt15" v-if="user" @click.native="logout()" title="注销" is-link></mt-cell>
     </div>
   </section>
 </template>
 <script>
+import common from '../../utils/common'
 export default{
   name:'mineindex',
   data(){
@@ -30,9 +35,37 @@ export default{
 
     }
   },
+  computed: {
+    user() {
+      return this.$store.getters.getUser
+    }
+  },
   methods:{
     sign(){
-      this.$router.push({name:'login'});
+      this.$router.push({name:'sign'});
+    },
+    logout(){
+      let user = this.$store.getters.getUser
+      let data = {
+        reqbase:{
+          timestamp:common.getLastDate(),
+          clientauthflag:common.getClientauthflag(),
+          reqorigin:"xuantie",
+          token:common.getToken(),
+          sourceip:common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page:1,
+          size:10,
+          count:false
+        },
+        reqparam:{
+          memberId:user.memberId,
+          source:1
+        }
+      }
+      this.$store.dispatch('logout', data)
     }
   }
 }

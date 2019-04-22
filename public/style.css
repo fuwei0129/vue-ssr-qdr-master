@@ -507,6 +507,27 @@
   background:url(/public/ico_pencil.png) no-repeat left center;
   background-size:15px;
 }
+/*协议*/
+.protocol{
+	padding:50px 10px 20px 10px;
+	position: absolute;
+  width: 100%;
+  min-height: 100%;
+}
+.protocol .proname{
+	color:#ff790a;
+	font-size:18px;
+	margin-bottom:20px;
+	text-align: center;
+}
+.protocol .substance{
+	color:#fff;
+	font-size:13px;
+	line-height: 24px;
+}
+.protocol .substance p{
+	text-indent: 2em;
+}
 /* 加载中、没有更多了 */
 .loading-box{
   text-align: center;

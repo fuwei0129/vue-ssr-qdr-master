@@ -12,7 +12,8 @@ import futuresdetail from '../pages/futures/detail.vue'
 import futuresreply from '../pages/futures/reply.vue'
 import answer from '../pages/futures/answer.vue'
 import mineindex from '../pages/mine/index.vue'
-import login from '../pages/mine/login.vue'
+import sign from '../pages/sign.vue'
+import registerprotocol from '../pages/registerprotocol.vue'
 
 Vue.use(Router)
 
@@ -123,13 +124,23 @@ export function createRouter () {
         }
       },
       {
-        path: '/mine/login',
-        name:'login',
-        component: login,
+        path: '/sign',
+        name:'sign',
+        component: sign,
         meta:{
           keepAlive: false,
           title:'登录/注册',
           content:'登录/注册'
+        }
+      },
+      {
+        path: '/registerprotocol',
+        name:'registerprotocol',
+        component: registerprotocol,
+        meta:{
+          keepAlive: false,
+          title:'注册协议',
+          content:'注册协议'
         }
       }
     ]

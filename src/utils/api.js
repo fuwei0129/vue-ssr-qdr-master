@@ -2,16 +2,12 @@ export default {
   //****************************************
   //用户
   //****************************************
-  login:'/user/login', //用户登录
-  loginByCode:'/user/loginByCode', //手机验证码登录
-  register:'/user/register', //用户注册
-  sendSms:'/user/sendSms', //发送手机验证码
-  logout:'/user/logout', //用户退出
-  getChatList:'/chat/getChatList', //拉取聊天信息
-  getUserSig:'/chat/getUserSig?SdkAppid=1400094844&ClientIP=127.0.0.1', //获取用户userSig
-  autologin:'/user/autologin', //重新登录
-  view:'/accessNotes/view', //访问记录
-  keep:'/accessNotes/keep', //保持在线
+  login:'/member/login', //用户登录
+  codeLogin:'/member/codeLogin', //手机验证码登录
+  register:'/member/register', //用户注册
+  sendSms:'/member/sendSms', //发送手机验证码
+  logout:'/member/logout', //用户退出
+  autoLogin:'/member/autoLogin', //自动登录
   //****************************************
   //行情+快讯
   //****************************************
@@ -29,4 +25,5 @@ export default {
   lives:'/zhiBo/zhiBoList', //直播列表
   liveBanners:'/zhiBo/showPosition', //直播列表轮播图
   getPushStreams:'/aliyun/getPushStreams',//获取视频流
+  getQuestions:'/questionManage/questionList',//期问列表
 }

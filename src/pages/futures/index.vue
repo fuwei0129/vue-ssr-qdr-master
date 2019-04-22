@@ -1,29 +1,31 @@
 <template>
   <section>
     <div class="futuresbox pdb52">
-      <div class="item">
+      <div class="item" v-for="(item,index) in questionData" :key="index">
         <div class="main">
           <div class="flex author-row">
-            <div class="avatar lg-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
+            <div class="avatar lg-avatar" v-if="item.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+            <div class="avatar lg-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.imgUrl+')'}"></div>
             <div class="mid">
-              <span class="uname mt5">郑梦琦</span>
-              <span class="others">2分钟前 来自iPhone</span>
+              <span class="uname mt5">{{item.name}}</span>
+              <span class="others">{{item.showTime}} 来自{{item.source}}</span>
             </div>
             <div class="right">
               <span>关注</span>
             </div>
           </div>
-          <div class="info" @click="todetail(3)">来自李开复的365种工作未来消亡概率图谱，看看有没有你的行业？</div>
+          <div class="info" @click="todetail(3)">{{nameformat(item.content)}}</div>
         </div>
-        <div class="reply">
+        <div class="reply" v-if="item.answerDTO">
           <div class="flex author-row">
-            <div class="avatar sm-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
+            <div class="avatar sm-avatar" v-if="item.answerDTO[0].imgUrl==''" style="background-image:url(/public/default.png)"></div>
+            <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.answerDTO[0].imgUrl+')'}"></div>
             <div class="mid">
-              <span class="uname mt8" style="color:#b7b8b8;">郑梦琦</span>
+              <span class="uname mt8" style="color:#b7b8b8;">{{item.answerDTO[0].name}}</span>
             </div>
-            <div class="r-time mt8">今天 10:59</div>
+            <div class="r-time mt8">{{item.answerDTO[0].answerTime}}</div>
           </div>
-          <div class="r-info">预测人工智能会引发的失业规模，这个已经成为全球经济学家...</div>
+          <div class="r-info">{{nameformat(item.answerDTO[0].answerContent)}}</div>
           <div class="futures-photos-box mt10">
             <span>6图</span>
             <div class="galley">
@@ -40,80 +42,57 @@
           <div><span class="ico_rewards">5</span></div>
         </div>
       </div>
-      <div class="item">
-        <div class="main">
-          <div class="flex author-row">
-            <div class="avatar lg-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
-            <div class="mid">
-              <span class="uname mt5">郑梦琦</span>
-              <span class="others">2分钟前 来自iPhone</span>
-            </div>
-            <div class="right">
-              <span>关注</span>
-            </div>
-          </div>
-          <div class="info" @click="todetail(4)">来自李开复的365种工作未来消亡概率图谱，看看有没有你的行业？</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="main">
-          <div class="flex author-row">
-            <div class="avatar lg-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
-            <div class="mid">
-              <span class="uname mt5">郑梦琦</span>
-              <span class="others">2分钟前 来自iPhone</span>
-            </div>
-            <div class="right">
-              <span>关注</span>
-            </div>
-          </div>
-          <div class="info" @click="todetail(5)">来自李开复的365种工作未来消亡概率图谱，看看有没有你的行业？</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="main">
-          <div class="flex author-row">
-            <div class="avatar lg-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
-            <div class="mid">
-              <span class="uname mt5">郑梦琦</span>
-              <span class="others">2分钟前 来自iPhone</span>
-            </div>
-            <div class="right">
-              <span>关注</span>
-            </div>
-          </div>
-          <div class="info" @click="todetail(6)">来自李开复的365种工作未来消亡概率图谱，看看有没有你的行业？</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="main">
-          <div class="flex author-row">
-            <div class="avatar lg-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
-            <div class="mid">
-              <span class="uname mt5">郑梦琦</span>
-              <span class="others">2分钟前 来自iPhone</span>
-            </div>
-            <div class="right">
-              <span>关注</span>
-            </div>
-          </div>
-          <div class="info" @click="todetail(1)">来自李开复的365种工作未来消亡概率图谱，看看有没有你的行业？</div>
-        </div>
-      </div>
     </div>
   </section>
 </template>
 <script>
+import common from '../../utils/common'
 export default{
+  /**
+   * [SSR获取所有组件的asyncData并执行获得初始数据]
+   * @param  {[Object]} store [Vuex Store]
+   * 此函数会在组件实例化之前调用，所以它无法访问 this。需要将 store 和路由信息作为参数传递进去：
+   */
+  asyncData (store, route) {
+    let model = {
+      reqbase:{
+        timestamp: common.getLastDate(),
+        clientauthflag: common.getClientauthflag(),
+        reqorigin: "xuantie",
+        token: "",
+        sourceip: "127.0.0.1"
+      },
+      reqpage:{
+        total:0,
+        page: 1,
+        size: 10,
+        count: true
+      },
+      reqparam:{}
+    }
+    return store.dispatch('fetchQuestions', { model }) // 服务端渲染触发
+  },
   name:'futuresindex',
   data(){
     return{
 
     }
   },
+  // 计算属性
+  computed: {
+    questionData(){
+      return this.$store.getters.getQuestionData
+    }
+  },
   methods:{
     todetail(id){
       this.$router.push({name:'futuresdetail',params:{id:id}});
+    },
+    nameformat(val){
+      if(val.length>50){
+        val = val.substr(0,50)+'...'
+      }
+      return val
     }
   }
 }

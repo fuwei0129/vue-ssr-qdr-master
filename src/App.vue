@@ -12,6 +12,7 @@
 <script>
 import '../public/style.css'
 import Foot from './components/foot.vue'
+import common from './utils/common'
 export default {
   name: 'App',
   data(){
@@ -28,7 +29,11 @@ export default {
       this.routeChange()
     }
   },
-  created () {
+  mounted() {
+    // 自动登录
+    this.autoLogin()
+  },
+  created() {
     this.routeChange()
   },
   methods: {
@@ -39,7 +44,32 @@ export default {
       } else {
         this.showNav = false
       }
-    }
+    },
+    autoLogin() {
+      const { dispatch } = this.$store
+      // 如果storage中存在token，则使用storage中保存的信息进行自动登录
+      if (sessionStorage.sign) {
+        let data = {
+          reqbase:{
+            timestamp:common.getLastDate(),
+            clientauthflag:common.getClientauthflag(),
+            reqorigin:"xuantie",
+            token:common.getToken(),
+            sourceip:common.getIp()
+          },
+          reqpage:{
+            total:0,
+            page:1,
+            size:10,
+            count:false
+          },
+          reqparam:{
+            memberSign:sessionStorage.sign
+          }
+        }
+        dispatch('autoLogin',data)
+      }
+    },
   }
 }
 </script>

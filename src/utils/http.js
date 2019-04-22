@@ -85,32 +85,11 @@ export default {
       }
     )
   },
-  postpassport (url,data) {
-    return axios({
-      method: 'post',
-      baseURL: 'http://testpassportapi.qdr8.com',
-      // baseURL: 'http://passport.qdr8.com',
-      url,
-      data: data,
-      timeout: 10000,
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      }
-    }).then(
-      (response) => {
-        return checkStatus(response)
-      }
-    ).then(
-      (res) => {
-        return checkCode(res)
-      }
-    )
-  },
   postaccount (url,data) {
     return axios({
       method: 'post',
-      baseURL: 'http://testaccountapi.qdr8.com',
-      // baseURL: 'http://api.qdr8.com:8103',
+      baseURL: 'http://172.16.1.208:8119',
+      // baseURL: '',
       url,
       data: data,
       timeout: 10000,
