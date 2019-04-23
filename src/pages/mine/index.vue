@@ -134,4 +134,8 @@ export default{
   background-image:none;
   background-size:0;
 }
+.mint-cell:last-child{
+  background-image:none;
+  background-size:0;
+}
 </style>

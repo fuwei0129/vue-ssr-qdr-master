@@ -94,7 +94,7 @@ export function createRouter () {
         }
       },
       {
-        path: '/futures/reply/:id',
+        path: '/futures/reply/:id/:qid',
         name:'futuresreply',
         component: futuresreply,
         meta:{

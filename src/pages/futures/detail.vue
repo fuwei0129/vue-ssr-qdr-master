@@ -9,36 +9,39 @@
     </mt-header>
     <div class="futures-detail-box pdt40 mt5">
       <div class="ask-box">
-        <p class="title">如果有一天你突然有了130万美元，将会是一种什么样的感受呢？</p>
+        <p class="title">{{questiondetail.content}}</p>
         <div class="flex author-row">
-          <div class="avatar lg-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
+          <div class="avatar lg-avatar" v-if="questiondetail.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+          <div class="avatar lg-avatar" v-else v-bind:style="{backgroundImage: 'url('+questiondetail.imgUrl+')'}"></div>
           <div class="mid">
-            <span class="uname mt5">郑梦琦</span>
-            <span class="others">6小时前</span>
+            <span class="uname mt5">{{questiondetail.name}}</span>
+            <span class="others">{{questiondetail.showTime}}</span>
           </div>
           <div class="right">
             <span>关注</span>
           </div>
         </div>
-        <div class="futures-photos-box half mt15">
-          <span>6图</span>
-          <div class="cover">
-            <img src="http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20190122/128a3b665f91662b5fd3f42a842adf8e93ca3ba2.jpeg" />
-          </div>
+        <div class="futures-photos-box half mt15" v-if="questiondetail.questionAccessory && questiondetail.questionAccessory.length">
+          <span v-if="questiondetail.questionAccessory.length > 1">{{questiondetail.questionAccessory.length}}图</span>
+          <div
+              class="cover"
+              v-bind:style="{backgroundImage: 'url('+questiondetail.questionAccessory[0].accessoryUrl+')'}"></div>
         </div>
       </div>
       <div class="answer-box mt8">
         <div class="summary-bar-head">
-          <span>回答（32）</span>
+          <span v-if="questiondetail.answerDTO && questiondetail.answerDTO.length">回答（{{questiondetail.answerDTO.length}}）</span>
+          <span v-else>回答（0）</span>
           <div class="fr"><label>按最新</label></div>
         </div>
-        <div class="answer-list">
-          <div class="answer-item">
+        <div class="answer-list" v-if="questiondetail.answerDTO && questiondetail.answerDTO.length">
+          <div class="answer-item" v-for="item in questiondetail.answerDTO">
             <div class="pd15">
               <div class="flex author-row">
-                <div class="avatar sm-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
+                <div class="avatar sm-avatar" v-if="item.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+                <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.imgUrl+')'}"></div>
                 <div class="mid">
-                  <span class="mini-uname">郑梦琦</span>
+                  <span class="mini-uname">{{item.name}}</span>
                   <span class="others">金融研究院老师</span>
                 </div>
                 <div class="right">
@@ -46,71 +49,33 @@
                 </div>
               </div>
               <div class="answer-info">
-                <p @click="todetail(2)">黑色的相对重要度不高。有时候行情不一定会和数据产生的效果一直，所以只能仅供参考。</p>
-                <div class="futures-photos-box half mt5">
-                  <span>6图</span>
-                  <div class="cover">
-                    <img src="http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20190122/128a3b665f91662b5fd3f42a842adf8e93ca3ba2.jpeg" />
-                  </div>
+                <p @click="todetail(item.answerId,questiondetail.questionId)">{{item.answerContent}}</p>
+                <div class="futures-photos-box half mt5" v-if="item.questionAccessory && item.questionAccessory.length">
+                  <span v-if="item.questionAccessory.length>1">{{item.questionAccessory.length}}图</span>
+                  <div
+                      class="cover"
+                      v-bind:style="{backgroundImage: 'url('+item.questionAccessory[0].accessoryUrl+')'}"></div>
                 </div>
-                <span class="time">2019-02-05 14:22:21</span>
+                <span class="time">{{item.answerTime}}</span>
               </div>
-              <div class="comment-list">
-                <div class="comment-item">
+              <div class="comment-list" v-if="item.commentList && item.commentList.length">
+                <div class="comment-item" v-for="kitem in item.commentList">
                   <div class="flex author-row">
-                    <div class="avatar mini-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
+                    <div class="avatar mini-avatar" v-if="kitem.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+                    <div class="avatar mini-avatar" v-else v-bind:style="{backgroundImage: 'url('+kitem.imgUrl+')'}"></div>
                     <div class="mid">
-                      <span class="mini-uname mt5">郑梦琦</span>
+                      <span class="mini-uname mt5">{{kitem.name}}</span>
                     </div>
                   </div>
-                  <p>如果有一天我突然有了100多万元，先买房在买车...</p>
-                </div>
-                <div class="comment-item">
-                  <div class="flex author-row">
-                    <div class="avatar mini-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
-                    <div class="mid">
-                      <span class="mini-uname mt5">郑梦琦</span>
-                    </div>
-                  </div>
-                  <p>如果有一天我突然有了100多万元，先买房在买车...</p>
+                  <p>{{kitem.comment}}</p>
                 </div>
               </div>
             </div>
             <div class="item-buttons-bottom border-top">
-              <div><span class="ico_zf">20</span></div>
-              <div><span class="ico_comment">999+</span></div>
-              <div><span class="ico_like">10</span></div>
-              <div><span class="ico_rewards">5</span></div>
-            </div>
-          </div>
-          <div class="answer-item">
-            <div class="pd15">
-              <div class="flex author-row">
-                <div class="avatar sm-avatar" style="background-image:url(http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20181122/122c8e81033b85e3214e20d74a09d3b376fb60e6.png)"></div>
-                <div class="mid">
-                  <span class="mini-uname">郑梦琦</span>
-                  <span class="others">金融研究院老师</span>
-                </div>
-                <div class="right">
-                  <span>关注</span>
-                </div>
-              </div>
-              <div class="answer-info">
-                <p @click="todetail(3)">黑色的相对重要度不高。有时候行情不一定会和数据产生的效果一直，所以只能仅供参考。</p>
-                <div class="futures-photos-box half mt5">
-                  <span>6图</span>
-                  <div class="cover">
-                    <img src="http://qdrwebsite.oss-cn-beijing.aliyuncs.com/20190122/128a3b665f91662b5fd3f42a842adf8e93ca3ba2.jpeg" />
-                  </div>
-                </div>
-                <span class="time">2019-02-05 14:22:21</span>
-              </div>
-            </div>
-            <div class="item-buttons-bottom border-top">
-              <div><span class="ico_zf">20</span></div>
-              <div><span class="ico_comment">999+</span></div>
-              <div><span class="ico_like">10</span></div>
-              <div><span class="ico_rewards">5</span></div>
+              <div><span class="ico_zf">{{item.shareNum}}</span></div>
+              <div><span class="ico_comment">{{item.commentNum}}</span></div>
+              <div><span class="ico_like">{{item.toPraiseNum}}</span></div>
+              <!-- <div><span class="ico_rewards">5</span></div> -->
             </div>
           </div>
         </div>
@@ -119,19 +84,50 @@
   </section>
 </template>
 <script>
+import common from '../../utils/common'
 export default{
+  asyncData (store, route) {
+    let questionId = route.params.id // 期问id
+    let user = store.getters.getUser //user
+    let model = {
+      reqbase:{
+        timestamp: common.getLastDate(),
+        clientauthflag: common.getClientauthflag(),
+        reqorigin: "xuantie",
+        token: "",
+        sourceip: "127.0.0.1"
+      },
+      reqpage:{
+        total:0,
+        page: 1,
+        size: 10,
+        count: true
+      },
+      reqparam:{
+        questionId:questionId,
+        userId:user?user.memberId:'0'
+      }
+    }
+    return store.dispatch('fetchQuestionDetail', { model }) // 服务端渲染执行
+  },
   name:'futuresdetail',
   data(){
     return{
 
     }
   },
+  // 计算属性
+  computed: {
+    questiondetail () {
+      return this.$store.getters.getQuestionDetail // 期问详情
+    }
+  },
   methods:{
     answer(id){
       this.$router.push({name:'answer',params:{id:id}});
     },
-    todetail(id){
-      this.$router.push({name:'futuresreply',params:{id:id}});
+    todetail(id,qid){
+      this.$router.push({name:'futuresreply',params:{id:id,qid:qid}});
     }
   }
 }

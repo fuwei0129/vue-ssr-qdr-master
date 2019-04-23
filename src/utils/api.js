@@ -26,4 +26,6 @@ export default {
   liveBanners:'/zhiBo/showPosition', //直播列表轮播图
   getPushStreams:'/aliyun/getPushStreams',//获取视频流
   getQuestions:'/questionManage/questionList',//期问列表
+  findQuestion:'/questionManage/findQuestion',//期问详情
+  queryAnswerDetail:'/answerManage/queryAnswerDetail',//回答详情
 }
