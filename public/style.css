@@ -146,7 +146,7 @@
   padding:20px 10px;
 }
 .article-normal-box .nodata{
-  background:url(/public/icon-loss.png) no-repeat center bottom;
+  background:url(../public/img/icon-loss.png) no-repeat center bottom;
   background-size: 50%;
   height:200px;
   position: relative;
@@ -268,7 +268,7 @@
   width: 15px;
   height: 15px;
   margin-left:5px;
-  background: url(/public/ico_like.png) no-repeat center;
+  background: url(../public/img/ico_like.png) no-repeat center;
   background-size: 15px;
 }
 .futuresbox .item .info{
@@ -366,16 +366,16 @@
   background-position: center;
 }
 .item-buttons-bottom span.ico_zf:before{
-  background-image:url(/public/ico_zf.png);
+  background-image:url(../public/img/ico_zf.png);
 }
 .item-buttons-bottom span.ico_comment:before{
-  background-image:url(/public/ico_comment.png);
+  background-image:url(../public/img/ico_comment.png);
 }
 .item-buttons-bottom span.ico_like:before{
-  background-image:url(/public/ico_like.png);
+  background-image:url(../public/img/ico_like.png);
 }
 .item-buttons-bottom span.ico_rewards:before{
-  background-image:url(/public/ico_rewards.png);
+  background-image:url(../public/img/ico_rewards.png);
 }
 .futures-detail-box .bottom-add{
   position: fixed;
@@ -501,7 +501,7 @@
   margin-top:15px;
 }
 .uploads .ico_add{
-  background:url(/public/ico_add_img.png) no-repeat center;
+  background:url(../public/img/ico_add_img.png) no-repeat center;
   width:100px;
   height:100px;
   background-size:100px;
@@ -517,7 +517,7 @@
   font-size:15px;
   position: relative;
   top:2px;
-  background:url(/public/ico_pencil.png) no-repeat left center;
+  background:url(../public/img/ico_pencil.png) no-repeat left center;
   background-size:15px;
 }
 /*协议*/

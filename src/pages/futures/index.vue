@@ -10,7 +10,7 @@
         <div class="item" v-for="(item,index) in questionData" :key="index">
           <div class="main">
             <div class="flex author-row">
-              <div class="avatar lg-avatar" v-if="item.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+              <div class="avatar lg-avatar" v-if="item.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
               <div class="avatar lg-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.imgUrl+')'}"></div>
               <div class="mid">
                 <span class="uname mt5">{{item.name}}</span>
@@ -24,7 +24,7 @@
           </div>
           <div class="reply" v-if="item.answerDTO && item.answerDTO.length">
             <div class="flex author-row">
-              <div class="avatar sm-avatar" v-if="item.answerDTO[0].imgUrl==''" style="background-image:url(/public/default.png)"></div>
+              <div class="avatar sm-avatar" v-if="item.answerDTO[0].imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
               <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.answerDTO[0].imgUrl+')'}"></div>
               <div class="mid">
                 <span class="uname mt8" style="color:#b7b8b8;">{{item.answerDTO[0].name}}</span>

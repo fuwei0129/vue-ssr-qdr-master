@@ -2,28 +2,28 @@
   <section>
     <mt-tabbar v-model="selected" v-show="showNav" fixed>
       <mt-tab-item id="1">
-        <img slot="icon" src="../../public/ico_01_on.png" v-if="route === '/'">
-        <img slot="icon" src="../../public/ico_01.png" v-else>
+        <img slot="icon" src="../../public/img/ico_01_on.png" v-if="route === '/'">
+        <img slot="icon" src="../../public/img/ico_01.png" v-else>
         资讯
       </mt-tab-item>
       <mt-tab-item id="2">
-        <img slot="icon" src="../../public/ico_02_on.png" v-if="route === '/market/index'">
-        <img slot="icon" src="../../public/ico_02.png" v-else>
+        <img slot="icon" src="../../public/img/ico_02_on.png" v-if="route === '/market/index'">
+        <img slot="icon" src="../../public/img/ico_02.png" v-else>
         行情
       </mt-tab-item>
       <mt-tab-item id="3">
-        <img slot="icon" src="../../public/ico_03_on.png" v-if="route === '/futures/index'">
-        <img slot="icon" src="../../public/ico_03.png" v-else>
+        <img slot="icon" src="../../public/img/ico_03_on.png" v-if="route === '/futures/index'">
+        <img slot="icon" src="../../public/img/ico_03.png" v-else>
         达人
       </mt-tab-item>
       <mt-tab-item id="4">
-        <img slot="icon" src="../../public/ico_04_on.png" v-if="selected == '4'">
-        <img slot="icon" src="../../public/ico_04.png" v-else>
+        <img slot="icon" src="../../public/img/ico_04_on.png" v-if="selected == '4'">
+        <img slot="icon" src="../../public/img/ico_04.png" v-else>
         开户
       </mt-tab-item>
       <mt-tab-item id="5">
-        <img slot="icon" src="../../public/ico_05_on.png" v-if="route === '/mine/index'">
-        <img slot="icon" src="../../public/ico_05.png" v-else>
+        <img slot="icon" src="../../public/img/ico_05_on.png" v-if="route === '/mine/index'">
+        <img slot="icon" src="../../public/img/ico_05.png" v-else>
         我的
       </mt-tab-item>
     </mt-tabbar>

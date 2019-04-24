@@ -9,7 +9,7 @@
     <div class="futures-detail-box pdt40 mt5">
       <div class="answer-box pd15">
         <div class="flex author-row">
-          <div class="avatar sm-avatar" v-if="answerdetail.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+          <div class="avatar sm-avatar" v-if="answerdetail.imgUrl==null" style="background-image:url(../../../public/img/user-default.png)"></div>
           <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+answerdetail.imgUrl+')'}"></div>
           <div class="mid">
             <span class="mini-uname">{{answerdetail.name}}</span>
@@ -25,6 +25,7 @@
             <span v-if="answerdetail.questionAccessory.length>1">{{answerdetail.questionAccessory.length}}图</span>
             <div
                 class="cover"
+                @click="preview(0,answerdetail.questionAccessory)"
                 v-bind:style="{backgroundImage: 'url('+answerdetail.questionAccessory[0].accessoryUrl+')'}"></div>
           </div>
           <span class="time">{{answerdetail.answerTime}}</span>
@@ -32,14 +33,13 @@
       </div>
       <div class="comment-box mt8">
         <div class="summary-bar-head">
-          <span v-if="answerdetail.commentList && answerdetail.commentList.length">评论（{{answerdetail.commentList.length}}）</span>
-          <span v-else>评论（0）</span>
-          <div class="fr"><label>按最新</label></div>
+          <span>评论（{{answerdetail.commentNum}}）</span>
+          <!-- <div class="fr"><label>按最新</label></div> -->
         </div>
         <div class="reply-comment-list" v-if="answerdetail.commentList && answerdetail.commentList.length">
           <div class="item" v-for="item in answerdetail.commentList">
             <div class="flex author-row">
-              <div class="avatar sm-avatar" v-if="item.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+              <div class="avatar sm-avatar" v-if="item.imgUrl==null" style="background-image:url(../../../public/img/user-default.png)"></div>
               <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.imgUrl+')'}"></div>
               <div class="mid">
                 <span class="mini-uname">{{item.name}}</span>
@@ -94,13 +94,17 @@ export default{
   name:'futuresreply',
   data(){
     return{
-
     }
   },
   // 计算属性
   computed: {
     answerdetail () {
       return this.$store.getters.getAnswerDetail // 期问问答详情
+    }
+  },
+  methods:{
+    preview(index,arr) {
+
     }
   }
 }

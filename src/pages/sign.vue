@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="full-log-box">
-      <div class="bg-log" style="background-image:url(/public/default.png)">
+      <div class="bg-log" style="background-image:url(../public/img/default.png)">
         <div class="bottom">
           <span :class="signIndex == 0 ? 'on':''" @click="setVal(0)">注册</span>
           <span :class="signIndex == 1 ? 'on':''" @click="setVal(1)">登录</span>

@@ -11,7 +11,7 @@
       <div class="ask-box">
         <p class="title">{{questiondetail.content}}</p>
         <div class="flex author-row">
-          <div class="avatar lg-avatar" v-if="questiondetail.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+          <div class="avatar lg-avatar" v-if="questiondetail.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
           <div class="avatar lg-avatar" v-else v-bind:style="{backgroundImage: 'url('+questiondetail.imgUrl+')'}"></div>
           <div class="mid">
             <span class="uname mt5">{{questiondetail.name}}</span>
@@ -30,15 +30,14 @@
       </div>
       <div class="answer-box mt8">
         <div class="summary-bar-head">
-          <span v-if="questiondetail.answerDTO && questiondetail.answerDTO.length">回答（{{questiondetail.answerDTO.length}}）</span>
-          <span v-else>回答（0）</span>
-          <div class="fr"><label>按最新</label></div>
+          <span>回答（{{questiondetail.answerNum}}）</span>
+          <!-- <div class="fr"><label>按最新</label></div> -->
         </div>
         <div class="answer-list" v-if="questiondetail.answerDTO && questiondetail.answerDTO.length">
           <div class="answer-item" v-for="item in questiondetail.answerDTO">
             <div class="pd15">
               <div class="flex author-row">
-                <div class="avatar sm-avatar" v-if="item.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+                <div class="avatar sm-avatar" v-if="item.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
                 <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.imgUrl+')'}"></div>
                 <div class="mid">
                   <span class="mini-uname">{{item.name}}</span>
@@ -61,7 +60,7 @@
               <div class="comment-list" v-if="item.commentList && item.commentList.length">
                 <div class="comment-item" v-for="kitem in item.commentList">
                   <div class="flex author-row">
-                    <div class="avatar mini-avatar" v-if="kitem.imgUrl==''" style="background-image:url(/public/default.png)"></div>
+                    <div class="avatar mini-avatar" v-if="kitem.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
                     <div class="avatar mini-avatar" v-else v-bind:style="{backgroundImage: 'url('+kitem.imgUrl+')'}"></div>
                     <div class="mid">
                       <span class="mini-uname mt5">{{kitem.name}}</span>

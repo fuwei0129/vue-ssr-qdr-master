@@ -14,7 +14,7 @@
     					<span class="item-source">{{item.sourcefrom}}</span><span class="item-read">{{item.readcount}}人阅读</span>
     				</div>
     			</div>
-    			<div class="item-right" v-if="item.pic==''" style="background-image:url(/public/default.png)"></div>
+    			<div class="item-right" v-if="item.pic==''" style="background-image:url(../../public/img/default.png)"></div>
           <div class="item-right" v-else v-bind:style="{backgroundImage: 'url('+item.pic+')'}"></div>
         </div>
       </div>

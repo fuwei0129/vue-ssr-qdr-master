@@ -3,7 +3,7 @@
     <div class="online-box">
       <div class="basicio">
 				<div class="wrap">
-					<div class="avatar" style="background-image:url(/public/default.png)"></div>
+					<div class="avatar" style="background-image:url(../../public/img/default.png)"></div>
       		<div class="lname"><span>期达人直播室</span><span>123123</span></div>
           <span class="btn-subscribe">关注</span>
 				</div>
@@ -118,7 +118,7 @@ export default{
   background: #e4a859;
 }
 .basicio .icon-exit{
-  background:url(/public/icon-exit.png) no-repeat;
+  background:url(/public/img/icon-exit.png) no-repeat;
   position: absolute;
   top: 10px;
   right: 15px;

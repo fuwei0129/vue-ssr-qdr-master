@@ -2,7 +2,8 @@
   <section>
     <div class="signtop">
       <div class="flex">
-        <div class="user-photo" style="background-image:url(/public/default.png)"></div>
+        <div class="user-photo" v-if="!user || user.profilePhoto == null" style="background-image:url(../public/img/user-default.png)"></div>
+        <div class="user-photo" v-else v-bind:style="{backgroundImage: 'url('+user.profilePhoto+')'}"></div>
         <div class="mid-right" v-if="user">
           <span>{{user.nickName}}</span><label>喜欢期货，所有我用期达人</label>
         </div>
