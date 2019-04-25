@@ -31,14 +31,17 @@ export default{
   },
   actions: {
     //获取专栏列表
-    fetchColumnLists({ commit }, data){
-      return http.postmain(api.getColumns,data.model).then((response) => {
-        if(response.data.respbase.returncode == '10000'){
-          commit('setColumns', response.data.respparam)
-        }else{
-          console.log("出错")
-        }
-      })
+    fetchColumnLists({ commit,rootState }, data){
+      if(rootState.column.columns.length>0){
+      }else{
+        return http.postmain(api.getColumns,data.model).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            commit('setColumns', response.data.respparam)
+          }else{
+            console.log("出错")
+          }
+        })
+      }
     },
     //获取专栏详情
     fetchColumnDetail({ commit }, data){

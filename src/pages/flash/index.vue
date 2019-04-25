@@ -1,46 +1,74 @@
 <template>
   <section>
-    <div class="flashlist"
-          v-if="panel==2"
-          v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="isMoreLoading"
-          infinite-scroll-distance="0"
-          infinite-scroll-immediate-check="true">
-      <div class="inner">
-        <div class="item" v-for="(item,index) in lists" :key="index">
-          <div class="days" v-if="item.flag || index == 0">
-            <label class="monthday">{{item.month}}-{{item.day}}</label>
-            <label class="year">{{item.year}}</label>
+    <div class="mt50 pdb52">
+      <mynav :navIndex="navIndex"></mynav>
+      <div class="flashlist"
+            v-infinite-scroll="loadMore"
+            infinite-scroll-disabled="isMoreLoading"
+            infinite-scroll-distance="0"
+            infinite-scroll-immediate-check="true">
+        <div class="inner">
+          <div class="item" v-for="(item,index) in lists" :key="index">
+            <div class="days" v-if="item.flag || index == 0">
+              <label class="monthday">{{item.month}}-{{item.day}}</label>
+              <label class="year">{{item.year}}</label>
+            </div>
+            <span class="time">{{item.time | timefilter1}}</span>
+            <p v-if="item.content.length>100">{{item.content.substr(0,100)+'...'}}<span>详见></span></p>
+            <p v-else>{{item.content}}</p>
           </div>
-          <span class="time">{{item.time | timefilter1}}</span>
-          <p v-if="item.content.length>100">{{item.content.substr(0,100)+'...'}}<span>详见></span></p>
-          <p v-else>{{item.content}}</p>
         </div>
       </div>
+      <!--显示加载中-->
+      <div class="loading-box" v-if="isLoading">
+          <mt-spinner type="snake" class="loading-more"></mt-spinner>
+          <span class="loading-more-txt">加载中...</span>
+      </div>
+      <div class="no-more" v-if="noMore">没有更多了~</div>
     </div>
-    <!--显示加载中-->
-    <div class="loading-box" v-if="isLoading">
-        <mt-spinner type="snake" class="loading-more"></mt-spinner>
-        <span class="loading-more-txt">加载中...</span>
-    </div>
-    <div class="no-more" v-if="noMore">没有更多了~</div>
   </section>
 </template>
 <script>
+import mynav from '../../components/nav.vue'
 import common from '../../utils/common'
 import http from '../../utils/http'
 import api from '../../utils/api'
 export default{
-  name: "flashindex",
-  props:{
-    panel:''
+  /**
+   * [SSR获取所有组件的asyncData并执行获得初始数据]
+   * @param  {[Object]} store [Vuex Store]
+   * 此函数会在组件实例化之前调用，所以它无法访问 this。需要将 store 和路由信息作为参数传递进去：
+   */
+  asyncData (store, route) {
+    let model = {
+      reqbase:{
+        timestamp: common.getLastDate(),
+        clientauthflag: common.getClientauthflag(),
+        reqorigin: "xuantie",
+        token: "",
+        sourceip: "127.0.0.1"
+      },
+      reqpage:{
+        total:0,
+        page: 1,
+        size: 10,
+        count: true
+      },
+      reqparam:{}
+    }
+    return store.dispatch('fetchFlashLists', { model }) // 服务端渲染触发
   },
+  name: "flashindex",
   data(){
     return{
+      navIndex:1,
       isLoading:false, //是否显示加载中
       isMoreLoading:false, //是否加载更多
       noMore:false //是否还有更多
     }
+  },
+  components:{
+    mynav
   },
   // 计算属性
   computed: {
@@ -49,13 +77,9 @@ export default{
       }
   },
   mounted(){
-    if(this.$store.getters.getFlashLists.length > 0){
-      return
-    }
-    this.fetchList()
   },
   methods:{
-    fetchList(type){
+    fetchList(){
       let model = {
         reqbase:{
           timestamp: common.getLastDate(),
@@ -73,24 +97,20 @@ export default{
         reqparam:{}
       }
       let that = this
-      if(type == 'loadmore'){
-        http.postmain(api.getFutures,model).then((response) => {
-          if(response.data.respbase.returncode == '10000'){
-            if(response.data.respparam == null){
-                that.noMore = true
-                that.isLoading = false
-            }else{
-              that.isMoreLoading = false
+      http.postmain(api.getFutures,model).then((response) => {
+        if(response.data.respbase.returncode == '10000'){
+          if(response.data.respparam == null){
+              that.noMore = true
               that.isLoading = false
-              that.$store.commit('setFlashLists',response.data.respparam)
-            }
           }else{
-            console.log("出错")
+            that.isMoreLoading = false
+            that.isLoading = false
+            that.$store.commit('setFlashLists',response.data.respparam)
           }
-        })
-      }else{
-        this.$store.dispatch('fetchFlashLists', { model })
-      }
+        }else{
+          console.log("出错")
+        }
+      })
     },
     loadMore(){
       this.isMoreLoading = true // 设置加载更多中
@@ -98,7 +118,7 @@ export default{
       this.$store.commit('addFlashPage')
       var that = this
       setTimeout(() => {
-        this.fetchList('loadmore')
+        this.fetchList()
       },1000)
     }
   }

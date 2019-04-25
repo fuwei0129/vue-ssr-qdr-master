@@ -12,6 +12,8 @@
 <script>
 import '../public/style.css'
 import Foot from './components/foot.vue'
+import api from './utils/api'
+import http from './utils/http'
 import common from './utils/common'
 export default {
   name: 'App',
@@ -30,16 +32,15 @@ export default {
     }
   },
   mounted() {
-    // 自动登录
-    this.autoLogin()
+    this.autoLogin()// 自动登录
+    this.getSig()//获取游客信息
   },
   created() {
     this.routeChange()
   },
   methods: {
     routeChange () {
-      let path = this.$route.path
-      if (path === '/' || path === '/index' || path === '/market/index' || path === '/futures/index' || path === '/mine/index') {
+      if (this.$route.meta.showFoot) {
         this.showNav = true
       } else {
         this.showNav = false
@@ -70,6 +71,46 @@ export default {
         dispatch('autoLogin',data)
       }
     },
+    getSig(){
+      if(!common.getCookie('t_uuid')){
+        let data = {
+          reqbase:{
+            timestamp:common.getLastDate(),
+            clientauthflag:common.getClientauthflag(),
+            reqorigin:"chat",
+            token:common.getToken(),
+            sourceip:common.getIp()
+          },
+          reqpage:{
+            total:0,
+            page:1,
+            size:10,
+            count:false
+          },
+          reqparam:{
+            "SdkAppid":'1400094844',
+      			"ClientIP":'127.0.0.1',
+      			"userName": '',
+      			"nickName": '',
+            "uuid": ''
+          }
+        }
+        http.postchat(api.getUserSigByName,data).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            common.setCookie("t_nickname",response.data.respparam.nickName,365)
+          	common.setCookie("t_username",response.data.respparam.userName,365)
+          	common.setCookie("t_uuid",response.data.respparam.uuid,365)
+          	common.setCookie("t_sig",response.data.respparam.UserSig,365)
+          }else{
+            Toast({
+              message: response.data.respbase.returnmsg,
+              position: 'middle',
+              duration: 2000
+            })
+          }
+        })
+      }
+    }
   }
 }
 </script>

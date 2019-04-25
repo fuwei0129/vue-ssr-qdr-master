@@ -2,7 +2,10 @@
   <section>
     <mt-tabbar v-model="selected" v-show="showNav" fixed>
       <mt-tab-item id="1">
-        <img slot="icon" src="../../public/img/ico_01_on.png" v-if="route === '/'">
+        <img
+            slot="icon"
+            src="../../public/img/ico_01_on.png"
+            v-if="route === '/' || route === '/flash/index' || route === '/live/index' || route === '/column/index'">
         <img slot="icon" src="../../public/img/ico_01.png" v-else>
         资讯
       </mt-tab-item>

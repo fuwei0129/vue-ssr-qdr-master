@@ -13,8 +13,11 @@
               <div class="avatar lg-avatar" v-if="item.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
               <div class="avatar lg-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.imgUrl+')'}"></div>
               <div class="mid">
-                <span class="uname mt5">{{item.name}}</span>
-                <span class="others">{{item.showTime}} 来自{{item.source}}</span>
+                <p>
+                  <span class="uname mt5">{{item.name}}</span>
+                  <label v-if="item.isVip==1" style="background-image:url(../../public/img/ico_vip.png)"></label>
+                </p>
+                <p class="others">{{item.showTime}} 来自{{item.source}}</p>
               </div>
               <div class="right">
                 <span>关注</span>
@@ -27,7 +30,10 @@
               <div class="avatar sm-avatar" v-if="item.answerDTO[0].imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
               <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.answerDTO[0].imgUrl+')'}"></div>
               <div class="mid">
-                <span class="uname mt8" style="color:#b7b8b8;">{{item.answerDTO[0].name}}</span>
+                <p>
+                  <span class="uname mt8" style="color:#b7b8b8;">{{item.answerDTO[0].name}}</span>
+                  <label v-if="item.answerDTO[0].isVip==1" style="background-image:url(../../public/img/ico_vip.png)"></label>
+                </p>
               </div>
               <div class="r-time mt8">{{item.answerDTO[0].answerTime}}</div>
             </div>

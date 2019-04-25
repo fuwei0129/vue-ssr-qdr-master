@@ -4,8 +4,11 @@ import Router from 'vue-router'
 
 import index from '../pages/index/index.vue'
 import newsdetail from '../pages/news/detail.vue'
-import columndetail from '../pages/column/detail.vue'
+import flashindex from '../pages/flash/index.vue'
+import liveindex from '../pages/live/index.vue'
 import livedetail from '../pages/live/detail.vue'
+import columnindex from '../pages/column/index.vue'
+import columndetail from '../pages/column/detail.vue'
 import marketindex from '../pages/market/index.vue'
 import futuresindex from '../pages/futures/index.vue'
 import futuresdetail from '../pages/futures/detail.vue'
@@ -29,6 +32,7 @@ export function createRouter () {
         component: index,
         meta:{
           keepAlive: true,
+          showFoot:true,
           title:'期达人-推荐',
           content:'期达人-推荐'
         }
@@ -41,6 +45,49 @@ export function createRouter () {
           keepAlive: false,
           title:'期达人-推荐详情',
           content:'期达人-推荐详情描述'
+        }
+      },
+      {
+        path: '/flash/index',
+        name:'flashindex',
+        component: flashindex,
+        meta:{
+          keepAlive: true,
+          showFoot:true,
+          title:'期达人-7*24',
+          content:'期达人-7*24快讯'
+        }
+      },
+      {
+        path: '/live/index',
+        name:'liveindex',
+        component: liveindex,
+        meta:{
+          keepAlive: false,
+          showFoot:true,
+          title:'期达人-视频',
+          content:'期达人-视频列表'
+        }
+      },
+      {
+        path: '/live/detail/:id',
+        name:'livedetail',
+        component: livedetail,
+        meta:{
+          keepAlive: false,
+          title:'期达人-视频详情',
+          content:'期达人-视频详情'
+        }
+      },
+      {
+        path: '/column/index',
+        name:'columnindex',
+        component: columnindex,
+        meta:{
+          keepAlive: true,
+          showFoot:true,
+          title:'期达人-专栏列表',
+          content:'期达人-专栏详情'
         }
       },
       {
@@ -59,6 +106,7 @@ export function createRouter () {
         component: marketindex,
         meta:{
           keepAlive: false,
+          showFoot:true,
           title:'期达人-行情',
           content:'期达人-行情列表'
         }
@@ -69,6 +117,7 @@ export function createRouter () {
         component: futuresindex,
         meta:{
           keepAlive: true,
+          showFoot:true,
           title:'期达人-期问',
           content:'期达人-期问列表'
         }
@@ -104,21 +153,12 @@ export function createRouter () {
         }
       },
       {
-        path: '/live/detail/:id',
-        name:'livedetail',
-        component: livedetail,
-        meta:{
-          keepAlive: false,
-          title:'期达人-直播详情',
-          content:'期达人-直播室详情'
-        }
-      },
-      {
         path: '/mine/index',
         name:'mineindex',
         component: mineindex,
         meta:{
           keepAlive: false,
+          showFoot:true,
           title:'我的',
           content:'我的-个人中心'
         }

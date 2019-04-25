@@ -19,12 +19,12 @@
             <div class="normal"><input type="password" placeholder="请输入密码" v-model="regModel.password" /></div>
           </div>
           <div class="form-group" v-show = 'showregImgCode'>
-            <div class="small fl"><input type="text" placeholder="图形验证码" v-model="regModel.validateCode" /></div>
+            <div class="small fl"><input type="text" maxlength="4" placeholder="图形验证码" v-model="regModel.validateCode" /></div>
             <img class="imgcode fr" @click="regrefresh()" :src="regModel.uri" />
           </div>
           <div class="form-group">
-            <div class="small fl"><input type="text" placeholder="请输入验证码" v-model="regModel.code" /></div>
-            <div class="get-code fr" @click="getregcode()">获取验证码</div>
+            <div class="small fl"><input type="text" maxlength="6" placeholder="请输入验证码" v-model="regModel.code" /></div>
+            <div class="get-code fr" @click="getregcode()">{{ setregText() }}</div>
           </div>
           <div class="action-group">
             <button class="btn-submit" @click="register()">免费注册</button>
@@ -57,11 +57,11 @@
             <div class="normal"><input type="tel" maxlength="11" placeholder="请输入手机号" v-model="codeLoginModel.mobile" /></div>
           </div>
           <div class="form-group" v-show = 'showlogImgCode'>
-            <div class="small fl"><input type="text" placeholder="图形验证码" v-model="codeLoginModel.validateCode" /></div>
+            <div class="small fl"><input type="text" maxlength="4" placeholder="图形验证码" v-model="codeLoginModel.validateCode" /></div>
             <img class="imgcode fr" @click="logrefresh()" :src="codeLoginModel.uri" />
           </div>
           <div class="form-group">
-            <div class="small fl"><input type="text" placeholder="请输入验证码" v-model="codeLoginModel.code" /></div>
+            <div class="small fl"><input type="text" maxlength="6" placeholder="请输入验证码" v-model="codeLoginModel.code" /></div>
             <div class="get-code fr" @click="getlogcode()">{{ setlogText() }}</div>
           </div>
           <div class="action-group">
@@ -136,13 +136,13 @@ export default{
     regrefresh(){
       this.regModel.validateCode = ""
       var i = Math.ceil(Math.random() * 100) //生成一个随机数（防止缓存）
-      let uuid = common.getMsgId()
+      let uuid = common.getCookie("t_uuid")
       this.regModel.uri = "http://172.16.1.208:8119/member/validateCode?uuid=" + uuid + "_" + i
     },
     logrefresh(){
       this.codeLoginModel.validateCode = ""
       var i = Math.ceil(Math.random() * 100) //生成一个随机数（防止缓存）
-      let uuid = common.getMsgId()
+      let uuid = common.getCookie("t_uuid")
       this.codeLoginModel.uri = "http://172.16.1.208:8119/member/validateCode?uuid=" + uuid + "_" + i
     },
     login(){
@@ -239,13 +239,11 @@ export default{
         },
         reqparam:{
           mobile:this.regModel.mobile,
-          sendVerify:'v',
+          sendVerify:'n',
           code:this.regModel.validateCode,
-          uuid:''
+          uuid:common.getCookie("t_uuid")
         }
       }
-      console.log(data)
-      return
       let that = this
       http.postaccount(api.sendSms,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
@@ -326,8 +324,12 @@ export default{
           count:false
         },
         reqparam:{
-          mobile:this.codeLoginModel.mobile,
-          code:this.codeLoginModel.code
+          mobile:this.regModel.mobile,
+          code:this.regModel.code,
+          password:this.regModel.password,
+          rePassword:this.regModel.password,
+          nickName:this.regModel.nickName,
+          source:'1'
         }
       }
       http.postaccount(api.register,data).then((response) => {
@@ -386,9 +388,9 @@ export default{
         },
         reqparam:{
           mobile:this.codeLoginModel.mobile,
-          sendVerify:'n',
+          sendVerify:'v',
           code:this.codeLoginModel.validateCode,
-          uuid:''
+          uuid:common.getCookie("t_uuid")
         }
       }
       let that = this

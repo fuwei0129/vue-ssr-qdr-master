@@ -3,16 +3,12 @@ import api from '../../utils/api'
 
 export default{
   state: {
-    currentTabIndex: '1', //当前选中的tab项
     banners:[], //banner轮播图
     page: 1,
     news: [], //新闻列表
     detail: {} // 推荐详情
   },
   getters: {
-    getCurrentTabIndex: state => {
-      return state.currentTabIndex
-    },
     getBanners: state => { //轮播图
       return state.banners
     },
@@ -27,9 +23,6 @@ export default{
     },
   },
   mutations: {
-    setCurrentTabIndex (state, val) {
-      state.currentTabIndex = val
-    },
     setBanners (state, data) {
       state.banners = data
     },

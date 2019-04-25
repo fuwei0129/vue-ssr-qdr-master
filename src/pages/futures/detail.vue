@@ -14,8 +14,11 @@
           <div class="avatar lg-avatar" v-if="questiondetail.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
           <div class="avatar lg-avatar" v-else v-bind:style="{backgroundImage: 'url('+questiondetail.imgUrl+')'}"></div>
           <div class="mid">
-            <span class="uname mt5">{{questiondetail.name}}</span>
-            <span class="others">{{questiondetail.showTime}}</span>
+            <p>
+              <span class="uname mt5">{{questiondetail.name}}</span>
+              <label v-if="questiondetail.isVip==1" style="background-image:url(../../public/img/ico_vip.png)"></label>
+            </p>
+            <p class="others">{{questiondetail.showTime}}</p>
           </div>
           <div class="right">
             <span>关注</span>
@@ -40,8 +43,11 @@
                 <div class="avatar sm-avatar" v-if="item.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
                 <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.imgUrl+')'}"></div>
                 <div class="mid">
-                  <span class="mini-uname">{{item.name}}</span>
-                  <span class="others">金融研究院老师</span>
+                  <p>
+                    <span class="mini-uname">{{item.name}}</span>
+                    <label v-if="item.isVip==1" style="background-image:url(../../public/img/ico_vip.png)"></label>
+                  </p>
+                  <p class="others">{{item.source}}</p>
                 </div>
                 <div class="right">
                   <span>关注</span>

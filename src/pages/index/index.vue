@@ -1,24 +1,10 @@
 <template>
   <section>
-    <mt-navbar v-model="selected" fixed>
-      <mt-tab-item id="1">推荐</mt-tab-item>
-      <mt-tab-item id="2">7*24</mt-tab-item>
-      <mt-tab-item id="3">直播</mt-tab-item>
-      <mt-tab-item id="4">专栏</mt-tab-item>
-    </mt-navbar>
-    <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1"><news :panel="selected" :banners="newsbanners" :lists="newslists"></news></mt-tab-container-item>
-      <mt-tab-container-item id="2"><flash :panel="selected"></flash></mt-tab-container-item>
-      <mt-tab-container-item id="3"><live :panel="selected"></live></mt-tab-container-item>
-      <mt-tab-container-item id="4"><columns :panel="selected"></columns></mt-tab-container-item>
-    </mt-tab-container>
+      <news :banners="newsbanners" :lists="newslists"></news>
   </section>
 </template>
 <script>
 import news from '../news/index.vue'
-import flash from '../flash/index.vue'
-import live from '../live/index.vue'
-import columns from '../column/index.vue'
 import common from '../../utils/common'
 export default{
   /**
@@ -47,14 +33,10 @@ export default{
   },
   data(){
     return{
-      selected:this.$store.getters.getCurrentTabIndex
     }
   },
   components:{
-    news,
-    flash,
-    live,
-    columns
+    news
   },
   // 计算属性
   computed: {
@@ -64,45 +46,8 @@ export default{
     newslists () {
       return this.$store.getters.getRecNews // 推荐列表（新闻）
     }
-  },
-  watch: {
-    selected: function (val, oldVal){
-      this.$store.commit('setCurrentTabIndex',val)
-    }
   }
 }
 </script>
 <style>
-.mint-navbar.is-fixed{
-  z-index:4;
-}
-.mint-navbar{
-  background:#131a25;
-  height:50px;
-}
-.mint-navbar .mint-tab-item{
-  color:#7b92a5;
-  position: relative;
-}
-.mint-navbar .mint-tab-item.is-selected{
-  color:#dfa55b;
-  border-bottom:none;
-}
-.mint-navbar .mint-tab-item.is-selected:after{
-  content:'';
-  position: absolute;
-  bottom:12px;
-  left:50%;
-  margin-left:-10px;
-  width:20px;
-  height:4px;
-  background:#dfa55b;
-}
-.mint-navbar .mint-tab-item-label{
-  font-size:15px;
-}
-.mint-tab-container{
-  margin-top:50px;
-  margin-bottom:52px;
-}
 </style>

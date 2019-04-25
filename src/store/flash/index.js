@@ -55,14 +55,17 @@ export default{
   },
   actions: {
     //获取快讯列表
-    fetchFlashLists({ commit }, data){
-      return http.postmain(api.getFutures,data.model).then((response) => {
-        if(response.data.respbase.returncode == '10000'){
-          commit('setFlashLists', response.data.respparam)
-        }else{
-          console.log("出错")
-        }
-      });
+    fetchFlashLists({ commit,rootState }, data){
+      if(rootState.flash.lists.length>0){
+      }else{
+        return http.postmain(api.getFutures,data.model).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            commit('setFlashLists', response.data.respparam)
+          }else{
+            console.log("出错")
+          }
+        });
+      }
     },
     //获取快讯详情
     fetchFlashDetail({ commit }, data){
