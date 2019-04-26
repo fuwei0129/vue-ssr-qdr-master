@@ -110,7 +110,7 @@ export default{
       },
       reqparam:{
         questionId:questionId,
-        userId:user?user.memberId:'0'
+        userId:user?user.memberId:null
       }
     }
     return store.dispatch('fetchQuestionDetail', { model }) // 服务端渲染执行

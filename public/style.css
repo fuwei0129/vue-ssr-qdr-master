@@ -124,7 +124,6 @@
   float:right;
   color:#7f8282;
 }
-
 .recommend-list .item-right{
   -webkit-flex: 0 0 110px;
   flex: 0 0 110px;
@@ -146,7 +145,7 @@
   border-radius: 3px;
 }
 .article-normal-box{
-  padding:20px 10px;
+  padding:20px 10px 30px 10px;
 }
 .article-normal-box .nodata{
   background:url(../public/img/icon-loss.png) no-repeat center bottom;
@@ -193,6 +192,21 @@
   margin-bottom:10px;
   letter-spacing:1px;
   line-height:20px;
+}
+.article-bottom-features{
+  color: #697fa1;
+  overflow: hidden;
+}
+.article-bottom-features span.ico_like:before{
+  content:'';
+  position: relative;
+  top:2px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right:5px;
+  background: url(../public/img/ico_like.png) no-repeat center;
+  background-size: 15px;
 }
 /* end推荐列表和新闻详情end */
 /* 期问style */

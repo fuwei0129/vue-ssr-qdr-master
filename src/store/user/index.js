@@ -5,9 +5,9 @@ import { Toast } from 'mint-ui'
 export default{
   state: {
     signIndex:1, //当前是登录面板还是注册面板
-    token:null,
+    sign:null,
     user:null,
-    sign:null
+    token:null
   },
   getters: {
     getSignIndex: state => {
@@ -27,6 +27,7 @@ export default{
       state.user = memberInfo
       state.token = memberToken
       sessionStorage.setItem('sign', memberSign)
+      sessionStorage.setItem('user', JSON.stringify(memberInfo))
       sessionStorage.setItem('token', memberToken)
     },
     signOut (state) {
@@ -34,6 +35,7 @@ export default{
       state.user = null
       state.token = null
       sessionStorage.removeItem('sign')
+      sessionStorage.removeItem('user')
       sessionStorage.removeItem('token')
     }
   },

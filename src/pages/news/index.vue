@@ -15,10 +15,11 @@
         </mt-swipe-item>
       </mt-swipe>
       <div class="recommend-list"
+            v-if="$route.path == '/'"
             v-infinite-scroll="loadMore"
             infinite-scroll-disabled="isMoreLoading"
             infinite-scroll-distance="0"
-            infinite-scroll-immediate-check="true">
+            infinite-scroll-immediate-check="false">
         <div class="item-main" v-for="(item,index) in lists" :key="index" @click="ltodetail(item)">
           <div class="normalbox" v-if="(index+1)%4 == 0">
             <div class="item-title -webkit-box-orient">{{item.title}}</div>
@@ -104,13 +105,12 @@ export default{
       }
       let that = this
       http.postmain(api.getNewsRecommend,model).then((response) => {
+        that.isLoading = false
         if(response.data.respbase.returncode == '10000'){
           if(response.data.respparam.news.length == 0){
-              that.noMore = true
-              that.isLoading = false
+            that.noMore = true
           }else{
             that.isMoreLoading = false
-            that.isLoading = false
             that.$store.commit('setRecNews',response.data.respparam.news)
           }
         }else{
@@ -124,7 +124,7 @@ export default{
       this.$store.commit('addRecPage')
       var that = this
       setTimeout(() => {
-        this.fetchList()
+        that.fetchList()
       },1000)
     },
     btodetail(obj){

@@ -3,10 +3,11 @@
     <div class="mt50 pdb52">
       <mynav :navIndex="navIndex"></mynav>
       <div class="flashlist"
+            v-if="$route.path == '/flash/index'"
             v-infinite-scroll="loadMore"
             infinite-scroll-disabled="isMoreLoading"
             infinite-scroll-distance="0"
-            infinite-scroll-immediate-check="true">
+            infinite-scroll-immediate-check="false">
         <div class="inner">
           <div class="item" v-for="(item,index) in lists" :key="index">
             <div class="days" v-if="item.flag || index == 0">
@@ -98,13 +99,12 @@ export default{
       }
       let that = this
       http.postmain(api.getFutures,model).then((response) => {
+        that.isLoading = false
         if(response.data.respbase.returncode == '10000'){
           if(response.data.respparam == null){
-              that.noMore = true
-              that.isLoading = false
+            that.noMore = true
           }else{
             that.isMoreLoading = false
-            that.isLoading = false
             that.$store.commit('setFlashLists',response.data.respparam)
           }
         }else{
@@ -118,7 +118,7 @@ export default{
       this.$store.commit('addFlashPage')
       var that = this
       setTimeout(() => {
-        this.fetchList()
+        that.fetchList()
       },1000)
     }
   }

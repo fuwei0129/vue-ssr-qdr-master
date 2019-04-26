@@ -47,28 +47,14 @@ export default {
       }
     },
     autoLogin() {
-      const { dispatch } = this.$store
+      const { commit } = this.$store
       // 如果storage中存在token，则使用storage中保存的信息进行自动登录
       if (sessionStorage.sign) {
-        let data = {
-          reqbase:{
-            timestamp:common.getLastDate(),
-            clientauthflag:common.getClientauthflag(),
-            reqorigin:"xuantie",
-            token:common.getToken(),
-            sourceip:common.getIp()
-          },
-          reqpage:{
-            total:0,
-            page:1,
-            size:10,
-            count:false
-          },
-          reqparam:{
-            memberSign:sessionStorage.sign
-          }
-        }
-        dispatch('autoLogin',data)
+        commit('setUser', {
+          memberSign: sessionStorage.sign,
+          memberInfo: JSON.parse(sessionStorage.user),
+          memberToken: sessionStorage.token
+        })
       }
     },
     getSig(){
