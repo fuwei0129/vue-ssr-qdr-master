@@ -18,7 +18,7 @@ export default {
   futuresDetail:'/futures/futuresDetails', //7*24详情
   getColumns:'/zhuangLan/zhuangLanList', //专栏
   columnDetail:'/zhuangLan/zhuangLanDetails', //专栏详情
-  readingInsert:'/functionManage/insert',//阅读文章+1
+  readingInsert:'/functionManage/insert',//阅读文章+1 or 点赞
   lives:'/zhiBo/zhiBoList', //直播列表
   liveBanners:'/zhiBo/showPosition', //直播列表轮播图
   getPushStreams:'/aliyun/getPushStreams',//获取视频流

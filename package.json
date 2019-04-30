@@ -24,6 +24,7 @@
     "mint-ui": "^2.2.13",
     "moment": "^2.24.0",
     "serve-favicon": "^2.4.1",
+    "vant": "^1.6.16",
     "vue": "^2.3.0",
     "vue-router": "^2.8.1",
     "vue-server-renderer": "^2.3.0",

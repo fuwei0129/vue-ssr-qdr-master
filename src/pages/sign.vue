@@ -187,7 +187,12 @@ export default{
           this.loginModel.mobile = ''
           this.loginModel.password = ''
           // 跳转到登录前的页面或个人中心
-          this.$router.push(this.$route.params.parentPath || '/mine/index')
+
+          if(this.$route.params.parentPath){
+            this.$router.replace(this.$route.params.parentPath)
+          }else{
+            this.$router.push('/mine/index')
+          }
         }else if(response.data.respbase.returncode == '20000'){
           Toast({
             message: '用户名或密码错误',
@@ -341,8 +346,8 @@ export default{
           this.regModel.password = ''
           this.regModel.code = ''
           this.regModel.validateCode = ''
-          // 跳转到登录前的页面或个人中心
-          this.$router.push(this.$route.params.parentPath || '/mine/index')
+          // 跳转到个人中心
+          this.$router.push('/mine/index')
         }else{
           Toast({
             message: response.data.respbase.returnmsg,
@@ -463,8 +468,8 @@ export default{
           this.codeLoginModel.mobile = ''
           this.codeLoginModel.code = ''
           this.codeLoginModel.validateCode = ''
-          // 跳转到登录前的页面或个人中心
-          this.$router.push(this.$route.params.parentPath || '/mine/index')
+          // 跳转到个人中心
+          this.$router.push('/mine/index')
         }else{
           Toast({
             message: response.data.respbase.returnmsg,

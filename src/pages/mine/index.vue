@@ -46,7 +46,6 @@ export default{
       this.$router.push({name:'sign'});
     },
     logout(){
-      let user = this.$store.getters.getUser
       let data = {
         reqbase:{
           timestamp:common.getLastDate(),
@@ -62,7 +61,7 @@ export default{
           count:false
         },
         reqparam:{
-          memberId:user.memberId,
+          memberId:this.user.memberId,
           source:1
         }
       }

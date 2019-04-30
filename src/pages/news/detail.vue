@@ -13,7 +13,9 @@
         </div>
         <div class="article-bottom-features">
           <span class="fl">阅读 {{article.reading}}</span>
-          <span class="fr ico_like">{{article.dianZan}}</span>
+          <span class="fr ico_like_on" v-if="article.isDianZan">{{article.dianZan}}</span>
+          <span class="fr ico_like_on" v-else-if="liked">{{article.dianZan+1}}</span>
+          <span class="fr ico_like" v-else @click="like()">{{article.dianZan}}</span>
         </div>
       </div>
     </div>
@@ -54,7 +56,8 @@ export default{
   name: "newsdetail",
   data(){
     return{
-      title:'新闻详情'
+      title:'新闻详情',
+      liked:false,
     }
   },
   // 计算属性
@@ -62,7 +65,7 @@ export default{
     user() {
       return this.$store.getters.getUser
     },
-    article () {
+    article() {
       return this.$store.getters.getRecDetail // 推荐详情
     }
   },
@@ -70,10 +73,37 @@ export default{
     Head
   },
   mounted(){
-    console.log(this.user)
-    this.reading()
+    setTimeout(() => {
+      this.fetchDetail()
+      this.reading()
+    },500)
   },
   methods:{
+    fetchDetail(){
+      let fId = this.$route.params.id // 文章id
+      let sourceTable = this.$route.params.type //文章类型
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: common.getToken(),
+          sourceip: common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page: 1,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          createBy:this.user?this.user.memberId:null,
+          fId:fId,
+          sourceTable:sourceTable
+        }
+      }
+      this.$store.dispatch('fetchRecommendDetail',{ model })
+    },
     reading(){
       let model = {
         reqbase:{
@@ -103,6 +133,46 @@ export default{
           // console.log("出错")
         }
       })
+    },
+    like(){
+      if(this.testWhetherDoLogin()){
+        let model = {
+          reqbase:{
+            timestamp: common.getLastDate(),
+            clientauthflag: common.getClientauthflag(),
+            reqorigin: "xuantie",
+            token: "",
+            sourceip: "127.0.0.1"
+          },
+          reqpage:{
+            total:0,
+            page: 1,
+            size: 10,
+            count: true
+          },
+          reqparam:{
+            busiId: this.article.param.id,
+  					busiType: this.article.type,
+  					fType: '2',
+  					operateId: this.user.memberId
+          }
+        }
+        var that = this
+        http.postmain(api.readingInsert,model).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            that.liked = true
+            console.log("已点赞")
+          }else{
+            console.log("出错")
+          }
+        })
+      }
+    },
+    testWhetherDoLogin() {
+      if (this.user) {
+        return true
+      }
+      this.$router.push({ name: 'sign', params: { parentPath: this.$route.path } })
     }
   }
 }

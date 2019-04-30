@@ -26,26 +26,27 @@
             </div>
             <div class="info" @click="todetail(item.questionId)">{{nameformat(item.content)}}</div>
           </div>
-          <div class="reply" v-if="item.answerDTO && item.answerDTO.length">
+          <div class="reply" v-if="item.answerDTO && item.answerDTO.answerId">
             <div class="flex author-row">
-              <div class="avatar sm-avatar" v-if="item.answerDTO[0].imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
-              <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.answerDTO[0].imgUrl+')'}"></div>
+              <div class="avatar sm-avatar" v-if="item.answerDTO.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
+              <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.answerDTO.imgUrl+')'}"></div>
               <div class="mid">
                 <p>
-                  <span class="uname mt8" style="color:#b7b8b8;">{{item.answerDTO[0].name}}</span>
-                  <label v-if="item.answerDTO[0].isVip==1" style="background-image:url(../../public/img/ico_vip.png)"></label>
+                  <span class="uname mt8" style="color:#b7b8b8;">{{item.answerDTO.name}}</span>
+                  <label v-if="item.answerDTO.isVip==1" style="background-image:url(../../public/img/ico_vip.png)"></label>
                 </p>
               </div>
-              <div class="r-time mt8">{{item.answerDTO[0].answerTime}}</div>
+              <div class="r-time mt8">{{item.answerDTO.answerTime}}</div>
             </div>
-            <div class="r-info">{{nameformat(item.answerDTO[0].answerContent)}}</div>
-            <div class="futures-photos-box mt10" v-if="item.answerDTO[0].questionAccessory && item.answerDTO[0].questionAccessory.length">
-              <span v-if="item.answerDTO[0].questionAccessory.length>3">{{item.answerDTO[0].questionAccessory.length}}图</span>
+            <div class="r-info">{{nameformat(item.answerDTO.answerContent)}}</div>
+            <div class="futures-photos-box mt10" v-if="item.answerDTO.questionAccessory && item.answerDTO.questionAccessory.length">
+              <span v-if="item.answerDTO.questionAccessory.length>3">{{item.answerDTO.questionAccessory.length}}图</span>
               <div class="galley">
                 <div
                   class="single"
                   v-bind:style="{backgroundImage: 'url('+jtem.accessoryUrl+')'}"
-                  v-for="(jtem,jndex) in item.answerDTO[0].questionAccessory"
+                  v-for="(jtem,jndex) in item.answerDTO.questionAccessory"
+                  @click="preview(jndex,item.answerDTO.questionAccessory)"
                   v-if="jndex < 3"></div>
               </div>
             </div>
@@ -65,6 +66,7 @@
 import http from '../../utils/http'
 import api from '../../utils/api'
 import common from '../../utils/common'
+import { ImagePreview } from 'vant'
 export default{
   /**
    * [SSR获取所有组件的asyncData并执行获得初始数据]
@@ -101,10 +103,91 @@ export default{
   // 计算属性
   computed: {
     questionData(){
-      return this.$store.getters.getQuestionData
+      var lst = []
+      var data = this.$store.getters.getQuestionData
+      for(var i=0;i<data.length;i++){
+        if(data[i].answerDTO && data[i].answerDTO.length<=1){
+          var arr = {
+            questionId:'',
+            answerNum: 0,
+            showTime: "",
+            source: "",
+            content: "",
+            memberId: "",
+            name: "",
+            imgUrl: "",
+            isFollowVip: 0,
+            isFollowQuestion: 0,
+            isToPraise: 0,
+            isVip: 0,
+            answerDTO:null,
+            questionAccessory:null
+          }
+          arr.questionId = data[i].questionId
+          arr.answerNum = data[i].answerNum
+          arr.showTime = data[i].showTime
+          arr.source = data[i].source
+          arr.content = data[i].content
+          arr.memberId = data[i].memberId
+          arr.name = data[i].name
+          arr.imgUrl = data[i].imgUrl
+          arr.isFollowVip = data[i].isFollowVip
+          arr.isFollowQuestion = data[i].isFollowQuestion
+          arr.isToPraise = data[i].isToPraise
+          arr.isVip = data[i].isVip
+          arr.questionAccessory = data[i].questionAccessory
+          arr.answerDTO = data[i].answerDTO[0]
+          lst.push(arr)
+        }else{
+            for(var j = 0;j<data[i].answerDTO.length;j++){
+              var arr = {
+                questionId:'',
+                answerNum: 0,
+            		showTime: "",
+            		source: "",
+            		content: "",
+            		memberId: "",
+            		name: "",
+            		imgUrl: "",
+            		isFollowVip: 0,
+            		isFollowQuestion: 0,
+            		isToPraise: 0,
+            		isVip: 0,
+                answerDTO:null,
+                questionAccessory:null
+              }
+              arr.questionId = data[i].questionId
+              arr.answerNum = data[i].answerNum
+              arr.showTime = data[i].showTime
+              arr.source = data[i].source
+              arr.content = data[i].content
+              arr.memberId = data[i].memberId
+              arr.name = data[i].name
+              arr.imgUrl = data[i].imgUrl
+              arr.isFollowVip = data[i].isFollowVip
+              arr.isFollowQuestion = data[i].isFollowQuestion
+              arr.isToPraise = data[i].isToPraise
+              arr.isVip = data[i].isVip
+              arr.questionAccessory = data[i].questionAccessory
+              arr.answerDTO = data[i].answerDTO[j]
+              lst.push(arr)
+            }
+        }
+      }
+      return lst
     }
   },
   methods:{
+    preview(index,imgs){
+      let arr = []
+      for (var i = 0; i < imgs.length; i++) {
+        arr.push(imgs[i].accessoryUrl)
+      }
+      ImagePreview({
+        images: arr,
+        startPosition: index
+      })
+    },
     fetchList(){
       let model = {
         reqbase:{

@@ -28,7 +28,7 @@
             <span v-if="answerdetail.questionAccessory.length>1">{{answerdetail.questionAccessory.length}}图</span>
             <div
                 class="cover"
-                @click="preview(0,answerdetail.questionAccessory)"
+                @click="preview(answerdetail.questionAccessory)"
                 v-bind:style="{backgroundImage: 'url('+answerdetail.questionAccessory[0].accessoryUrl+')'}"></div>
           </div>
           <span class="time">{{answerdetail.answerTime}}</span>
@@ -67,6 +67,7 @@
 </template>
 <script>
 import common from '../../utils/common'
+import { ImagePreview } from 'vant'
 export default{
   asyncData (store, route) {
     let answerId = route.params.id // 期问问答id
@@ -106,9 +107,13 @@ export default{
     }
   },
   methods:{
-    preview(index,arr) {
-
-    }
+    preview(imgs){
+      let arr = []
+      for (var i = 0; i < imgs.length; i++) {
+        arr.push(imgs[i].accessoryUrl)
+      }
+      ImagePreview(arr)
+    },
   }
 }
 </script>
