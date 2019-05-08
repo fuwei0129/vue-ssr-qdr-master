@@ -1,7 +1,8 @@
 <template>
   <section>
     <div class="full-log-box">
-      <div class="bg-log" style="background-image:url(../public/img/default.png)">
+      <div class="bg-log" style="background-image:url(../public/img/bg-sign.png)">
+        <span class="icon-exit" @click="exit()"></span>
         <div class="bottom">
           <span :class="signIndex == 0 ? 'on':''" @click="setVal(0)">注册</span>
           <span :class="signIndex == 1 ? 'on':''" @click="setVal(1)">登录</span>
@@ -112,6 +113,9 @@ export default{
     }
   },
   methods:{
+    exit(){
+      this.$router.back(-1);
+    },
     setVal(val){
       this.signIndex = val
       this.$store.commit('setSignIndex',val)
@@ -493,9 +497,20 @@ export default{
 }
 .bg-log{
   background-repeat: no-repeat;
-  background-size:100% 200px;
-  height:200px;
+  background-size:100% 220px;
+  height:220px;
   position: relative;
+}
+.bg-log .icon-exit{
+  background:url(/public/img/icon-exit.png) no-repeat;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-size: 20px;
+  z-index: 3;
 }
 .bg-log .bottom{
   width:86%;

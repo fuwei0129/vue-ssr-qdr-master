@@ -127,6 +127,27 @@ export default {
       }
     )
   },
+  postlog (url,data){
+    return axios({
+      method: 'post',
+      baseURL: 'http://testlogapi.qdr8.com/',
+      // baseURL: 'http://api.qdr8.com:8102',
+      url,
+      data: data,
+      timeout: 10000,
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
+    }).then(
+      (response) => {
+        return checkStatus(response)
+      }
+    ).then(
+      (res) => {
+        return checkCode(res)
+      }
+    )
+  },
   postchat (url,data){
     return axios({
       method: 'post',

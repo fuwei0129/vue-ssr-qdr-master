@@ -17,7 +17,8 @@ const config = merge(base, {
     }),
     // html模板
     new HTMLPlugin({
-      template: 'src/index.html'
+      template: 'src/index.html',
+      favicon:'public/favicon.ico'
     })
   ]
 })

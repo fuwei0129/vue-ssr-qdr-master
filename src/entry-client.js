@@ -14,7 +14,16 @@ import { app, store, router } from './app'
 // 注意beforeRouteEnter无法直接获取到当前组件this，需使用next((vm)=>{ vm即为this }) 获取
 Vue.mixin({
   beforeRouteEnter (to, from, next) {
-    console.log(to.meta.content)
+    document.title = to.meta.title;
+    let head = document.getElementsByTagName('head');
+    let meta1 = document.createElement('meta');
+    let meta2 = document.createElement('meta');
+    meta1.name = "keywords";
+    meta2.name = "description";
+    meta1.content = to.meta.keywords;
+    meta2.content = to.meta.content;
+    head[0].appendChild(meta1);
+    head[0].appendChild(meta2);
   	next((vm)=>{
   	    const { asyncData } = vm.$options
   	    if (asyncData) {

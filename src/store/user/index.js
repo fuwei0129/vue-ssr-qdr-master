@@ -34,6 +34,7 @@ export default{
       state.sign = null
       state.user = null
       state.token = null
+      sessionStorage.removeItem('sig')
       sessionStorage.removeItem('sign')
       sessionStorage.removeItem('user')
       sessionStorage.removeItem('token')

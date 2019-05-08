@@ -33,8 +33,9 @@ export function createRouter () {
         meta:{
           keepAlive: true,
           showFoot:true,
-          title:'期达人-推荐',
-          content:'期达人-推荐'
+          title:'期达人国际期货_期达人期货咨询_期货投资咨询-期达人官网',
+          keywords:'期达人锦囊,期达人期货指南,期货投资技巧,期达人官网',
+          content:'期达人锦囊，为个人期货投资者提供期货投资技巧，以订阅的方式，提供期达人期货指南，帮助您获取最大的期货收益，您可以访问期达人锦囊，了解更多的期货投资指南，获取属于您的“锦囊妙计”。'
         }
       },
       {
@@ -44,6 +45,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'期达人-推荐详情',
+          keywords:'',
           content:'期达人-推荐详情描述'
         }
       },
@@ -55,6 +57,7 @@ export function createRouter () {
           keepAlive: true,
           showFoot:true,
           title:'期达人-7*24',
+          keywords:'',
           content:'期达人-7*24快讯'
         }
       },
@@ -66,6 +69,7 @@ export function createRouter () {
           keepAlive: false,
           showFoot:true,
           title:'期达人-视频',
+          keywords:'',
           content:'期达人-视频列表'
         }
       },
@@ -76,6 +80,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'期达人-视频详情',
+          keywords:'',
           content:'期达人-视频详情'
         }
       },
@@ -87,6 +92,7 @@ export function createRouter () {
           keepAlive: true,
           showFoot:true,
           title:'期达人-专栏列表',
+          keywords:'',
           content:'期达人-专栏详情'
         }
       },
@@ -97,6 +103,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'期达人-专栏详情',
+          keywords:'',
           content:'期达人-专栏详情描述'
         }
       },
@@ -108,6 +115,7 @@ export function createRouter () {
           keepAlive: false,
           showFoot:true,
           title:'期达人-行情',
+          keywords:'',
           content:'期达人-行情列表'
         }
       },
@@ -119,6 +127,7 @@ export function createRouter () {
           keepAlive: true,
           showFoot:true,
           title:'期达人-期问',
+          keywords:'',
           content:'期达人-期问列表'
         }
       },
@@ -129,6 +138,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'期达人-期问详情',
+          keywords:'',
           content:'期达人-期问详情描述'
         }
       },
@@ -139,6 +149,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'期达人-期问填写回答',
+          keywords:'',
           content:'期达人-期问填写回答'
         }
       },
@@ -149,6 +160,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'期达人-期问回答详情',
+          keywords:'',
           content:'期达人-期问回答详情描述'
         }
       },
@@ -160,6 +172,7 @@ export function createRouter () {
           keepAlive: false,
           showFoot:true,
           title:'我的',
+          keywords:'',
           content:'我的-个人中心'
         }
       },
@@ -170,6 +183,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'登录/注册',
+          keywords:'',
           content:'登录/注册'
         }
       },
@@ -180,6 +194,7 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           title:'注册协议',
+          keywords:'',
           content:'注册协议'
         }
       }

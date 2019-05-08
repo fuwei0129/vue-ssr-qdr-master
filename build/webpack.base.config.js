@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require("webpack");//jquery
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
   devtool: '#source-map',
@@ -67,5 +68,11 @@ module.exports = {
   },
   performance: {
     hints: process.env.NODE_ENV === 'production' ? 'warning' : false
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+        jQuery: 'jquery',
+        $: 'jquery'
+    })
+  ]
 }
