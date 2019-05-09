@@ -8,7 +8,7 @@
           infinite-scroll-disabled="isMoreLoading"
           infinite-scroll-distance="0"
           infinite-scroll-immediate-check="false">
-        <div class="item" v-for="(item,index) in questionData" :key="index">
+        <div class="item" v-for="(item,index) in questionData" :key="index" @click="todetail(item.questionId)">
           <div class="main">
             <div class="flex author-row">
               <div class="avatar lg-avatar" v-if="item.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
@@ -21,12 +21,13 @@
                 <p class="others">{{item.showTime}} 来自{{item.source}}</p>
               </div>
               <div class="right">
-                <span>关注</span>
+                <span v-if="item.isFollowVip == 1" @click.prevent="follow($event,item.memberId)">已关注</span>
+                <span class="unfollow" v-else @click.prevent="follow($event,item.memberId)">关注</span>
               </div>
             </div>
-            <div class="info" @click="todetail(item.questionId)">{{nameformat(item.content)}}</div>
+            <div class="info">{{nameformat(item.content)}}</div>
           </div>
-          <div class="reply" v-if="item.answerDTO && item.answerDTO.answerId">
+          <div class="reply" v-if="item.answerDTO && item.answerDTO.answerId" @click.prevent="torydetail($event,item.answerDTO.answerId,item.questionId)">
             <div class="flex author-row">
               <div class="avatar sm-avatar" v-if="item.answerDTO.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
               <div class="avatar sm-avatar" v-else v-bind:style="{backgroundImage: 'url('+item.answerDTO.imgUrl+')'}"></div>
@@ -74,6 +75,8 @@ export default{
    * 此函数会在组件实例化之前调用，所以它无法访问 this。需要将 store 和路由信息作为参数传递进去：
    */
   asyncData (store, route) {
+    console.log(1)
+    let user = store.getters.getUser //user
     let model = {
       reqbase:{
         timestamp: common.getLastDate(),
@@ -88,7 +91,10 @@ export default{
         size: 10,
         count: true
       },
-      reqparam:{}
+      reqparam:{
+        questionId:'',
+        userId:user?user.memberId:null
+      }
     }
     return store.dispatch('fetchQuestions', { model }) // 服务端渲染触发
   },
@@ -102,6 +108,9 @@ export default{
   },
   // 计算属性
   computed: {
+    user() {
+      return this.$store.getters.getUser
+    },
     questionData(){
       var lst = []
       var data = this.$store.getters.getQuestionData
@@ -177,6 +186,18 @@ export default{
       return lst
     }
   },
+  mounted(){
+    console.log("mounted")
+    setTimeout(() => {
+      this.fetchList(true)
+    },500)
+  },
+  activated(){
+    console.log("activated")
+  },
+  deactivated(){
+    console.log("deactivated")
+  },
   methods:{
     preview(index,imgs){
       let arr = []
@@ -188,7 +209,7 @@ export default{
         startPosition: index
       })
     },
-    fetchList(){
+    fetchList(isFirst){
       let model = {
         reqbase:{
           timestamp: common.getLastDate(),
@@ -203,20 +224,27 @@ export default{
           size: 10,
           count: true
         },
-        reqparam:{}
+        reqparam:{
+          questionId:'',
+          userId:this.user?this.user.memberId:null
+        }
       }
       let that = this
       http.postmain(api.getQuestions,model).then((response) => {
-        that.isLoading = false
-        if(response.data.respbase.returncode == '10000'){
-          if(response.data.respparam.length == 0){
-            that.noMore = true
-          }else{
-            that.isMoreLoading = false
-            that.$store.commit('setQuestionData',response.data.respparam)
-          }
+        if(isFirst){
+          that.$store.commit('resetQuestionData',response.data.respparam)
         }else{
-          console.log("出错")
+          that.isLoading = false
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore = true
+            }else{
+              that.isMoreLoading = false
+              that.$store.commit('setQuestionData',response.data.respparam)
+            }
+          }else{
+            console.log("出错")
+          }
         }
       })
     },
@@ -226,17 +254,69 @@ export default{
       this.$store.commit('addQstPage')
       var that = this
       setTimeout(() => {
-        that.fetchList()
+        that.fetchList(false)
       },1000)
     },
     todetail(id){
       this.$router.push({name:'futuresdetail',params:{id:id}});
+    },
+    torydetail(e,id,qid){
+      e.stopPropagation();
+      this.$router.push({name:'futuresreply',params:{id:id,qid:qid}});
     },
     nameformat(val){
       if(val.length>50){
         val = val.substr(0,50)+'...'
       }
       return val
+    },
+    follow(e,tid){
+      e.stopPropagation();
+      if(this.testWhetherDoLogin()){
+        let data = {
+          reqbase:{
+            timestamp:common.getLastDate(),
+            clientauthflag:common.getClientauthflag(),
+            reqorigin:"xuantie",
+            token:common.getToken(),
+            sourceip:common.getIp()
+          },
+          reqpage:{},
+          reqparam:{
+            tid:tid,
+            type:'1',
+            uid:this.user.memberId
+          }
+        }
+        var that = this
+        http.postmain(api.attentionOrNo,data).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            let obj = that.$store.getters.getQuestionData
+            for (var i = 0; i < obj.length; i++) {
+              if(obj[i].memberId == tid){
+                if(obj[i].isFollowVip == 0){
+                  obj[i].isFollowVip = 1
+                }else{
+                  obj[i].isFollowVip = 0
+                }
+              }
+            }
+            that.$store.commit('resetQuestionData',obj)
+          }else{
+            Toast({
+              message: response.data.respbase.returnmsg,
+              position: 'middle',
+              duration: 2000
+            })
+          }
+        })
+      }
+    },
+    testWhetherDoLogin() {
+      if (this.user) {
+        return true
+      }
+      this.$router.push({ name: 'sign', params: { parentPath: this.$route.path } })
     }
   }
 }

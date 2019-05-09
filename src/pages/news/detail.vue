@@ -11,7 +11,7 @@
           <div class="second"><span class="datetime">{{article.param.time | datefilter}}</span><span class="sourceform">来源：{{article.param.sourcefrom}}</span></div>
           <div class="content" v-html="article.param.content"></div>
         </div>
-        <div class="article-bottom-features">
+        <div class="article-bottom-features" v-if="article.param != null">
           <span class="fl">阅读 {{article.reading}}</span>
           <span class="fr ico_like_on" v-if="article.isDianZan">{{article.dianZan}}</span>
           <span class="fr ico_like_on" v-else-if="liked">{{article.dianZan+1}}</span>
@@ -105,6 +105,9 @@ export default{
       this.$store.dispatch('fetchRecommendDetail',{ model })
     },
     reading(){
+      if(this.article.param == null){
+        return
+      }
       let model = {
         reqbase:{
           timestamp: common.getLastDate(),

@@ -6,7 +6,7 @@
 					<div class="avatar" style="background-image:url(../../public/img/default.png)"></div>
       		<div class="lname"><span>期达人直播室</span><span>{{online}}</span></div>
           <span class="btn-subscribe" v-if="liveDetail.isAttention">已关注</span>
-          <span class="btn-subscribe" v-else>关注</span>
+          <span class="btn-subscribe" v-else @click="follow()">关注</span>
 				</div>
         <span class="icon-exit" @click="backtolist()"></span>
       </div>
@@ -667,6 +667,42 @@ export default{
     	setTimeout(function() {
     		$(".chatlst").mCustomScrollbar('scrollTo', 'last');
     	}, 500)
+    },
+    follow(){
+      if(this.testWhetherDoLogin()){
+        let data = {
+          reqbase:{
+            timestamp:common.getLastDate(),
+            clientauthflag:common.getClientauthflag(),
+            reqorigin:"xuantie",
+            token:common.getToken(),
+            sourceip:common.getIp()
+          },
+          reqpage:{},
+          reqparam:{
+            userId:this.user.memberId,
+            roomId: global.studioId
+          }
+        }
+        var that = this
+        http.postmain(api.addOrNo,data).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            that.liveDetail.isAttention = true
+          }else{
+            Toast({
+              message: response.data.respbase.returnmsg,
+              position: 'middle',
+              duration: 2000
+            })
+          }
+        })
+      }
+    },
+    testWhetherDoLogin() {
+      if (this.user) {
+        return true
+      }
+      this.$router.push({ name: 'sign', params: { parentPath: this.$route.path } })
     }
   }
 }

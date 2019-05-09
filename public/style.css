@@ -290,7 +290,7 @@
   border-radius: 5px;
   padding:3px 10px;
 }
-.author-row .right span:before{
+.author-row .right span.unfollow:before{
   content:'+';
 }
 .author-row .ct-right span{

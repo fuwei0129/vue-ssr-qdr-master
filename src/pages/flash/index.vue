@@ -15,7 +15,7 @@
               <label class="year">{{item.year}}</label>
             </div>
             <span class="time">{{item.time | timefilter1}}</span>
-            <p v-if="item.content.length>100">{{item.content.substr(0,100)+'...'}}<span>详见></span></p>
+            <p v-if="item.content && item.content.length>100">{{item.content.substr(0,100)+'...'}}<span>详见></span></p>
             <p v-else>{{item.content}}</p>
           </div>
         </div>

@@ -4,7 +4,7 @@
       <router-link to="" slot="left">
         <mt-button icon="back" @click="$router.back(-1)"></mt-button>
       </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
+      <!-- <mt-button icon="more" slot="right"></mt-button> -->
     </mt-header>
     <div class="futures-detail-box pdt40 mt5">
       <div class="answer-box pd15">

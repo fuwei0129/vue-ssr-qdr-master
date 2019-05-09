@@ -89,7 +89,7 @@ export function createRouter () {
         name:'columnindex',
         component: columnindex,
         meta:{
-          keepAlive: true,
+          keepAlive: false,
           showFoot:true,
           title:'期达人-专栏列表',
           keywords:'',
@@ -124,7 +124,7 @@ export function createRouter () {
         name:'futuresindex',
         component: futuresindex,
         meta:{
-          keepAlive: true,
+          keepAlive: false,
           showFoot:true,
           title:'期达人-期问',
           keywords:'',

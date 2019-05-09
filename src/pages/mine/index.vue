@@ -11,19 +11,33 @@
           <span>登录/注册</span><label>喜欢期货，所有我用期达人</label>
         </div>
       </div>
-      <div class="row">
-        <span class="fl">0关注</span>
-        <span class="fr">0收藏</span>
+      <div class="row flex">
+        <div>
+          <span>0</span>
+          <label>关注</label>
+        </div>
+        <div>
+          <span>0</span>
+          <label>粉丝</label>
+        </div>
+        <div>
+          <span>0</span>
+          <label>提问</label>
+        </div>
+        <div>
+          <span>0</span>
+          <label>收藏</label>
+        </div>
       </div>
     </div>
     <div>
-      <mt-cell class="mt5" title="消息" to="" is-link></mt-cell>
-      <mt-cell class="mt5" title="锦囊" to="" is-link></mt-cell>
-      <mt-cell class="mt5" title="订阅" to="" is-link></mt-cell>
-      <mt-cell class="mt5" title="开户" to="" is-link></mt-cell>
-      <mt-cell class="mt5" title="购买记录" to="" is-link></mt-cell>
-      <mt-cell class="mt15" title="在线客服" is-link></mt-cell>
-      <mt-cell class="mt15" v-if="user" @click.native="logout()" title="注销" is-link></mt-cell>
+      <mt-cell class="mt5" title="消息" to="" is-link>
+        <img slot="icon" src="/public/img/ico_msg.png" width="24" height="24">
+      </mt-cell>
+      <mt-cell class="mt5" title="联系客服" is-link>
+        <img slot="icon" src="/public/img/ico_kf.png" width="24" height="24">
+      </mt-cell>
+      <mt-cell class="mt5" v-if="user" @click.native="logout()" title="注销" is-link></mt-cell>
     </div>
   </section>
 </template>
@@ -112,19 +126,35 @@ export default{
 }
 .mid-right label{
   font-size:10px;
-  color:#fff;
+  color:#445168;
 }
 .row{
-  margin-top:15px;
-  padding:0 50px;
   overflow: hidden;
 }
-.row span{
+.row div{
+  margin:25px 0 10px 0;
+  flex:1;
+  text-align: center;
+}
+.row div span{
   color:#fff;
-  font-size:10px;
+  display: block;
+  font-size:16px;
+  margin-bottom:5px;
+}
+.row div label{
+  color:#6e7c95;
+  display: block;
+  font-size:14px;
+}
+.mint-cell-wrapper{
+  padding:0 10px 0 20px;
 }
 .mint-cell{
   background:#141f30;
+}
+.mint-cell img{
+  margin-right:5px;
 }
 .mint-cell-text{
   color:#fff;

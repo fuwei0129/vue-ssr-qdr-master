@@ -29,6 +29,9 @@ export default{
     setQuestionData (state, data) {
       state.questionData = state.questionData.concat(data)
     },
+    resetQuestionData (state, data){
+      state.questionData = data
+    },
     setQuestionDetail (state, data) {
       state.detail = data
     },

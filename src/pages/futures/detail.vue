@@ -4,8 +4,8 @@
       <router-link to="" slot="left">
         <mt-button icon="back" @click="$router.back(-1)"></mt-button>
       </router-link>
-      <span class="icon-add" slot="right" @click="answer(1)">写回答</span>
-      <mt-button icon="more" slot="right"></mt-button>
+      <!-- <span class="icon-add" slot="right" @click="answer(1)">写回答</span> -->
+      <!-- <mt-button icon="more" slot="right"></mt-button> -->
     </mt-header>
     <div class="futures-detail-box pdt40 mt5">
       <div class="ask-box">
@@ -38,7 +38,7 @@
           <!-- <div class="fr"><label>按最新</label></div> -->
         </div>
         <div class="answer-list" v-if="questiondetail.answerDTO && questiondetail.answerDTO.length">
-          <div class="answer-item" v-for="item in questiondetail.answerDTO">
+          <div class="answer-item" v-for="item in questiondetail.answerDTO" @click="todetail(item.answerId,questiondetail.questionId)">
             <div class="pd15">
               <div class="flex author-row">
                 <div class="avatar sm-avatar" v-if="item.imgUrl==null" style="background-image:url(../../public/img/user-default.png)"></div>
@@ -55,7 +55,7 @@
                 </div>
               </div>
               <div class="answer-info">
-                <p @click="todetail(item.answerId,questiondetail.questionId)">{{item.answerContent}}</p>
+                <p>{{item.answerContent}}</p>
                 <div class="futures-photos-box half mt5" v-if="item.questionAccessory && item.questionAccessory.length">
                   <span v-if="item.questionAccessory.length>1">{{item.questionAccessory.length}}图</span>
                   <div
