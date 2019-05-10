@@ -23,6 +23,9 @@ export default{
     }
   },
   mutations: {
+    resetQstPage (state){
+      state.page = 1
+    },
     addQstPage (state) {
       state.page++
     },

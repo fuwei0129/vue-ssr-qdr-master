@@ -63,7 +63,7 @@ export default{
           timestamp: common.getLastDate(),
           clientauthflag: common.getClientauthflag(),
           reqorigin: "xuantie",
-          token: "",
+          token: common.getToken(),
           sourceip: common.getIp()
         },
         reqpage:{
@@ -82,7 +82,7 @@ export default{
           timestamp: common.getLastDate(),
           clientauthflag: common.getClientauthflag(),
           reqorigin: "xuantie",
-          token: "",
+          token: common.getToken(),
           sourceip: common.getIp()
         },
         reqpage:{

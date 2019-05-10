@@ -47,7 +47,7 @@
                   class="single"
                   v-bind:style="{backgroundImage: 'url('+jtem.accessoryUrl+')'}"
                   v-for="(jtem,jndex) in item.answerDTO.questionAccessory"
-                  @click="preview(jndex,item.answerDTO.questionAccessory)"
+                  @click.prevent="preview($event,jndex,item.answerDTO.questionAccessory)"
                   v-if="jndex < 3"></div>
               </div>
             </div>
@@ -68,6 +68,7 @@ import http from '../../utils/http'
 import api from '../../utils/api'
 import common from '../../utils/common'
 import { ImagePreview } from 'vant'
+import { Toast } from 'mint-ui'
 export default{
   /**
    * [SSR获取所有组件的asyncData并执行获得初始数据]
@@ -75,7 +76,6 @@ export default{
    * 此函数会在组件实例化之前调用，所以它无法访问 this。需要将 store 和路由信息作为参数传递进去：
    */
   asyncData (store, route) {
-    console.log(1)
     let user = store.getters.getUser //user
     let model = {
       reqbase:{
@@ -186,20 +186,30 @@ export default{
       return lst
     }
   },
+  watch:{
+    user(newVal,oldVal){
+      if(newVal != oldVal){
+        this.$store.commit('resetQstPage')
+        setTimeout(() => {
+          this.fetchList(true)
+        },500)
+      }
+    }
+  },
   mounted(){
-    console.log("mounted")
     setTimeout(() => {
       this.fetchList(true)
     },500)
   },
   activated(){
-    console.log("activated")
+    // console.log("activated")
   },
   deactivated(){
-    console.log("deactivated")
+    // console.log("deactivated")
   },
   methods:{
-    preview(index,imgs){
+    preview(e,index,imgs){
+      e.stopPropagation();
       let arr = []
       for (var i = 0; i < imgs.length; i++) {
         arr.push(imgs[i].accessoryUrl)
@@ -215,12 +225,12 @@ export default{
           timestamp: common.getLastDate(),
           clientauthflag: common.getClientauthflag(),
           reqorigin: "xuantie",
-          token: "",
+          token: common.getToken(),
           sourceip: common.getIp()
         },
         reqpage:{
           total:0,
-          page: this.$store.getters.getQstPage,
+          page: isFirst?1:this.$store.getters.getQstPage,
           size: 10,
           count: true
         },
@@ -295,8 +305,18 @@ export default{
             for (var i = 0; i < obj.length; i++) {
               if(obj[i].memberId == tid){
                 if(obj[i].isFollowVip == 0){
+                  Toast({
+                    message: '关注成功',
+                    position: 'middle',
+                    duration: 2000
+                  })
                   obj[i].isFollowVip = 1
                 }else{
+                  Toast({
+                    message: '取消关注',
+                    position: 'middle',
+                    duration: 2000
+                  })
                   obj[i].isFollowVip = 0
                 }
               }

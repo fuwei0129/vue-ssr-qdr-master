@@ -143,9 +143,9 @@ export default{
           reqbase:{
             timestamp: common.getLastDate(),
             clientauthflag: common.getClientauthflag(),
-            reqorigin: "xuantie",
-            token: "",
-            sourceip: "127.0.0.1"
+            reqorigin:"xuantie",
+            token:common.getToken(),
+            sourceip:common.getIp()
           },
           reqpage:{
             total:0,

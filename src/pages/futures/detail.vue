@@ -5,7 +5,7 @@
         <mt-button icon="back" @click="$router.back(-1)"></mt-button>
       </router-link>
       <!-- <span class="icon-add" slot="right" @click="answer(1)">写回答</span> -->
-      <!-- <mt-button icon="more" slot="right"></mt-button> -->
+      <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     <div class="futures-detail-box pdt40 mt5">
       <div class="ask-box">
@@ -21,14 +21,15 @@
             <p class="others">{{questiondetail.showTime}}</p>
           </div>
           <div class="right">
-            <span>关注</span>
+            <span v-if="questiondetail.isFollowVip == 1" @click.prevent="followUser($event,questiondetail.memberId,'1')">已关注</span>
+            <span v-else @click.prevent="followUser($event,questiondetail.memberId,'1')">关注</span>
           </div>
         </div>
         <div class="futures-photos-box half mt15" v-if="questiondetail.questionAccessory && questiondetail.questionAccessory.length">
           <span v-if="questiondetail.questionAccessory.length > 1">{{questiondetail.questionAccessory.length}}图</span>
           <div
               class="cover"
-              @click="preview(questiondetail.questionAccessory)"
+              @click.prevent="preview($event,questiondetail.questionAccessory)"
               v-bind:style="{backgroundImage: 'url('+questiondetail.questionAccessory[0].accessoryUrl+')'}"></div>
         </div>
       </div>
@@ -51,7 +52,8 @@
                   <p class="others">{{item.source}}</p>
                 </div>
                 <div class="right">
-                  <span>关注</span>
+                  <span v-if="item.isFollowVip == 1" @click.prevent="followUser($event,item.answerMemberId,'2')">已关注</span>
+                  <span v-else @click.prevent="followUser($event,item.answerMemberId,'2')">关注</span>
                 </div>
               </div>
               <div class="answer-info">
@@ -60,7 +62,7 @@
                   <span v-if="item.questionAccessory.length>1">{{item.questionAccessory.length}}图</span>
                   <div
                       class="cover"
-                      @click="preview(item.questionAccessory)"
+                      @click.prevent="preview($event,item.questionAccessory)"
                       v-bind:style="{backgroundImage: 'url('+item.questionAccessory[0].accessoryUrl+')'}"></div>
                 </div>
                 <span class="time">{{item.answerTime}}</span>
@@ -81,7 +83,8 @@
             <div class="item-buttons-bottom border-top">
               <div><span class="ico_zf">{{item.shareNum}}</span></div>
               <div><span class="ico_comment">{{item.commentNum}}</span></div>
-              <div><span class="ico_like">{{item.toPraiseNum}}</span></div>
+              <div v-if="item.isToPraise == 1" @click.prevent="$event.stopPropagation();"><span class="ico_like ico_like_on">{{item.toPraiseNum}}</span></div>
+              <div v-else @click.prevent="like($event,item.answerId)"><span class="ico_like">{{item.toPraiseNum}}</span></div>
               <!-- <div><span class="ico_rewards">5</span></div> -->
             </div>
           </div>
@@ -91,8 +94,11 @@
   </section>
 </template>
 <script>
+import http from '../../utils/http'
+import api from '../../utils/api'
 import common from '../../utils/common'
 import { ImagePreview } from 'vant'
+import { Toast } from 'mint-ui'
 export default{
   asyncData (store, route) {
     let questionId = route.params.id // 期问id
@@ -126,17 +132,193 @@ export default{
   },
   // 计算属性
   computed: {
+    user() {
+      return this.$store.getters.getUser
+    },
     questiondetail () {
       return this.$store.getters.getQuestionDetail // 期问详情
     }
   },
+  mounted(){
+    setTimeout(() => {
+      this.fetchDetail()
+    },500)
+  },
+  activated(){
+    // console.log("activated")
+  },
+  deactivated(){
+    // console.log("deactivated")
+  },
   methods:{
-    preview(imgs){
+    fetchDetail(){
+      let questionId = this.$route.params.id // 期问id
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: common.getToken(),
+          sourceip: common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page: 1,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          questionId:questionId,
+          userId:this.user?this.user.memberId:null
+        }
+      }
+      let that = this
+      http.postmain(api.findQuestion,model).then((response) => {
+        if(response.data.respbase.returncode == '10000'){
+          console.log(response.data.respparam)
+          that.$store.commit('setQuestionDetail', response.data.respparam)
+        }else{
+          console.log("出错")
+        }
+      })
+    },
+    testWhetherDoLogin() {
+      if (this.user) {
+        return true
+      }
+      this.$router.push({ name: 'sign', params: { parentPath: this.$route.path } })
+    },
+    preview(e,imgs){
+      e.stopPropagation();
       let arr = []
       for (var i = 0; i < imgs.length; i++) {
         arr.push(imgs[i].accessoryUrl)
       }
       ImagePreview(arr)
+    },
+    followUser(e,tid,type){
+      e.stopPropagation();
+      if(this.testWhetherDoLogin()){
+        let data = {
+          reqbase:{
+            timestamp:common.getLastDate(),
+            clientauthflag:common.getClientauthflag(),
+            reqorigin:"xuantie",
+            token:common.getToken(),
+            sourceip:common.getIp()
+          },
+          reqpage:{},
+          reqparam:{
+            tid:tid,
+            type:'1',
+            uid:this.user.memberId
+          }
+        }
+        var that = this
+        http.postmain(api.attentionOrNo,data).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            let obj = that.$store.getters.getQuestionDetail
+            if(type == '1'){ //关注提问题的人
+              if(obj.isFollowVip == 0){
+                obj.isFollowVip = 1
+                Toast({
+                  message: '关注成功',
+                  position: 'middle',
+                  duration: 2000
+                })
+              }else{
+                obj.isFollowVip = 0
+                Toast({
+                  message: '取消关注',
+                  position: 'middle',
+                  duration: 2000
+                })
+              }
+            }else if(type == '2'){//关注回答的人
+              for (var i = 0; i < obj.answerDTO.length; i++) {
+                if(obj.answerDTO[i].answerMemberId == tid){
+                  if(obj.answerDTO[i].isFollowVip == 0){
+                    Toast({
+                      message: '关注成功',
+                      position: 'middle',
+                      duration: 2000
+                    })
+                    obj.answerDTO[i].isFollowVip = 1
+                  }else{
+                    Toast({
+                      message: '取消关注',
+                      position: 'middle',
+                      duration: 2000
+                    })
+                    obj.answerDTO[i].isFollowVip = 0
+                  }
+                }
+              }
+            }
+            that.$store.commit('setQuestionDetail',obj)
+
+            //更新外面的列表的状态
+            let obj1 = that.$store.getters.getQuestionData
+            for (var i = 0; i < obj1.length; i++) {
+              if(obj1[i].memberId == tid){
+                if(obj1[i].isFollowVip == 0){
+                  obj1[i].isFollowVip = 1
+                }else{
+                  obj1[i].isFollowVip = 0
+                }
+              }
+            }
+            that.$store.commit('resetQuestionData',obj1)
+          }else{
+            Toast({
+              message: response.data.respbase.returnmsg,
+              position: 'middle',
+              duration: 2000
+            })
+          }
+        })
+      }
+    },
+    like(e,bid){
+      e.stopPropagation();
+      if(this.testWhetherDoLogin()){
+        let model = {
+          reqbase:{
+            timestamp: common.getLastDate(),
+            clientauthflag: common.getClientauthflag(),
+            reqorigin:"xuantie",
+            token:common.getToken(),
+            sourceip:common.getIp()
+          },
+          reqpage:{
+            total:0,
+            page: 1,
+            size: 10,
+            count: true
+          },
+          reqparam:{
+            busiId: bid,
+  					busiType: 10,
+  					fType: '2',
+  					operateId: this.user.memberId
+          }
+        }
+        var that = this
+        http.postmain(api.readingInsert,model).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            let obj = that.$store.getters.getQuestionDetail
+            for (var i = 0; i < obj.answerDTO.length; i++) {
+              if(obj.answerDTO[i].answerId == bid){
+                obj.answerDTO[i].isToPraise = 1
+                obj.answerDTO[i].toPraiseNum++
+              }
+            }
+            that.$store.commit('setQuestionDetail',obj)
+          }else{
+            console.log("出错")
+          }
+        })
+      }
     },
     answer(id){
       this.$router.push({name:'answer',params:{id:id}});

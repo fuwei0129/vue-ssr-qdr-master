@@ -85,27 +85,6 @@ export default {
       }
     )
   },
-  postaccount (url,data) {
-    return axios({
-      method: 'post',
-      baseURL: 'http://172.16.1.208:8119',
-      // baseURL: '',
-      url,
-      data: data,
-      timeout: 10000,
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      }
-    }).then(
-      (response) => {
-        return checkStatus(response)
-      }
-    ).then(
-      (res) => {
-        return checkCode(res)
-      }
-    )
-  },
   postvideo (url,data) {
     return axios({
       method: 'post',

@@ -43,7 +43,7 @@ export default{
   actions: {
     //自动登录
     autoLogin({ commit }, data){
-      return http.postaccount(api.autoLogin,data).then((response) => {
+      return http.postmain(api.autoLogin,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           commit('setUser', response.data.respparam)
         }else{
@@ -57,7 +57,7 @@ export default{
     },
     //注销
     logout({ commit }, data){
-      return http.postaccount(api.logout,data).then((response) => {
+      return http.postmain(api.logout,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           commit('signOut')
         }else{

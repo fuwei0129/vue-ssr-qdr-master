@@ -124,7 +124,7 @@ export function createRouter () {
         name:'futuresindex',
         component: futuresindex,
         meta:{
-          keepAlive: false,
+          keepAlive: true,
           showFoot:true,
           title:'期达人-期问',
           keywords:'',
@@ -181,7 +181,7 @@ export function createRouter () {
         name:'sign',
         component: sign,
         meta:{
-          keepAlive: false,
+          keepAlive: true,
           title:'登录/注册',
           keywords:'',
           content:'登录/注册'
@@ -192,7 +192,7 @@ export function createRouter () {
         name:'registerprotocol',
         component: registerprotocol,
         meta:{
-          keepAlive: false,
+          keepAlive: true,
           title:'注册协议',
           keywords:'',
           content:'注册协议'

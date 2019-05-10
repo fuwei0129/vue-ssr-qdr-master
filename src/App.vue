@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <!-- <transition name="fade" mode="out-in"> -->
-      <keep-alive v-if="$route.meta.keepAlive">
+      <!-- <keep-alive v-if="$route.meta.keepAlive">
     	   <router-view></router-view>
       </keep-alive>
-      <router-view v-else></router-view>
+      <router-view v-else></router-view> -->
+      <keep-alive><router-view></router-view></keep-alive>
       <Foot :showNav="showNav"></Foot>
     <!-- </transition> -->
   </div>

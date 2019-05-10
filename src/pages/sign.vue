@@ -85,7 +85,7 @@ export default{
   name:'sign',
   data(){
     return{
-      signIndex:this.$store.getters.getSignIndex,
+      signIndex:1,
       type:1, //登录方式：1密码登录，2验证码登录
       log_wait_timer:false,
       reg_wait_timer:false,
@@ -118,7 +118,7 @@ export default{
     },
     setVal(val){
       this.signIndex = val
-      this.$store.commit('setSignIndex',val)
+      // this.$store.commit('setSignIndex',val)
     },
     setType(val){
       this.type = val
@@ -184,7 +184,7 @@ export default{
           password:this.loginModel.password
         }
       }
-      http.postaccount(api.login,data).then((response) => {
+      http.postmain(api.login,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           this.$store.commit('setUser', response.data.respparam)
           // 登录后，清除input项的值
@@ -254,7 +254,7 @@ export default{
         }
       }
       let that = this
-      http.postaccount(api.sendSms,data).then((response) => {
+      http.postmain(api.sendSms,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           that.reg_wait_timer = 59;
           var timer_interval = setInterval(function(){
@@ -341,7 +341,7 @@ export default{
           source:'1'
         }
       }
-      http.postaccount(api.register,data).then((response) => {
+      http.postmain(api.register,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           this.$store.commit('setUser', response.data.respparam)
           // 注册后，清除input项的值
@@ -403,7 +403,7 @@ export default{
         }
       }
       let that = this
-      http.postaccount(api.sendSms,data).then((response) => {
+      http.postmain(api.sendSms,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           that.log_wait_timer = 59;
           var timer_interval = setInterval(function(){
@@ -465,7 +465,7 @@ export default{
           code:this.codeLoginModel.code
         }
       }
-      http.postaccount(api.codeLogin,data).then((response) => {
+      http.postmain(api.codeLogin,data).then((response) => {
         if(response.data.respbase.returncode == '10000'){
           this.$store.commit('setUser', response.data.respparam)
           // 登录后，清除input项的值

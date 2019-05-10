@@ -100,6 +100,8 @@ export default{
       that.LiveDetail()
     },800)
   },
+  activated(){
+  },
   beforeDestroy(){
     this.logout()  //webim注销
   },
@@ -418,7 +420,7 @@ export default{
     				//html += convertLocationMsgToHtml(content);
     				break;
     			case webim.MSG_ELEMENT_TYPE.CUSTOM:
-    				html += ImBase.convertCustomMsgToHtml(content);
+    				// html += ImBase.convertCustomMsgToHtml(content);
     				break;
     			case webim.MSG_ELEMENT_TYPE.GROUP_TIP:
     				html += this.convertGroupTipMsgToHtml(content);
@@ -634,7 +636,7 @@ export default{
       })
     },
     backtolist(){
-      this.quitBigGroup()
+      // this.quitBigGroup()
       this.$router.back(-1)
     },
     quitBigGroup() {
