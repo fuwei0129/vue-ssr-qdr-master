@@ -5,7 +5,7 @@
         <img
             slot="icon"
             src="../../public/img/ico_01_on.png"
-            v-if="route === '/' || route === '/flash/index' || route === '/live/index' || route === '/column/index'">
+            v-if="route === '/' || route === '/flash/index' || route === '/live/index' || route === '/column/index' || route === '/calendar/data' || route === '/calendar/event'">
         <img slot="icon" src="../../public/img/ico_01.png" v-else>
         资讯
       </mt-tab-item>

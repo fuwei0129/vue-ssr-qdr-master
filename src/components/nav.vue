@@ -13,6 +13,10 @@
       <router-link class="initial" v-else to="/live/index">直播</router-link>
     </div>
     <div class="tab-item">
+      <span class="on" v-if="navIndex == 4">日历</span>
+      <router-link class="initial" v-else to="/calendar/data">日历</router-link>
+    </div>
+    <div class="tab-item">
       <span class="on" v-if="navIndex == 3">专栏</span>
       <router-link class="initial" v-else to="/column/index">专栏</router-link>
     </div>
@@ -43,7 +47,7 @@ export default{
     width:100%;
     display: flex;
     height:50px;
-    background:#131a25;
+    background:#171f2c;
     z-index:4;
   }
   .tab-item{

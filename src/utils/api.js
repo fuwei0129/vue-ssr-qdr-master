@@ -17,6 +17,8 @@ export default {
   recommendDetail:'/newsRecommend/recommendDetails', //推荐详情
   getFutures:'/futures/getFutures', //7*24
   futuresDetail:'/futures/futuresDetails', //7*24详情
+  getFinancialCalendar:'/calendenar/getFinancialCalendar',//财经日历
+  getFinancialNews:'/calendenar/getFinancialNews',//财经事件
   getColumns:'/zhuangLan/zhuangLanList', //专栏
   columnDetail:'/zhuangLan/zhuangLanDetails', //专栏详情
   readingInsert:'/functionManage/insert',//阅读文章+1 or 点赞

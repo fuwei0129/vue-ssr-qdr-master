@@ -25,6 +25,12 @@
 .mt50{
   margin-top:50px;
 }
+.mt104{
+  margin-top:104px;
+}
+.mt114{
+  margin-top:114px;
+}
 .border-top{
   border-top:1px solid #1b2435;
 }
@@ -222,8 +228,44 @@
   background: url(../public/img/ico_like_on.png) no-repeat center;
   background-size: 15px;
 }
-
 /* end推荐列表和新闻详情end */
+/* 日历 */
+.calendar-box .condition{
+  position: fixed;
+  top:51px;
+  width:100%;
+  background: #171f2c;
+  padding:10px 0;
+  text-align: center;
+}
+.calendar-box .condition div.ico_rili{
+  position: absolute;
+  left:15px;
+  top:10px;
+  height:32px;
+  line-height: 32px;
+  color:#7887a6;
+  font-size:14px;
+  background:url(../public/img/ico_rili.png) no-repeat left center;
+  padding-left:25px;
+  background-size:20px;
+}
+.calendar-box .condition .tab-btns{
+  display: inline-block;
+  border:1px solid #7b92a5;
+  border-radius: 3px;
+}
+.calendar-box .condition .tab-btns a{
+  color:#7887a6;
+  font-size:15px;
+  display: inline-block;
+  padding:5px 20px;
+}
+.calendar-box .condition .tab-btns a.on{
+  color:#09131b;
+  background:#7887a6;
+}
+
 /* 期问style */
 .futuresbox .item{
   padding:15px;

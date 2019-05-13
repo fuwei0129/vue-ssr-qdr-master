@@ -7,6 +7,8 @@ import newsdetail from '../pages/news/detail.vue'
 import flashindex from '../pages/flash/index.vue'
 import liveindex from '../pages/live/index.vue'
 import livedetail from '../pages/live/detail.vue'
+import calendardata from '../pages/calendar/data.vue'
+import calendarevent from '../pages/calendar/event.vue'
 import columnindex from '../pages/column/index.vue'
 import columndetail from '../pages/column/detail.vue'
 import marketindex from '../pages/market/index.vue'
@@ -82,6 +84,30 @@ export function createRouter () {
           title:'期达人-视频详情',
           keywords:'',
           content:'期达人-视频详情'
+        }
+      },
+      {
+        path: '/calendar/data',
+        name:'calendardata',
+        component: calendardata,
+        meta:{
+          keepAlive: false,
+          showFoot:true,
+          title:'期达人-日历',
+          keywords:'',
+          content:'期达人-日历'
+        }
+      },
+      {
+        path: '/calendar/event',
+        name:'calendarevent',
+        component: calendarevent,
+        meta:{
+          keepAlive: false,
+          showFoot:true,
+          title:'期达人-日历',
+          keywords:'',
+          content:'期达人-日历'
         }
       },
       {
