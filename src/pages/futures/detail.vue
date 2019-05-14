@@ -5,8 +5,14 @@
         <mt-button icon="back" @click="$router.back(-1)"></mt-button>
       </router-link>
       <!-- <span class="icon-add" slot="right" @click="answer(1)">写回答</span> -->
-      <mt-button icon="more" slot="right"></mt-button>
+      <mt-button icon="more" slot="right" @click="showpopup"></mt-button>
     </mt-header>
+    <div class="pop-panel" v-show="popupVisible" @click="hidepopup">
+      <div class="customize-widget" @click.prevent="$event.stopPropagation();">
+        <span v-if="questiondetail.isFollowQuestion == 0" @click="followQst(questiondetail.questionId)">关注</span>
+        <span v-else @click="followQst(questiondetail.questionId)">已关注</span>
+      </div>
+    </div>
     <div class="futures-detail-box pdt40 mt5">
       <div class="ask-box">
         <p class="title">{{questiondetail.content}}</p>
@@ -127,7 +133,7 @@ export default{
   name:'futuresdetail',
   data(){
     return{
-
+      popupVisible:false
     }
   },
   // 计算属性
@@ -151,6 +157,12 @@ export default{
     // console.log("deactivated")
   },
   methods:{
+    showpopup(){
+      this.popupVisible = true
+    },
+    hidepopup(){
+      this.popupVisible = false
+    },
     fetchDetail(){
       let questionId = this.$route.params.id // 期问id
       let model = {
@@ -175,7 +187,6 @@ export default{
       let that = this
       http.postmain(api.findQuestion,model).then((response) => {
         if(response.data.respbase.returncode == '10000'){
-          console.log(response.data.respparam)
           that.$store.commit('setQuestionDetail', response.data.respparam)
         }else{
           console.log("出错")
@@ -195,6 +206,54 @@ export default{
         arr.push(imgs[i].accessoryUrl)
       }
       ImagePreview(arr)
+    },
+    followQst(tid,type){
+      if(this.testWhetherDoLogin()){
+        let data = {
+          reqbase:{
+            timestamp:common.getLastDate(),
+            clientauthflag:common.getClientauthflag(),
+            reqorigin:"xuantie",
+            token:common.getToken(),
+            sourceip:common.getIp()
+          },
+          reqpage:{},
+          reqparam:{
+            tid:tid,
+            type:'3',
+            uid:this.user.memberId
+          }
+        }
+        var that = this
+        http.postmain(api.attentionOrNo,data).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            let obj = that.$store.getters.getQuestionDetail
+            if(obj.isFollowQuestion == 0){
+              obj.isFollowQuestion = 1
+              Toast({
+                message: '关注成功',
+                position: 'middle',
+                duration: 2000
+              })
+            }else{
+              obj.isFollowQuestion = 0
+              Toast({
+                message: '取消关注',
+                position: 'middle',
+                duration: 2000
+              })
+            }
+            that.popupVisible = false
+            that.$store.commit('setQuestionDetail',obj)
+          }else{
+            Toast({
+              message: response.data.respbase.returnmsg,
+              position: 'middle',
+              duration: 2000
+            })
+          }
+        })
+      }
     },
     followUser(e,tid,type){
       e.stopPropagation();
