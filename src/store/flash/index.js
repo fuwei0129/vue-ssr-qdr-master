@@ -23,38 +23,7 @@ export default{
       state.page++
     },
     setFlashLists (state, data) {
-      let val = []
-      console.log(data)
-      return;
-      for (var i = 0; i < data.length; i++) {
-        let arr = {
-          id:'',
-          day:'',
-          month:'',
-          year:'',
-          time:'',
-          content:'',
-          flag:false
-        }
-        if(data[i].id == null){
-          console.log(data[i].id)
-        }else{
-          console.log(data[i].id)
-          arr.id = data[i].id
-          arr.day = data[i].id.substr(6,2)
-          arr.month = data[i].id.substr(4,2)
-          arr.year = data[i].id.substr(0,4)
-          arr.time = data[i].timeShow
-          arr.content = data[i].titleContent
-          if(i > 0){
-            if(data[i].id.substr(6,2) != data[i-1].id.substr(6,2)){
-                arr.flag = true
-            }
-          }
-        }
-        val.push(arr)
-      }
-      state.lists = state.lists.concat(val)
+      state.lists = state.lists.concat(data)
     },
     setFlashDetail (state, data) {
       state.detail = data

@@ -242,7 +242,15 @@ export default{
       let that = this
       http.postmain(api.getQuestions,model).then((response) => {
         if(isFirst){
-          that.$store.commit('resetQuestionData',response.data.respparam)
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              console.log("无数据")
+            }else{
+              that.$store.commit('resetQuestionData',response.data.respparam)
+            }
+          }else{
+            console.log("出错")
+          }
         }else{
           that.isLoading = false
           if(response.data.respbase.returncode == '10000'){

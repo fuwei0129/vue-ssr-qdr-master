@@ -6,7 +6,7 @@ export default{
     cpage: 1,
     cddata: [], //财经日历
     epage:1,
-    eventData: {} // 财经事件
+    eventData: [] // 财经事件
   },
   getters: {
     getCdPage: state => {
@@ -29,10 +29,22 @@ export default{
     addEventPage (state) {
       state.epage++
     },
+    resetCdPage (state) {
+      state.cpage = 1
+    },
+    clearCdData (state) {
+      state.cddata = []
+    },
     setCdData (state, data) {
       state.cddata = state.cddata.concat(data)
     },
-    setEventDetail (state, data) {
+    resetEventPage (state) {
+      state.epage = 1
+    },
+    clearEventData (state, data) {
+      state.eventData = []
+    },
+    setEventData (state, data) {
       state.eventData = state.eventData.concat(data)
     }
   },
@@ -41,7 +53,7 @@ export default{
     fetchFCLists({ commit,rootState }, data){
       if(rootState.calendar.cddata.length>0){
       }else{
-        return http.postmain(api.getFinancialCalendar,data.model).then((response) => {
+        return http.postest(api.getFinancialCalendar,data.model).then((response) => {
           if(response.data.respbase.returncode == '10000'){
             commit('setCdData', response.data.respparam)
           }else{
@@ -54,9 +66,9 @@ export default{
     fetchFNLists({ commit,rootState }, data){
       if(rootState.calendar.eventData.length>0){
       }else{
-        return http.postmain(api.getFinancialNews,data.model).then((response) => {
+        return http.postest(api.getFinancialNews,data.model).then((response) => {
           if(response.data.respbase.returncode == '10000'){
-            commit('setEventDetail', response.data.respparam)
+            commit('setEventData', response.data.respparam)
           }else{
             console.log("出错")
           }

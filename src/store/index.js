@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import recommend from './recommend/index'
 import flash from './flash/index'
 import live from './live/index'
+import calendar from './calendar/index'
 import column from './column/index'
 import market from './market/index'
 import futures from './futures/index'
@@ -16,6 +17,7 @@ export function createStore () {
       recommend,
       flash,
       live,
+      calendar,
       column,
       market,
       futures,

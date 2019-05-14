@@ -148,6 +148,26 @@ export default {
       }
     )
   },
+  postest (url,data){
+    return axios({
+      method: 'post',
+      baseURL: 'http://172.16.1.185:8119/',
+      url,
+      data: data,
+      timeout: 10000,
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
+    }).then(
+      (response) => {
+        return checkStatus(response)
+      }
+    ).then(
+      (res) => {
+        return checkCode(res)
+      }
+    )
+  },
   postmain (url,data){
     return axios({
       method: 'post',

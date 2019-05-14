@@ -232,11 +232,13 @@
 /* 日历 */
 .calendar-box .condition{
   position: fixed;
-  top:51px;
+  top:50px;
   width:100%;
   background: #171f2c;
   padding:10px 0;
   text-align: center;
+  z-index: 4;
+  border-top:1px solid #09131b;
 }
 .calendar-box .condition div.ico_rili{
   position: absolute;

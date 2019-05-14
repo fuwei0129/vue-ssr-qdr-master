@@ -74,15 +74,24 @@ export default{
       that.initWebSocket()
     })
   },
-  mounted(){
+  // mounted(){
+  //   var that = this
+  //   setTimeout(() => {
+  //     that.threadPoxi()
+  //   }, 1000)
+  // },
+  activated(){
     var that = this
     setTimeout(() => {
       that.threadPoxi()
     }, 1000)
   },
-  beforeDestroy(){
+  deactivated(){
     this.ws.close()
   },
+  // beforeDestroy(){
+  //   this.ws.close()
+  // },
   methods:{
     removeClass(){
       var that = this

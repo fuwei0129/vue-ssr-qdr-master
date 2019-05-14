@@ -15,6 +15,15 @@ const filter = {
   timefilter1:function(value){
     return moment(value).format('hh:mm:ss')
   },
+  yearformat:function(value){
+    return moment(value).format('YYYY')
+  },
+  monthformat:function(value){
+    return moment(value).format('MM')
+  },
+  dayformat:function(value){
+    return moment(value).format('DD')
+  },
   twodecimal:function(val){
     val = Number(val)
     return val.toFixed(2)

@@ -10,13 +10,42 @@
             infinite-scroll-immediate-check="false">
         <div class="inner">
           <div class="item" v-for="(item,index) in lists" :key="index">
-            <div class="days" v-if="item.flag || index == 0">
-              <label class="monthday">{{item.month}}-{{item.day}}</label>
-              <label class="year">{{item.year}}</label>
+            <div class="days" v-if="item.flag == true">
+              <label class="monthday">{{item.timeShow | monthformat}}-{{item.timeShow | dayformat}}</label>
+              <label class="year">{{item.timeShow | yearformat}}</label>
             </div>
-            <span class="time">{{item.time | timefilter1}}</span>
-            <p v-if="item.content && item.content.length>100">{{item.content.substr(0,100)+'...'}}<span>详见></span></p>
-            <p v-else>{{item.content}}</p>
+            <div v-if="item.newstype == 1">
+              <span class="time">{{item.timeShow | timefilter1}}</span>
+              <!-- <p v-if="item.content && item.content.length>100">{{item.content.substr(0,100)+'...'}}<span @click="extend(index)">展开</span></p>
+              <p v-else>{{item.content}}</p> -->
+
+              <p v-if="item.content && item.content.length>100">
+                <label v-if="index == currentIndex">
+                  {{item.content}}
+                  <span @click="fold()">收起</span>
+                </label>
+                <label v-else>
+                  {{item.content.substr(0,100)+'...'}}
+                  <span @click="extend(index)">展开</span>
+                </label>
+              </p>
+              <p v-else>{{item.content}}</p>
+
+            </div>
+            <div v-if="item.newstype == 2">
+              <div class="flag" v-bind:style="{backgroundImage: 'url('+item.pic+')'}"></div>
+              <span class="time">{{item.timeShow | timefilter1}}</span>
+              <p class="title">{{item.title}}</p>
+              <div class="flex">
+                <div v-if="item.revised"><span>前值：{{item.revised}}</span></div>
+                <div v-else><span>前值：{{item.previous == null ? '--' : item.previous }}{{item.unit == '%' && item.previous ? item.unit : ''}}</span></div>
+                <div>预期：{{item.consensus ? item.consensus : '--'}}{{item.unit == '%' && item.consensus ? item.unit : ''}}</div>
+                <div>公布：{{item.actual ? item.actual : '--'}}{{item.unit == '%' && item.actual ? item.unit : ''}}</div>
+              </div>
+              <div class="star">
+                <div v-for="i in item.importantLevel" style="background-image:url(../../public/img/ico_star3.png)"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -34,6 +63,7 @@ import mynav from '../../components/nav.vue'
 import common from '../../utils/common'
 import http from '../../utils/http'
 import api from '../../utils/api'
+import moment from 'moment'
 export default{
   /**
    * [SSR获取所有组件的asyncData并执行获得初始数据]
@@ -63,6 +93,7 @@ export default{
   data(){
     return{
       navIndex:1,
+      currentIndex:null,
       isLoading:false, //是否显示加载中
       isMoreLoading:false, //是否加载更多
       noMore:false //是否还有更多
@@ -74,7 +105,19 @@ export default{
   // 计算属性
   computed: {
       lists () {
-        return this.$store.getters.getFlashLists // 快讯列表
+        let arr = this.$store.getters.getFlashLists
+        for (var i = 0; i < arr.length; i++) {
+          if(i == 0){
+            arr[0].flag = true
+          }else{
+            let day = moment(arr[i].timeShow).format('DD')
+            let preday = moment(arr[i-1].timeShow).format('DD')
+            if(day != preday){
+              arr[i].flag = true
+            }
+          }
+        }
+        return arr // 快讯列表
       }
   },
   mounted(){
@@ -120,11 +163,17 @@ export default{
       setTimeout(() => {
         that.fetchList()
       },1000)
+    },
+    extend(index){
+      this.currentIndex = index
+    },
+    fold(){
+      this.currentIndex = null
     }
   }
 }
 </script>
-<style>
+<style scoped>
   .flashlist{
     padding:10px 15px 0 25px;
   }
@@ -197,8 +246,43 @@ export default{
     color:#bec8d4;
     text-align:justify;
     font-size:13px;
+    word-break: break-all;
   }
   .flashlist .item p span{
     color:#c00;
+  }
+  .flashlist .item .flag{
+    position: absolute;
+    right:0;
+    top:35px;
+    width:40px;
+    height:23px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .star{
+    margin-top:5px;
+    overflow: hidden;
+  }
+  .star div{
+    float:left;
+    width:22px;
+    height:20px;
+    background-repeat: no-repeat;
+    background-size:15px 15px;
+    background-position: left center;
+  }
+  .flashlist .item p.title{
+    font-size:14px;
+    color:#fff;
+  }
+  .flashlist .item .flex{
+    margin-top:10px;
+  }
+  .flashlist .item .flex div{
+    flex:1;
+    color:#8690ab;
   }
 </style>
