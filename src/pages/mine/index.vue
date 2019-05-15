@@ -175,10 +175,9 @@ export default{
   color:#fff;
   display: block;
   vertical-align: top;
-  margin-bottom:2px;
 }
 .mid-right label{
-  font-size:10px;
+  font-size:12px;
   color:#445168;
 }
 .row{

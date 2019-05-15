@@ -2,12 +2,24 @@
   <section>
     <Head :title="title"></Head>
     <div class="pdt40">
-      <div class="asklst">
+      <div
+          class="asklst"
+          v-if="$route.path == '/mine/asks'"
+          v-infinite-scroll="loadMore"
+          infinite-scroll-disabled="isMoreLoading"
+          infinite-scroll-distance="0"
+          infinite-scroll-immediate-check="false">
         <div class="item" v-for="(item,index) in data" :key="index" @click="todetail(item.tId)">
-          <p class="title">{{item.content.length>40 ? item.content.substr(0,40) + '...' : item.content}}</p>
+          <p class="title">{{item.content && item.content.length>40 ? item.content.substr(0,40) + '...' : item.content}}</p>
           <p><span>{{item.answerNum}}个回答·{{item.participation}}人参与</span><span class="fr time">{{item.modifyTime | datefilter3}}</span></p>
         </div>
       </div>
+      <!--显示加载中-->
+      <div class="loading-box" v-if="isLoading">
+          <mt-spinner type="snake" class="loading-more"></mt-spinner>
+          <span class="loading-more-txt">加载中...</span>
+      </div>
+      <div class="no-more" v-if="noMore">没有更多了~</div>
     </div>
   </section>
 </template>

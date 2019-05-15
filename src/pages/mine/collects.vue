@@ -2,16 +2,10 @@
   <section>
     <Head :title="title"></Head>
     <div class="pdt40">
-      <div
-          class="clst"
-          v-if="$route.path == '/mine/collects'"
-          v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="isMoreLoading"
-          infinite-scroll-distance="0"
-          infinite-scroll-immediate-check="false">
+      <div class="clst">
         <van-swipe-cell :right-width="100" :on-close="onClose" v-for="(item,index) in data" :key="index" :data-i="index">
           <div class="item">
-            <div class="avatar" style="background-image:url(../../public/img/default.png)"></div>
+            <div class="avatar" v-bind:style="{backgroundImage: 'url('+item.anchorpic+')'}"></div>
             <div class="info">
               <p class="name">{{item.title}}</p>
               <p class="des">{{item.content}}</p>
