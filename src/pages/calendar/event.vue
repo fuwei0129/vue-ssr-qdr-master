@@ -22,7 +22,7 @@
             <div class="flag" v-bind:style="{backgroundImage: 'url('+item.picUrl+')'}"></div>
             <div class="info">
               <div class="top">
-                <span>{{item.eventTime | timefilter}}</span>
+                <span>{{item.eventTime | timeformat}}</span>
                 <div class="star" v-if="item.importantLevel == 1">
                   <div style="background-image:url(../../public/img/ico_star2.png)"></div>
                   <div v-for="i in 4" style="background-image:url(../../public/img/ico_star1.png)"></div>

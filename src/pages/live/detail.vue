@@ -5,8 +5,8 @@
 				<div class="wrap">
 					<div class="avatar" style="background-image:url(../../public/img/default.png)"></div>
       		<div class="lname"><span>期达人直播室</span><span>{{online}}</span></div>
-          <span class="btn-subscribe" v-if="liveDetail.isAttention">已关注</span>
-          <span class="btn-subscribe" v-else @click="follow()">关注</span>
+          <span class="btn-subscribe" v-if="liveDetail.isAttention">已收藏</span>
+          <span class="btn-subscribe" v-else @click="follow()">收藏</span>
 				</div>
         <span class="icon-exit" @click="backtolist()"></span>
       </div>
@@ -85,6 +85,8 @@ export default{
     }
   },
   mounted(){
+  },
+  activated(){
     $(".chatlst").mCustomScrollbar({
       theme:"light", //主题颜色
       scrollInertia:1000
@@ -100,10 +102,11 @@ export default{
       that.LiveDetail()
     },800)
   },
-  activated(){
+  deactivated(){
+    this.logout()  //webim注销
   },
   beforeDestroy(){
-    this.logout()  //webim注销
+    // this.logout()  //webim注销
   },
   methods:{
     LiveDetail(){

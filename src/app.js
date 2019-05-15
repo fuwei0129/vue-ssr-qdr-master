@@ -2,9 +2,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import moment from 'moment'
-import { ImagePreview } from 'vant'
+import { SwipeCell,Dialog,ImagePreview } from 'vant'
 import 'vant/lib/index.css'
-Vue.use(ImagePreview)
+Vue.use(SwipeCell,Dialog,ImagePreview)
 import mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import filters from './filters/index'

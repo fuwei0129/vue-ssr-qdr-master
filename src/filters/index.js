@@ -9,8 +9,18 @@ const filter = {
   datefilter2:function(value){
     return moment(value*1000).format('MM/DD-HH:mm')
   },
+  datefilter3:function(value){
+    return moment(value).format('YYYY-MM-DD HH:mm:ss')
+  },
   timefilter:function(value){
     return moment(value).format('HH:mm')
+  },
+  timeformat:function(value){
+    let val = moment(value).format('HH:mm')
+    if(val == '00:00'){
+      val = '待定'
+    }
+    return val
   },
   timefilter1:function(value){
     return moment(value).format('hh:mm:ss')

@@ -17,6 +17,10 @@ import futuresdetail from '../pages/futures/detail.vue'
 import futuresreply from '../pages/futures/reply.vue'
 import answer from '../pages/futures/answer.vue'
 import mineindex from '../pages/mine/index.vue'
+import attentions from '../pages/mine/attentions.vue'
+import fans from '../pages/mine/fans.vue'
+import asks from '../pages/mine/asks.vue'
+import collects from '../pages/mine/collects.vue'
 import sign from '../pages/sign.vue'
 import registerprotocol from '../pages/registerprotocol.vue'
 
@@ -197,9 +201,57 @@ export function createRouter () {
         meta:{
           keepAlive: false,
           showFoot:true,
-          title:'我的',
+          title:'期达人-我的',
           keywords:'',
-          content:'我的-个人中心'
+          content:'期达人-个人中心'
+        }
+      },
+      {
+        path: '/mine/attentions',
+        name:'attentions',
+        component: attentions,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-我的关注',
+          keywords:'',
+          content:'期达人-我的关注'
+        }
+      },
+      {
+        path: '/mine/fans',
+        name:'fans',
+        component: fans,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-我的粉丝',
+          keywords:'',
+          content:'期达人-我的粉丝'
+        }
+      },
+      {
+        path: '/mine/asks',
+        name:'asks',
+        component: asks,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-我的提问',
+          keywords:'',
+          content:'期达人-我的提问'
+        }
+      },
+      {
+        path: '/mine/collects',
+        name:'collects',
+        component: collects,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-我的收藏',
+          keywords:'',
+          content:'期达人-我的收藏'
         }
       },
       {

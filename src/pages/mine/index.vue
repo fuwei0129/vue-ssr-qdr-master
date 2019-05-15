@@ -8,26 +8,14 @@
           <span>{{user.nickName}}</span><label>喜欢期货，所有我用期达人</label>
         </div>
         <div class="mid-right" @click="sign()" v-else>
-          <span>登录/注册</span><label>喜欢期货，所有我用期达人</label>
+          <span>登录/注册</span><label>喜欢期货，所以我用期达人</label>
         </div>
       </div>
       <div class="row flex">
-        <div>
-          <span>0</span>
-          <label>关注</label>
-        </div>
-        <div>
-          <span>0</span>
-          <label>粉丝</label>
-        </div>
-        <div>
-          <span>0</span>
-          <label>提问</label>
-        </div>
-        <div>
-          <span>0</span>
-          <label>收藏</label>
-        </div>
+        <div @click="access('attentions')"><span>{{personalInfo.attentionNumber ? personalInfo.attentionNumber : '0'}}</span><label>关注</label></div>
+        <div @click="access('fans')"><span>{{personalInfo.fenSiNumber ? personalInfo.fenSiNumber : '0'}}</span><label>粉丝</label></div>
+        <div @click="access('asks')"><span>{{personalInfo.questionListNumber ? personalInfo.questionListNumber : '0'}}</span><label>提问</label></div>
+        <div @click="access('collects')"><span>{{personalInfo.collectionNumber ? personalInfo.collectionNumber : '0'}}</span><label>收藏</label></div>
       </div>
     </div>
     <div>
@@ -44,6 +32,32 @@
 <script>
 import common from '../../utils/common'
 export default{
+  asyncData (store, route) {
+    let user = store.getters.getUser
+    if(user){
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: "",
+          sourceip: "127.0.0.1"
+        },
+        reqpage:{
+          total:0,
+          page: 1,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          uid:user.memberId
+        }
+      }
+      return store.dispatch('fetchPersonalInfo', { model }) // 服务端渲染执行
+    }else{
+      return null
+    }
+  },
   name:'mineindex',
   data(){
     return{
@@ -53,11 +67,50 @@ export default{
   computed: {
     user() {
       return this.$store.getters.getUser
+    },
+    personalInfo(){
+      return this.$store.getters.getPersonalInfo
     }
+  },
+  mounted(){
+    var that = this
+    setTimeout(() => {
+      if(that.user){
+        this.fetchInfo()
+      }
+    },500)
   },
   methods:{
     sign(){
-      this.$router.push({name:'sign'});
+      this.$router.push({name:'sign'})
+    },
+    access(r){
+      if(this.user){
+        this.$router.push({name:r})
+      }else{
+        this.sign()
+      }
+    },
+    fetchInfo(){
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: common.getToken(),
+          sourceip: common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page: 1,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          uid:this.user.memberId
+        }
+      }
+      this.$store.dispatch('fetchPersonalInfo',{ model })
     },
     logout(){
       let data = {

@@ -4,23 +4,20 @@ import { Toast } from 'mint-ui'
 
 export default{
   state: {
-    signIndex:1, //当前是登录面板还是注册面板
     sign:null,
     user:null,
-    token:null
+    token:null,
+    personalInfo:{}//个人信息（关注量，粉丝量等等）
   },
   getters: {
-    getSignIndex: state => {
-      return state.signIndex
-    },
     getUser: state => {
       return state.user
+    },
+    getPersonalInfo: state => {
+      return state.personalInfo
     }
   },
   mutations: {
-    setSignIndex (state, val) {
-      state.signIndex = val
-    },
     setUser (state, val) {
       let { memberSign,memberInfo,memberToken } = val
       state.sign = memberSign
@@ -29,6 +26,9 @@ export default{
       sessionStorage.setItem('sign', memberSign)
       sessionStorage.setItem('user', JSON.stringify(memberInfo))
       sessionStorage.setItem('token', memberToken)
+    },
+    setPersonalInfo (state, data) {
+      state.personalInfo = data
     },
     signOut (state) {
       state.sign = null
@@ -55,6 +55,20 @@ export default{
         }
       })
     },
+    //获取我的关注量、粉丝量等等
+    fetchPersonalInfo({ commit }, data){
+      return http.postmain(api.getPersonalInfo,data.model).then((response) => {
+        if(response.data.respbase.returncode == '10000'){
+          commit('setPersonalInfo',response.data.respparam)
+        }else{
+          Toast({
+            message: response.data.respbase.returnmsg,
+            position: 'middle',
+            duration: 2000
+          })
+        }
+      })
+    },
     //注销
     logout({ commit }, data){
       return http.postmain(api.logout,data).then((response) => {
@@ -68,6 +82,6 @@ export default{
           })
         }
       })
-    },
+    }
   }
 }

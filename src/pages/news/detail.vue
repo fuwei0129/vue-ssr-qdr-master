@@ -164,7 +164,7 @@ export default{
         http.postmain(api.readingInsert,model).then((response) => {
           if(response.data.respbase.returncode == '10000'){
             that.liked = true
-            console.log("已点赞")
+            // console.log("已点赞")
           }else{
             console.log("出错")
           }

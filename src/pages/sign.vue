@@ -118,7 +118,6 @@ export default{
     },
     setVal(val){
       this.signIndex = val
-      // this.$store.commit('setSignIndex',val)
     },
     setType(val){
       this.type = val
