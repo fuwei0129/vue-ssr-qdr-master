@@ -58,64 +58,64 @@ export default{
   },
   activated(){
     var that = this
-    setTimeout(() => {
-      that.fetchData(true)
-    },500)
+    if(sessionStorage.user){
+      setTimeout(() => {
+        that.fetchData(true)
+      },500)
+    }else{
+      this.$router.push({name:'sign'})
+    }
   },
   deactivated(){
     // console.log("deactivated")
   },
   methods:{
     fetchData(isFirst){
-      if(this.user){
-        let model = {
-          reqbase:{
-            timestamp: common.getLastDate(),
-            clientauthflag: common.getClientauthflag(),
-            reqorigin: "xuantie",
-            token: common.getToken(),
-            sourceip: common.getIp()
-          },
-          reqpage:{
-            total:0,
-            page: this.page,
-            size: 10,
-            count: true
-          },
-          reqparam:{
-            uid:this.user.memberId
-          }
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: common.getToken(),
+          sourceip: common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page: this.page,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          uid:this.user.memberId
         }
-        let that = this
-        http.postmain(api.getQuestionList,model).then((response) => {
-          if(isFirst){
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore = true
-              }else{
-                that.noMore = false
-                that.data = response.data.respparam
-              }
+      }
+      let that = this
+      http.postmain(api.getQuestionList,model).then((response) => {
+        if(isFirst){
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore = true
             }else{
-              console.log("出错")
+              that.noMore = false
+              that.data = response.data.respparam
             }
           }else{
-            that.isLoading = false
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore = true
-              }else{
-                that.isMoreLoading = false
-                that.data = that.data.concat(response.data.respparam)
-              }
-            }else{
-              console.log("出错")
-            }
+            console.log("出错")
           }
-        })
-      }else{
-        this.$router.push({name:'sign'})
-      }
+        }else{
+          that.isLoading = false
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore = true
+            }else{
+              that.isMoreLoading = false
+              that.data = that.data.concat(response.data.respparam)
+            }
+          }else{
+            console.log("出错")
+          }
+        }
+      })
     },
     loadMore(){
       this.isMoreLoading = true // 设置加载更多中

@@ -17,6 +17,10 @@ import futuresdetail from '../pages/futures/detail.vue'
 import futuresreply from '../pages/futures/reply.vue'
 import answer from '../pages/futures/answer.vue'
 import mineindex from '../pages/mine/index.vue'
+import notification from '../pages/mine/notification.vue'
+import personal from '../pages/mine/personal.vue'
+import editname from '../pages/mine/editname.vue'
+import editdes from '../pages/mine/editdes.vue'
 import attentions from '../pages/mine/attentions.vue'
 import fans from '../pages/mine/fans.vue'
 import asks from '../pages/mine/asks.vue'
@@ -204,6 +208,54 @@ export function createRouter () {
           title:'期达人-我的',
           keywords:'',
           content:'期达人-个人中心'
+        }
+      },
+      {
+        path: '/mine/notification',
+        name:'notification',
+        component: notification,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-消息中心',
+          keywords:'',
+          content:'期达人-消息中心'
+        }
+      },
+      {
+        path: '/mine/personal',
+        name:'personal',
+        component: personal,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-个人信息',
+          keywords:'',
+          content:'期达人-个人信息'
+        }
+      },
+      {
+        path: '/mine/editname',
+        name:'editname',
+        component: editname,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-修改昵称',
+          keywords:'',
+          content:'期达人-修改昵称'
+        }
+      },
+      {
+        path: '/mine/editdes',
+        name:'editdes',
+        component: editdes,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-修改描述',
+          keywords:'',
+          content:'期达人-修改描述'
         }
       },
       {

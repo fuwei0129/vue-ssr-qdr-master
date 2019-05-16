@@ -4,8 +4,8 @@
       <div class="flex">
         <div class="user-photo" v-if="!user || user.profilePhoto == null" style="background-image:url(../public/img/user-default.png)"></div>
         <div class="user-photo" v-else v-bind:style="{backgroundImage: 'url('+user.profilePhoto+')'}"></div>
-        <div class="mid-right" v-if="user">
-          <span>{{user.nickName}}</span><label>喜欢期货，所有我用期达人</label>
+        <div class="mid-right" v-if="user" @click="personal()">
+          <span>{{user.nickName}}</span><label>{{user.remark ? user.remark : '喜欢期货，所以我用期达人'}}</label>
         </div>
         <div class="mid-right" @click="sign()" v-else>
           <span>登录/注册</span><label>喜欢期货，所以我用期达人</label>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div>
-      <mt-cell class="mt5" title="消息" to="" is-link>
+      <mt-cell class="mt5" title="消息" to="/mine/notification" is-link>
         <img slot="icon" src="/public/img/ico_msg.png" width="24" height="24">
       </mt-cell>
       <mt-cell class="mt5" title="联系客服" is-link>
@@ -34,29 +34,25 @@ import common from '../../utils/common'
 export default{
   asyncData (store, route) {
     let user = store.getters.getUser
-    if(user){
-      let model = {
-        reqbase:{
-          timestamp: common.getLastDate(),
-          clientauthflag: common.getClientauthflag(),
-          reqorigin: "xuantie",
-          token: "",
-          sourceip: "127.0.0.1"
-        },
-        reqpage:{
-          total:0,
-          page: 1,
-          size: 10,
-          count: true
-        },
-        reqparam:{
-          uid:user.memberId
-        }
+    let model = {
+      reqbase:{
+        timestamp: common.getLastDate(),
+        clientauthflag: common.getClientauthflag(),
+        reqorigin: "xuantie",
+        token: "",
+        sourceip: "127.0.0.1"
+      },
+      reqpage:{
+        total:0,
+        page: 1,
+        size: 10,
+        count: true
+      },
+      reqparam:{
+        uid:user?user.memberId:null
       }
-      return store.dispatch('fetchPersonalInfo', { model }) // 服务端渲染执行
-    }else{
-      return null
     }
+    return store.dispatch('fetchPersonalInfo', { model }) // 服务端渲染执行
   },
   name:'mineindex',
   data(){
@@ -83,6 +79,9 @@ export default{
   methods:{
     sign(){
       this.$router.push({name:'sign'})
+    },
+    personal(){
+      this.$router.push({name:'personal'})
     },
     access(r){
       if(this.user){
@@ -137,7 +136,7 @@ export default{
   }
 }
 </script>
-<style>
+<style scoped>
 .signtop{
   background:#141f30;
   padding:30px 15px 5px 15px;
@@ -145,14 +144,13 @@ export default{
 .user-photo{
   background-repeat: no-repeat;
   background-size: cover;
-  margin-right:10px;
+  margin-right:20px;
   border-radius: 50%;
   overflow: hidden;
   flex:0 0 50px;
   height:50px;
 }
 .mid-right{
-  margin-left:10px;
   flex:1 1;
   position:relative;
 }
@@ -198,26 +196,5 @@ export default{
   color:#6e7c95;
   display: block;
   font-size:14px;
-}
-.mint-cell-wrapper{
-  padding:0 10px 0 20px;
-}
-.mint-cell{
-  background:#141f30;
-}
-.mint-cell img{
-  margin-right:5px;
-}
-.mint-cell-text{
-  color:#fff;
-  font-size:14px;
-}
-.mint-cell-wrapper{
-  background-image:none;
-  background-size:0;
-}
-.mint-cell:last-child{
-  background-image:none;
-  background-size:0;
 }
 </style>

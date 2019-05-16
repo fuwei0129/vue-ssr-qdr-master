@@ -317,6 +317,7 @@ export default{
           });
           return;
       }
+
       let data = {
         reqbase:{
           timestamp:common.getLastDate(),
@@ -337,7 +338,7 @@ export default{
           password:this.regModel.password,
           rePassword:this.regModel.password,
           nickName:this.regModel.nickName,
-          source:'1'
+          source:common.iosOrAndroid()
         }
       }
       http.postmain(api.register,data).then((response) => {

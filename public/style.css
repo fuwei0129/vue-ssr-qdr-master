@@ -710,3 +710,25 @@
   font-size: 13px;
   padding:10px 0;
 }
+/* cell */
+.mint-cell-wrapper{
+  padding:0 10px 0 20px!important;
+}
+.mint-cell{
+  background:#141f30!important;
+}
+.mint-cell img{
+  margin-right:5px!important;
+}
+.mint-cell-text{
+  color:#fff!important;
+  font-size:14px!important;
+}
+.mint-cell-wrapper{
+  background-image:none!important;
+  background-size:0!important;
+}
+.mint-cell:last-child{
+  background-image:none!important;
+  background-size:0!important;
+}

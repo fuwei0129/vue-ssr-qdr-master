@@ -4,7 +4,7 @@
     <div class="pdt40">
       <div class="clst">
         <van-swipe-cell :right-width="100" :on-close="onClose" v-for="(item,index) in data" :key="index" :data-i="index">
-          <div class="item">
+          <div class="item" @click="todetail(item.studioid)">
             <div class="avatar" v-bind:style="{backgroundImage: 'url('+item.anchorpic+')'}"></div>
             <div class="info">
               <p class="name">{{item.title}}</p>
@@ -29,7 +29,6 @@ import api from '../../utils/api'
 import common from '../../utils/common'
 import global from '../../utils/global'
 import Head from '../../components/head.vue'
-import { Dialog } from 'vant'
 import { Toast } from 'mint-ui'
 export default{
   name: "collects",
@@ -60,64 +59,64 @@ export default{
   },
   activated(){
     var that = this
-    setTimeout(() => {
-      that.fetchData(true)
-    },500)
+    if(sessionStorage.user){
+      setTimeout(() => {
+        that.fetchData(true)
+      },500)
+    }else{
+      this.$router.push({name:'sign'})
+    }
   },
   deactivated(){
     // console.log("deactivated")
   },
   methods:{
     fetchData(isFirst){
-      if(this.user){
-        let model = {
-          reqbase:{
-            timestamp: common.getLastDate(),
-            clientauthflag: common.getClientauthflag(),
-            reqorigin: "xuantie",
-            token: common.getToken(),
-            sourceip: common.getIp()
-          },
-          reqpage:{
-            total:0,
-            page: this.page,
-            size: 10,
-            count: true
-          },
-          reqparam:{
-            uid:this.user.memberId
-          }
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: common.getToken(),
+          sourceip: common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page: this.page,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          uid:this.user.memberId
         }
-        let that = this
-        http.postmain(api.getCollectionList,model).then((response) => {
-          if(isFirst){
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore = true
-              }else{
-                that.noMore = false
-                that.data = response.data.respparam
-              }
+      }
+      let that = this
+      http.postmain(api.getCollectionList,model).then((response) => {
+        if(isFirst){
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore = true
             }else{
-              console.log("出错")
+              that.noMore = false
+              that.data = response.data.respparam
             }
           }else{
-            that.isLoading = false
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore = true
-              }else{
-                that.isMoreLoading = false
-                that.data = that.data.concat(response.data.respparam)
-              }
-            }else{
-              console.log("出错")
-            }
+            console.log("出错")
           }
-        })
-      }else{
-        this.$router.push({name:'sign'})
-      }
+        }else{
+          that.isLoading = false
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore = true
+            }else{
+              that.isMoreLoading = false
+              that.data = that.data.concat(response.data.respparam)
+            }
+          }else{
+            console.log("出错")
+          }
+        }
+      })
     },
     loadMore(){
       this.isMoreLoading = true // 设置加载更多中
@@ -176,6 +175,9 @@ export default{
           })
         }
       })
+    },
+    todetail(id){
+      this.$router.push({name:'livedetail',params:{id:id}})
     }
   }
 }

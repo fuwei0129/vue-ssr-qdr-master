@@ -2,8 +2,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import moment from 'moment'
-import { SwipeCell,Dialog,ImagePreview } from 'vant'
+import { SwipeCell,Dialog,ImagePreview,Actionsheet } from 'vant'
 import 'vant/lib/index.css'
+Vue.component(Actionsheet.name, Actionsheet)
 Vue.use(SwipeCell,Dialog,ImagePreview)
 import mint from 'mint-ui'
 import 'mint-ui/lib/style.css'

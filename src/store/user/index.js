@@ -18,6 +18,10 @@ export default{
     }
   },
   mutations: {
+    resetUser (state, val){
+      state.user = val
+      sessionStorage.setItem('user', JSON.stringify(val))
+    },
     setUser (state, val) {
       let { memberSign,memberInfo,memberToken } = val
       state.sign = memberSign
@@ -56,18 +60,21 @@ export default{
       })
     },
     //获取我的关注量、粉丝量等等
-    fetchPersonalInfo({ commit }, data){
-      return http.postmain(api.getPersonalInfo,data.model).then((response) => {
-        if(response.data.respbase.returncode == '10000'){
-          commit('setPersonalInfo',response.data.respparam)
-        }else{
-          Toast({
-            message: response.data.respbase.returnmsg,
-            position: 'middle',
-            duration: 2000
-          })
-        }
-      })
+    fetchPersonalInfo({ commit,rootState }, data){
+      if(rootState.user){
+        return http.postmain(api.getPersonalInfo,data.model).then((response) => {
+          if(response.data.respbase.returncode == '10000'){
+            commit('setPersonalInfo',response.data.respparam)
+          }else{
+            Toast({
+              message: response.data.respbase.returnmsg,
+              position: 'middle',
+              duration: 2000
+            })
+          }
+        })
+      }else{
+      }
     },
     //注销
     logout({ commit }, data){

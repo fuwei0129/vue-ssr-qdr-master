@@ -32,7 +32,6 @@ Vue.mixin({
   			next()
   	    }
   	})
-
   }
 })
 

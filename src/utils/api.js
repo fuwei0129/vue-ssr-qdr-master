@@ -6,6 +6,8 @@ export default {
   sendSms:'/member/sendSms', //发送手机验证码
   logout:'/member/logout', //用户退出
   autoLogin:'/member/autoLogin', //自动登录
+  getMemberInfo:'/member/getMemberInfo',//根据用户id获取用户信息
+  updateMember:'/member/updateMember',//修改资料
   // 聊天相关
   getUserSigByName:'/chat/getUserSigByName',//获取sig
   getOnLineNumber:'/accessNotes/getOnLineNumber',//获取直播室在线人数

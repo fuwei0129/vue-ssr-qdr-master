@@ -27,7 +27,7 @@
         <div class="no-more" v-if="noMore1">没有更多了~</div>
       </div>
       <div v-show="currentIndex == 1">
-        <!-- <div
+        <div
             class="flst"
             v-if="$route.path == '/mine/attentions' && currentIndex == 1"
             v-infinite-scroll="loadMore2"
@@ -42,13 +42,13 @@
               <p class="des">{{item.jobName}}</p>
             </div>
           </div>
-        </div>-->
-        <!--<div class="loading-box" v-if="isLoading2">
+        </div>
+        <div class="loading-box" v-if="isLoading2">
             <mt-spinner type="snake" class="loading-more"></mt-spinner>
             <span class="loading-more-txt">加载中...</span>
         </div>
-        <div class="no-more" v-if="noMore2">没有更多了~</div> -->
-        <span style="color:#fff;">12321</span>
+        <div class="no-more" v-if="noMore2">没有更多了~</div>
+        <!-- <span style="color:#fff;">12321</span> -->
       </div>
     </div>
   </section>
@@ -94,10 +94,14 @@ export default{
   },
   activated(){
     var that = this
-    setTimeout(() => {
-      that.fetchData1(true)
-      that.fetchData2(true)
-    },500)
+    if(sessionStorage.user){
+      setTimeout(() => {
+        that.fetchData1(true)
+        that.fetchData2(true)
+      },500)
+    }else{
+      this.$router.push({name:'sign'})
+    }
   },
   deactivated(){
     // console.log("deactivated")
@@ -107,106 +111,98 @@ export default{
       this.currentIndex = v
     },
     fetchData1(isFirst){
-      if(this.user){
-        let model = {
-          reqbase:{
-            timestamp: common.getLastDate(),
-            clientauthflag: common.getClientauthflag(),
-            reqorigin: "xuantie",
-            token: common.getToken(),
-            sourceip: common.getIp()
-          },
-          reqpage:{
-            total:0,
-            page: this.page1,
-            size: 10,
-            count: true
-          },
-          reqparam:{
-            uid:this.user.memberId
-          }
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: common.getToken(),
+          sourceip: common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page: this.page1,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          uid:this.user.memberId
         }
-        let that = this
-        http.postmain(api.getAttentionQuesList,model).then((response) => {
-          if(isFirst){
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore1 = true
-              }else{
-                that.noMore1 = false
-                that.data1 = response.data.respparam
-              }
+      }
+      let that = this
+      http.postmain(api.getAttentionQuesList,model).then((response) => {
+        if(isFirst){
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore1 = true
             }else{
-              console.log("出错")
+              that.noMore1 = false
+              that.data1 = response.data.respparam
             }
           }else{
-            that.isLoading1 = false
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore1 = true
-              }else{
-                that.isMoreLoading1 = false
-                that.data1 = that.data1.concat(response.data.respparam)
-              }
-            }else{
-              console.log("出错")
-            }
+            console.log("出错")
           }
-        })
-      }else{
-        this.$router.push({name:'sign'})
-      }
+        }else{
+          that.isLoading1 = false
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore1 = true
+            }else{
+              that.isMoreLoading1 = false
+              that.data1 = that.data1.concat(response.data.respparam)
+            }
+          }else{
+            console.log("出错")
+          }
+        }
+      })
     },
     fetchData2(isFirst){
-      if(this.user){
-        let model = {
-          reqbase:{
-            timestamp: common.getLastDate(),
-            clientauthflag: common.getClientauthflag(),
-            reqorigin: "xuantie",
-            token: common.getToken(),
-            sourceip: common.getIp()
-          },
-          reqpage:{
-            total:0,
-            page: this.page2,
-            size: 10,
-            count: true
-          },
-          reqparam:{
-            uid:this.user.memberId
-          }
+      let model = {
+        reqbase:{
+          timestamp: common.getLastDate(),
+          clientauthflag: common.getClientauthflag(),
+          reqorigin: "xuantie",
+          token: common.getToken(),
+          sourceip: common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page: this.page2,
+          size: 10,
+          count: true
+        },
+        reqparam:{
+          uid:this.user.memberId
         }
-        let that = this
-        http.postmain(api.getAttentionManList,model).then((response) => {
-          if(isFirst){
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore2 = true
-              }else{
-                that.noMore2 = false
-                that.data1 = response.data.respparam
-              }
+      }
+      let that = this
+      http.postmain(api.getAttentionManList,model).then((response) => {
+        if(isFirst){
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore2 = true
             }else{
-              console.log("出错")
+              that.noMore2 = false
+              that.data2 = response.data.respparam
             }
           }else{
-            that.isLoading2 = false
-            if(response.data.respbase.returncode == '10000'){
-              if(response.data.respparam.length == 0){
-                that.noMore2 = true
-              }else{
-                that.isMoreLoading2 = false
-                that.data2 = that.data2.concat(response.data.respparam)
-              }
-            }else{
-              console.log("出错")
-            }
+            console.log("出错")
           }
-        })
-      }else{
-        this.$router.push({name:'sign'})
-      }
+        }else{
+          that.isLoading2 = false
+          if(response.data.respbase.returncode == '10000'){
+            if(response.data.respparam.length == 0){
+              that.noMore2 = true
+            }else{
+              that.isMoreLoading2 = false
+              that.data2 = that.data2.concat(response.data.respparam)
+            }
+          }else{
+            console.log("出错")
+          }
+        }
+      })
     },
     loadMore1(){
       this.isMoreLoading1 = true // 设置加载更多中
@@ -298,7 +294,7 @@ export default{
   width:50px;
   height:50px;
   border-radius: 50%;
-  margin-right:10px;
+  margin-right:15px;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;

@@ -147,6 +147,23 @@ export function logout(){  //删除用户信息
   delCookie("userSign")
   delCookie("userSig")
 }
+/*判断ios还是android*/
+export  function iosOrAndroid() {
+  const pattern_phone = new RegExp("iPhone", "i");
+  const pattern_android = new RegExp("android", "i");
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isAndroid = pattern_android.test(userAgent);
+  const isIphone = pattern_phone.test(userAgent);
+  let source;
+  if (isAndroid) {
+    source = 2;
+  } else if (isIphone) {
+    source = 1;
+  }else{
+    source = '未知';
+  }
+  return source;
+}
 export default{
   getMsgDate,
   getMsgId,
@@ -165,5 +182,6 @@ export default{
   getCookie,
   setCookie,
   delCookie,
-  logout
+  logout,
+  iosOrAndroid
 }
