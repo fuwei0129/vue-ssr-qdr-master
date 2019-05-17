@@ -16,6 +16,8 @@ import futuresindex from '../pages/futures/index.vue'
 import futuresdetail from '../pages/futures/detail.vue'
 import futuresreply from '../pages/futures/reply.vue'
 import answer from '../pages/futures/answer.vue'
+import accountindex from '../pages/account/index.vue'
+import sywg from '../pages/account/sywg.vue'
 import mineindex from '../pages/mine/index.vue'
 import notification from '../pages/mine/notification.vue'
 import personal from '../pages/mine/personal.vue'
@@ -196,6 +198,30 @@ export function createRouter () {
           title:'期达人-期问回答详情',
           keywords:'',
           content:'期达人-期问回答详情描述'
+        }
+      },
+      {
+        path: '/account/index',
+        name:'accountindex',
+        component: accountindex,
+        meta:{
+          keepAlive: false,
+          showFoot:true,
+          title:'期达人-开户列表',
+          keywords:'',
+          content:'期达人-开户列表'
+        }
+      },
+      {
+        path: '/account/sywg',
+        name:'sywg',
+        component: sywg,
+        meta:{
+          keepAlive: false,
+          showFoot:false,
+          title:'期达人-申银万国',
+          keywords:'',
+          content:'期达人-申银万国'
         }
       },
       {

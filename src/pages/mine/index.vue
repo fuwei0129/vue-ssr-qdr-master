@@ -22,10 +22,9 @@
       <mt-cell class="mt5" title="消息" to="/mine/notification" is-link>
         <img slot="icon" src="/public/img/ico_msg.png" width="24" height="24">
       </mt-cell>
-      <mt-cell class="mt5" title="联系客服" is-link>
+      <mt-cell class="mt5" title="联系客服" is-link @click.native="callPhone">
         <img slot="icon" src="/public/img/ico_kf.png" width="24" height="24">
       </mt-cell>
-      <mt-cell class="mt5" v-if="user" @click.native="logout()" title="注销" is-link></mt-cell>
     </div>
   </section>
 </template>
@@ -69,12 +68,25 @@ export default{
     }
   },
   mounted(){
+    // var that = this
+    // setTimeout(() => {
+    //   if(that.user){
+    //     this.fetchInfo()
+    //   }
+    // },500)
+  },
+  activated(){
     var that = this
     setTimeout(() => {
       if(that.user){
-        this.fetchInfo()
+        that.fetchInfo()
+      }else{
+        that.$store.commit('clearPersonalInfo') //清除关注量、粉丝量等等（场景：注销的时候重定向到此页面）
       }
     },500)
+  },
+  deactivated(){
+    // console.log("deactivated")
   },
   methods:{
     sign(){
@@ -111,27 +123,8 @@ export default{
       }
       this.$store.dispatch('fetchPersonalInfo',{ model })
     },
-    logout(){
-      let data = {
-        reqbase:{
-          timestamp:common.getLastDate(),
-          clientauthflag:common.getClientauthflag(),
-          reqorigin:"xuantie",
-          token:common.getToken(),
-          sourceip:common.getIp()
-        },
-        reqpage:{
-          total:0,
-          page:1,
-          size:10,
-          count:false
-        },
-        reqparam:{
-          memberId:this.user.memberId,
-          source:1
-        }
-      }
-      this.$store.dispatch('logout', data)
+    callPhone(){
+      window.location.href = 'tel://02160772399'
     }
   }
 }

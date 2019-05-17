@@ -140,13 +140,13 @@ export default{
       this.regModel.validateCode = ""
       var i = Math.ceil(Math.random() * 100) //生成一个随机数（防止缓存）
       let uuid = common.getCookie("t_uuid")
-      this.regModel.uri = "http://172.16.1.208:8119/member/validateCode?uuid=" + uuid + "_" + i
+      this.regModel.uri = global.path+"/member/validateCode?uuid=" + uuid + "_" + i
     },
     logrefresh(){
       this.codeLoginModel.validateCode = ""
       var i = Math.ceil(Math.random() * 100) //生成一个随机数（防止缓存）
       let uuid = common.getCookie("t_uuid")
-      this.codeLoginModel.uri = "http://172.16.1.208:8119/member/validateCode?uuid=" + uuid + "_" + i
+      this.codeLoginModel.uri = global.path+"/member/validateCode?uuid=" + uuid + "_" + i
     },
     login(){
       if(this.loginModel.mobile == ""){

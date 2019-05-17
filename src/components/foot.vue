@@ -20,7 +20,7 @@
         达人
       </mt-tab-item>
       <mt-tab-item id="4">
-        <img slot="icon" src="../../public/img/ico_04_on.png" v-if="selected == '4'">
+        <img slot="icon" src="../../public/img/ico_04_on.png" v-if="route == '/account/index'">
         <img slot="icon" src="../../public/img/ico_04.png" v-else>
         开户
       </mt-tab-item>
@@ -53,6 +53,8 @@ export default{
         this.selected = '2'
       }else if(this.$route.path == "/futures/index"){
         this.selected = '3'
+      }else if(this.$route.path == "/account/index"){
+        this.selected = '4'
       }else if(this.$route.path == "/mine/index"){
         this.selected = '5'
       }
@@ -68,7 +70,7 @@ export default{
           }else if(val == "3"){
             this.$router.push({name:'futuresindex'})
           }else if(val == "4"){
-
+            this.$router.push({name:'accountindex'})
           }else if(val == "5"){
             this.$router.push({name:'mineindex'})
           }

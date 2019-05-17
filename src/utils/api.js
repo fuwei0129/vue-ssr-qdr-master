@@ -32,6 +32,7 @@ export default {
   getQuestions:'/questionManage/questionList',//期问列表
   findQuestion:'/questionManage/findQuestion',//期问详情
   queryAnswerDetail:'/answerManage/queryAnswerDetail',//回答详情
+  getList:'/openAccount/getList',//开户列表
   attentionOrNo:'/userInfo/attentionOrNo',//关注用户，关注（收藏）期问问题
   getPersonalInfo:'/userInfo/findList',//我的列表（关注，粉丝，提问，收藏）
   getAttentionManList:'/userInfo/getAttentionManList',//我的关注的用户
@@ -39,4 +40,5 @@ export default {
   getFenSiList:'/userInfo/getFenSiList',//我的粉丝
   getQuestionList:'/userInfo/getQuestionList',//我的提问
   getCollectionList:'/userInfo/getCollectionList',//我的收藏
+  getNotice:'/pushManager/getNotice',//消息中心
 }

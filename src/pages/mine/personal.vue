@@ -16,6 +16,9 @@
           <mt-cell title="手机绑定" :value="phoneformat(user.mobile)"></mt-cell>
           <mt-cell title="密码修改" to="" is-link></mt-cell>
         </div>
+        <div class="mt10">
+          <button class="btn-logout" @click="logout">退出登录</button>
+        </div>
       </div>
       <div v-else></div>
     </div>
@@ -134,6 +137,29 @@ export default{
     },
     showpanel(){
       this.sheetVisible = true
+    },
+    logout(){
+      let data = {
+        reqbase:{
+          timestamp:common.getLastDate(),
+          clientauthflag:common.getClientauthflag(),
+          reqorigin:"xuantie",
+          token:common.getToken(),
+          sourceip:common.getIp()
+        },
+        reqpage:{
+          total:0,
+          page:1,
+          size:10,
+          count:false
+        },
+        reqparam:{
+          memberId:this.user.memberId,
+          source:common.iosOrAndroid()
+        }
+      }
+      this.$store.dispatch('logout', data)
+      this.$router.push('/mine/index')
     }
   }
 }
@@ -146,5 +172,14 @@ export default{
   overflow: hidden;
   width:40px;
   height:40px;
+}
+.btn-logout{
+  width:100%;
+  display: block;
+  padding:12px 0;
+  background:#141f30;
+  text-align: center;
+  font-size:16px;
+  color:#ff6969;
 }
 </style>

@@ -31,6 +31,9 @@ export default{
       sessionStorage.setItem('user', JSON.stringify(memberInfo))
       sessionStorage.setItem('token', memberToken)
     },
+    clearPersonalInfo (state) {
+      state.personalInfo = {}
+    },
     setPersonalInfo (state, data) {
       state.personalInfo = data
     },

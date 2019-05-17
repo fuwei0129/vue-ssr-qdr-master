@@ -276,11 +276,11 @@ export default{
       },1000)
     },
     todetail(id){
-      this.$router.push({name:'futuresdetail',params:{id:id}});
+      this.$router.push({name:'futuresdetail',params:{id:id}})
     },
     torydetail(e,id,qid){
       e.stopPropagation();
-      this.$router.push({name:'futuresreply',params:{id:id,qid:qid}});
+      this.$router.push({name:'futuresreply',params:{id:id,qid:qid}})
     },
     nameformat(val){
       if(val.length>50){

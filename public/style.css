@@ -732,3 +732,15 @@
   background-image:none!important;
   background-size:0!important;
 }
+/* swiper */
+.mint-swipe img{
+  width:100%;
+  height:100%;
+}
+.mint-swipe-indicator{
+  background:#333!important;
+  opacity: 1!important;
+}
+.mint-swipe-indicator.is-active{
+  background:#4595e6!important;
+}

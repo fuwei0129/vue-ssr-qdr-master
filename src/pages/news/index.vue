@@ -140,11 +140,4 @@ export default{
 }
 </script>
 <style>
-.mint-swipe-indicator{
-  background:#333!important;
-  opacity: 1!important;
-}
-.mint-swipe-indicator.is-active{
-  background:#4595e6!important;
-}
 </style>
